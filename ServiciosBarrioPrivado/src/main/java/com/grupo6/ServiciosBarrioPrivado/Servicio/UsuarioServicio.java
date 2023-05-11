@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UsuarioService implements UserDetailsService {
+public class UsuarioServicio /*implements UserDetailsService*/ {
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
@@ -61,19 +61,19 @@ public class UsuarioService implements UserDetailsService {
 
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-
-        Usuario usuario = usuarioRepositorio.buscarPorEmail(email);
-
-        if (usuario != null){
-            List<GrantedAuthority> permisos = new ArrayList();
-            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_"+usuario.getRol().toString());
-            permisos.add(p);
-
-            return new User(usuario.getEmail(), usuario.getPassword(), permisos);
-        } else {
-            return null;
-        }
-    }
+//    @Override
+//    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+//
+//        Usuario usuario = usuarioRepositorio.buscarPorEmail(email);
+//
+//        if (usuario != null){
+//            List<GrantedAuthority> permisos = new ArrayList();
+//            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_"+usuario.getRol().toString());
+//            permisos.add(p);
+//
+//            return new User(usuario.getEmail(), usuario.getPassword(), permisos);
+//        } else {
+//            return null;
+//        }
+//    }
 }

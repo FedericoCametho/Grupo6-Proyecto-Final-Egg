@@ -13,7 +13,10 @@ public class Usuario {
     private String id;
 
     private String nombre;
+    private String apellido;
     private String email;
+    private String telefono;
+
     private String password;
     @Enumerated(EnumType.STRING)
     private Rol rol;
@@ -60,5 +63,21 @@ public class Usuario {
 
     public void setRol(Rol rol) {
         this.rol = rol;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 }
