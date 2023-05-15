@@ -4,8 +4,9 @@ import com.grupo6.ServiciosBarrioPrivado.Entidad.Usuario;
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.Rol;
 import com.grupo6.ServiciosBarrioPrivado.Excepciones.MiException;
 import com.grupo6.ServiciosBarrioPrivado.Repositorio.UsuarioRepositorio;
-import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -15,11 +16,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UsuarioServicio /*implements UserDetailsService*/ {
+public class UsuarioServicio implements UserDetailsService {
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
@@ -61,19 +63,19 @@ public class UsuarioServicio /*implements UserDetailsService*/ {
 
     }
 
-//    @Override
-//    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-//
-//        Usuario usuario = usuarioRepositorio.buscarPorEmail(email);
-//
-//        if (usuario != null){
-//            List<GrantedAuthority> permisos = new ArrayList();
-//            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_"+usuario.getRol().toString());
-//            permisos.add(p);
-//
-//            return new User(usuario.getEmail(), usuario.getPassword(), permisos);
-//        } else {
-//            return null;
-//        }
-//    }
+    @Override
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+
+        Usuario usuario = usuarioRepositorio.buscarPorEmail(email);
+
+        if (usuario != null){
+            List<GrantedAuthority> permisos = new ArrayList();
+            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_"+usuario.getRol().toString());
+            permisos.add(p);
+
+            return new User(usuario.getEmail(), usuario.getPassword(), permisos);
+        } else {
+            return null;
+        }
+    }
 }

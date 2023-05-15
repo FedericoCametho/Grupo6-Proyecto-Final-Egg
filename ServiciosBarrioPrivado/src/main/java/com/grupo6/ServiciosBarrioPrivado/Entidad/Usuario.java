@@ -1,8 +1,10 @@
 package com.grupo6.ServiciosBarrioPrivado.Entidad;
 
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.Rol;
-import jakarta.persistence.*;
+
 import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 
 @Entity
 public class Usuario {
