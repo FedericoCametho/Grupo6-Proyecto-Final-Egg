@@ -27,8 +27,8 @@ public class UsuarioServicio implements UserDetailsService {
     private UsuarioRepositorio usuarioRepositorio;
 
     @Transactional
-    public void registrar(String nombre, String email, String password, String password2) throws MiException {
-        this.validar(nombre,email,password,password2);
+    public void registrar(String nombre, String email, String password, String password2, String telefono) throws MiException {
+        this.validar(nombre,email,password,password2, telefono);
 
         Usuario usuario = new Usuario();
 
@@ -36,6 +36,7 @@ public class UsuarioServicio implements UserDetailsService {
         usuario.setEmail(email);
         usuario.setPassword(new BCryptPasswordEncoder().encode(password));
         usuario.setRol(Rol.USER);
+        usuario.setTelefono(telefono);
 
         usuarioRepositorio.save(usuario);
     }
@@ -43,7 +44,7 @@ public class UsuarioServicio implements UserDetailsService {
 
 
 
-    public void validar(String nombre, String email, String password, String password2) throws MiException{
+    public void validar(String nombre, String email, String password, String password2, String telefono) throws MiException{
 
         if(nombre.isEmpty() || nombre == null){
             throw new MiException("El nombre no puede ser nulo o estar vacio");
@@ -61,21 +62,25 @@ public class UsuarioServicio implements UserDetailsService {
             throw new MiException("Las contraseñas ingresadas deben ser iguales");
         }
 
+        if(telefono.isEmpty() || telefono == null){
+            throw new MiException("El telefono no puede ser nulo o estar vacio");
+        }
+
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        Usuario usuario = usuarioRepositorio.buscarPorEmail(email);
+            Usuario usuario = usuarioRepositorio.buscarPorEmail(email);
 
-        if (usuario != null){
-            List<GrantedAuthority> permisos = new ArrayList();
-            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_"+usuario.getRol().toString());
-            permisos.add(p);
+            if (usuario != null){
+                List<GrantedAuthority> permisos = new ArrayList();
+                GrantedAuthority p = new SimpleGrantedAuthority("ROLE_"+usuario.getRol().toString());
+                permisos.add(p);
 
-            return new User(usuario.getEmail(), usuario.getPassword(), permisos);
-        } else {
-            return null;
-        }
+                return new User(usuario.getEmail(), usuario.getPassword(), permisos);
+            } else {
+                return null;
+            }
     }
 }

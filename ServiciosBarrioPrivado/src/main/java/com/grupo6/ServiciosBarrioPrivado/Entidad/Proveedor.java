@@ -101,4 +101,7 @@ public class Proveedor {
     public void setCategoriaServicio(CategoriaServicio categoriaServicio) {
         this.categoriaServicio = categoriaServicio;
     }
+
+
+
 }

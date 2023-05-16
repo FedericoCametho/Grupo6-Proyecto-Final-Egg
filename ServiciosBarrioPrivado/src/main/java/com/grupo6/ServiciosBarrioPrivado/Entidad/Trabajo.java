@@ -24,11 +24,12 @@ public class Trabajo {
     @ManyToOne
     private Proveedor proveedor;
 
-    private CategoriaServicio categoria = proveedor.getCategoriaServicio();
+    private CategoriaServicio categoria ;
 
     private String comentario;
 
     private Integer calificacion;
+
 
     public Date getFecha() {
         return fecha;
