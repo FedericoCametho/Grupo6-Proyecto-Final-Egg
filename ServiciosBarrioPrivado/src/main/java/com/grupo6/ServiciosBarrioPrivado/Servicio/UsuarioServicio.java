@@ -28,8 +28,8 @@ public class UsuarioServicio implements UserDetailsService {
     private UsuarioRepositorio usuarioRepositorio;
 
     @Transactional
-    public void registrar(String nombre, String email, String password, String password2, String telefono) throws MiException {
-        this.validar(nombre,email,password,password2, telefono);
+    public void registrar(String nombre,String apellido, String email, String password, String password2, String telefono) throws MiException {
+        this.validar(nombre,email,password,password2, apellido, telefono);
 
         Usuario usuario = new Usuario();
 
@@ -86,9 +86,13 @@ public class UsuarioServicio implements UserDetailsService {
         return usuarioRepositorio.getOne(id);
     }
 
-    public void validar(String nombre, String email, String password, String password2, String telefono) throws MiException{
+    public void validar(String nombre,String apellido, String email, String password, String password2, String telefono) throws MiException{
 
         if(nombre.isEmpty() || nombre == null){
+            throw new MiException("El nombre no puede ser nulo o estar vacio");
+        }
+
+        if(apellido.isEmpty() || apellido == null){
             throw new MiException("El nombre no puede ser nulo o estar vacio");
         }
 

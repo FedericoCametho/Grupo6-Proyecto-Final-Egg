@@ -14,19 +14,23 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class ProveedorServicio implements UserDetailsService {
 
     @Autowired
     private ProveedorRepositorio proveedorRepositorio;
 
     @Transactional
-    public void registrar(String nombre, String email, String password, String password2, String telefono, CategoriaServicio categoria) throws MiException {
-        this.validar(nombre,email,password,password2, telefono, categoria);
+    public void registrar(String nombre, String email, String password, String password2, String telefono,
+                          CategoriaServicio categoria, Double precioPorHora) throws MiException {
+
+        this.validar(nombre,email,password,password2, telefono, categoria, precioPorHora);
 
         Proveedor proveedor = new Proveedor();
 
@@ -34,6 +38,8 @@ public class ProveedorServicio implements UserDetailsService {
         proveedor.setEmail(email);
         proveedor.setPassword(new BCryptPasswordEncoder().encode(password));
         proveedor.setRol(Rol.PROVEEDOR);
+        proveedor.setCategoriaServicio(categoria);
+        proveedor.setPrecioPorHora(precioPorHora);
 
         proveedorRepositorio.save(proveedor);
     }
@@ -41,7 +47,8 @@ public class ProveedorServicio implements UserDetailsService {
 
 
 
-    public void validar(String nombre, String email, String password, String password2, String telefono, CategoriaServicio categoria) throws MiException{
+    public void validar(String nombre, String email, String password, String password2, String telefono,
+                        CategoriaServicio categoria, Double precioPorHora) throws MiException{
 
         if(nombre.isEmpty() || nombre == null){
             throw new MiException("El nombre no puede ser nulo o estar vacio");
@@ -64,6 +71,9 @@ public class ProveedorServicio implements UserDetailsService {
         }
         if(categoria.toString().isEmpty() || categoria == null){
             throw new MiException("La categoria no puede ser nulo o estar vacio");
+        }
+        if(precioPorHora == null){
+            throw new MiException("El precio por hora no puede ser nulo");
         }
 
     }
