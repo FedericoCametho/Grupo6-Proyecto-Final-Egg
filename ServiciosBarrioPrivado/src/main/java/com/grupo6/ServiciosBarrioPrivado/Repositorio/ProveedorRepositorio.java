@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface ProveedorRepositorio  extends JpaRepository<Proveedor, String> {
 
-    @Query("SELECT p FROM Proveedor p WHERE p.email = :email")
+    @Query("SELECT p FROM Proveedor p WHERE p.email =:email")
     public Proveedor buscarPorEmail(@Param("email") String email);
 
 

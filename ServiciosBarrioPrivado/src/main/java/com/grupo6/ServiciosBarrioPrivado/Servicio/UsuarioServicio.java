@@ -82,6 +82,10 @@ public class UsuarioServicio implements UserDetailsService {
         return usuarios;
     }
 
+    public Usuario mostrarUsuario(String id){
+        return usuarioRepositorio.getOne(id);
+    }
+
     public void validar(String nombre, String email, String password, String password2, String telefono) throws MiException{
 
         if(nombre.isEmpty() || nombre == null){
