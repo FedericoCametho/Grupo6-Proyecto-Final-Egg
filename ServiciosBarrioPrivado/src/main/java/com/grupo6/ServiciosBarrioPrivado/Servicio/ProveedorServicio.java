@@ -19,7 +19,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProveedorService implements UserDetailsService {
+public class ProveedorServicio implements UserDetailsService {
 
     @Autowired
     private ProveedorRepositorio proveedorRepositorio;
