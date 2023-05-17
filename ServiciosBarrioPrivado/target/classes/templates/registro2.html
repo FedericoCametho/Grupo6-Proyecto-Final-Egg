@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Service + - Registro Usuario</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="./index.html"><img src="../static/assets/imagenes/Logo.png" alt="logo" width="100" height="90">SERVICE+</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" style="background-color:rgb(130, 130, 212); color: white;">Iniciar Sesion</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="background-color:rgb(130, 130, 212); color: white; margin-left: 20px;">
+                            Registrate
+                        </a>
+                        <ul class="dropdown-menu">
+                            <!--<li><a class="dropdown-item" href="./index.html">Inicio</a></li>-->
+                            <li><a class="dropdown-item" href="#">Proveedor</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+
+
+
+    <div class="container">
+
+
+
+    </div>
+    <h1 style="text-align: center; margin-bottom: 5%;">Registro de Usuario</h1>
+    <div class="container-fluid" style="width: 400px; background-color: #c2bebe; border-radius: 5%; padding-top: 20px; padding-bottom: 20px; margin-bottom: 10%;">
+        <form method="post" th:action="@{/usuario/registro}">
+            <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError" >
+                <div class="card-body">
+                    <h5 class="card-title">Error 👎</h5>
+                    <p class="card-text" th:text="${error}"></p>
+                </div>
+            </div>
+            <div th:if="${exito != null}" class="card text-white bg-success mb-3 mt-3 mensajeExito" >
+                <div class="card-body">
+                    <h5 class="card-title">Exito!</h5>
+                    <p class="card-text" th:text="${exito}"></p>
+                </div>
+            </div>
+
+            <div class="mb-3" style="text-align: center;">
+                <label for="email-input" class="form-label"><b>Email</b></label>
+                <input type="email" class="form-control" name="email" id="email-input" placeholder="name@example.com">
+            </div>
+            <div class="mb-3" style="text-align: center;">
+                <label for="nombre-input" class="form-label"><b>Nombre</b></label>
+                <input type="text" class="form-control" name="nombre" id="nombre-input" placeholder="Ej: Juan">
+            </div>
+            <div class="mb-3" style="text-align: center;">
+                <label for="apellido-input" class="form-label"><b>Apellido</b></label>
+                <input type="text" class="form-control" name="apellido" id="apellido-input" placeholder="Ej: Perez">
+            </div>
+            <div class="mb-3" style="text-align: center;">
+                <label for="telefono-input" class="form-label"><b>Telefono</b></label>
+                <input type="text" class="form-control" name="telefono" id="telefono-input" placeholder="Ej: 2215554688">
+            </div>
+            <div class="mb-3" style="text-align: center;">
+                <label for="password-input1" class="form-label"><b>Contraseña</b></label>
+                <input type="password" class="form-control" name="password" id="password-input1" placeholder="Contraseña">
+            </div>
+            <div class="mb-3" style="text-align: center;">
+                <label for="password-input2" class="form-label"><b>Reconfirme Contraseña</b></label>
+                <input type="password" class="form-control" name="password2"  id="password-input2" placeholder="Repita su Contraseña">
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                    Acepto <a href="#">Terminos y Condiciones</a>
+                </label>
+            </div>
+            <div class="container-fluid" style="text-align: center; margin-top: 10%;">
+                <button type="submit" class="btn btn-primary mt-3 botones" style="background-color: #8282d4;">Crear</button>
+<!--                <a id="Crear" class="btn btn-primary" href="#" role="button" style="background-color: #8282d4;">Crear</a>-->
+<!--                <a id="cancelar" class="btn btn-primary" href="/" role="button" style="background-color: #8282d4;">Cancelar</a>-->
+                <div class="divVolver">
+                    <a th:href="@{/}" class="btn btn-secondary my-2 botonVolver botones" style="background-color: #8282d4;">Volver</a>
+                </div>
+            </div>
+
+    </form>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+</body>
+</html>

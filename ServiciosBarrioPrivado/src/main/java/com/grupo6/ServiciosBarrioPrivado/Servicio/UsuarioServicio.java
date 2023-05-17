@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +29,13 @@ public class UsuarioServicio implements UserDetailsService {
     private UsuarioRepositorio usuarioRepositorio;
 
     @Transactional
-    public void registrar(String nombre, String email, String password, String password2, String telefono) throws MiException {
-        this.validar(nombre,email,password,password2, telefono);
+    public void registrar(String nombre,String apellido, String email, String password, String password2, String telefono) throws MiException {
+        this.validar(nombre,apellido,email,password,password2, telefono);
 
         Usuario usuario = new Usuario();
 
         usuario.setNombre(nombre);
+        usuario.setApellido(apellido);
         usuario.setEmail(email);
         usuario.setPassword(new BCryptPasswordEncoder().encode(password));
         usuario.setRol(Rol.USER);
@@ -82,13 +84,21 @@ public class UsuarioServicio implements UserDetailsService {
         return usuarios;
     }
 
+    public Usuario getUsuarioById(String id){
+        return usuarioRepositorio.getOne(id);
+    }
+
     public Usuario mostrarUsuario(String id){
         return usuarioRepositorio.getOne(id);
     }
 
-    public void validar(String nombre, String email, String password, String password2, String telefono) throws MiException{
+    public void validar(String nombre,String apellido, String email, String password, String password2, String telefono) throws MiException{
 
         if(nombre.isEmpty() || nombre == null){
+            throw new MiException("El nombre no puede ser nulo o estar vacio");
+        }
+
+        if(apellido.isEmpty() || apellido == null){
             throw new MiException("El nombre no puede ser nulo o estar vacio");
         }
 
