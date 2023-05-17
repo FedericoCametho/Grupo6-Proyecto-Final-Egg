@@ -1,6 +1,7 @@
 package com.grupo6.ServiciosBarrioPrivado.Servicio;
 
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Proveedor;
+import com.grupo6.ServiciosBarrioPrivado.Entidad.Usuario;
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.CategoriaServicio;
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.Rol;
 import com.grupo6.ServiciosBarrioPrivado.Excepciones.MiException;
@@ -27,14 +28,15 @@ public class ProveedorServicio implements UserDetailsService {
     private ProveedorRepositorio proveedorRepositorio;
 
     @Transactional
-    public void registrar(String nombre, String email, String password, String password2, String telefono,
-                          CategoriaServicio categoria, Double precioPorHora) throws MiException {
+    public void registrar(String nombre, String apellido, String email, String password, String password2, String telefono,
+                          CategoriaServicio categoria, Integer precioPorHora) throws MiException {
 
-        this.validar(nombre,email,password,password2, telefono, categoria, precioPorHora);
+        this.validar(nombre,apellido, email,password,password2, telefono, categoria, precioPorHora);
 
         Proveedor proveedor = new Proveedor();
 
         proveedor.setNombre(nombre);
+        proveedor.setApellido(apellido);
         proveedor.setEmail(email);
         proveedor.setPassword(new BCryptPasswordEncoder().encode(password));
         proveedor.setRol(Rol.PROVEEDOR);
@@ -45,13 +47,27 @@ public class ProveedorServicio implements UserDetailsService {
     }
 
 
+    // METODOS DE CONSULTA
 
+    public List<Proveedor> listarProveedores(){
+        List<Proveedor> proveedores = new ArrayList();
+        proveedores = proveedorRepositorio.findAll();
+        return proveedores;
+    }
 
-    public void validar(String nombre, String email, String password, String password2, String telefono,
-                        CategoriaServicio categoria, Double precioPorHora) throws MiException{
+    public Proveedor getProveedorById(String id){
+        return proveedorRepositorio.getOne(id);
+    }
+
+    public void validar(String nombre, String apellido, String email, String password, String password2, String telefono,
+                        CategoriaServicio categoria, Integer precioPorHora) throws MiException{
 
         if(nombre.isEmpty() || nombre == null){
             throw new MiException("El nombre no puede ser nulo o estar vacio");
+        }
+
+        if(apellido.isEmpty() || apellido == null){
+            throw new MiException("El apellido no puede ser nulo o estar vacio");
         }
 
         if(email.isEmpty() || email == null){

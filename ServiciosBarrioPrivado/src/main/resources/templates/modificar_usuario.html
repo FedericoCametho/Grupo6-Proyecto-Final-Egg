@@ -35,9 +35,10 @@
   </div>
 </header>
 
+
 <div class="container-fluid m-5 contenedor">
 
-  <form class="formulario" th:action="@{/proveedor/registro}"  method="POST">
+  <form class="formulario" th:action="@{/usuario/modificar/__${usuario.id}__}"  method="POST">
 
     <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError" >
       <div class="card-body">
@@ -51,44 +52,19 @@
         <p class="card-text" th:text="${exito}"></p>
       </div>
     </div>
-    <h2 class="mb-2">Registrar Usuario Proveedor</h2>
+    <h2 class="mb-2">Modificar Usuario Cliente</h2>
     <div class="form-group my-3">
-      <input type="text" class="form-control" name="nombre" placeholder="Nombre">
+      <input type="text" class="form-control" name="nombre" th:value="${usuario.nombre}">
     </div>
     <div class="form-group my-3">
-      <input type="text" class="form-control" name="apellido" placeholder="Apellido">
+      <input type="text" class="form-control" name="apellido" th:value="${usuario.apellido}">
     </div>
     <div class="form-group my-3">
-      <input type="text" class="form-control" name="email" placeholder="Email">
-    </div>
-    <div class="form-group my-3">
-      <input type="text" class="form-control" name="telefono" placeholder="Telefono">
-    </div>
-    <div class="form-group my-3">
-
-      <select name="categoria">
-
-        <option>Seleccionar Categoria</option>
-
-        <option th:each="cat : ${categoriaServicio}"
-                th:value="${cat}"
-                th:text="${cat.toString()}"
-        />
-      </select>
-    </div>
-    <div class="form-group my-3">
-      <input type="number" class="form-control" name="precioPorHora" placeholder="Precio Por Hora">
-    </div>
-    <div class="form-group my-3">
-      <input type="password" class="form-control" name="password" placeholder="Contraseña">
-    </div>
-    <div class="form-group my-3">
-      <input type="password" class="form-control" name="password2" placeholder="Repita la contraseña">
+      <input type="text" class="form-control" name="telefono" th:value="${usuario.telefono}">
     </div>
 
-    <button type="submit" class="btn btn-primary mt-3 botones">Registrarse</button>
+    <button type="submit" class="btn btn-primary mt-3 botones">Modificar</button>
   </form>
-
 
 
   <section class=" text-center container">

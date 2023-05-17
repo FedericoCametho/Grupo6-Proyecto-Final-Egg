@@ -8,62 +8,32 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navBar">
-  <div class="containerImg">
-    <a href="/" class="navbar-brand d-flex align-items-center">
-      <!--            <img class="logo" src="/img/Egg.png" alt="Img logo egg">-->
-    </a>
+<header class="p-3 text-bg-dark">
+  <div class="header-container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
+      </a>
+
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <li><a th:href="@{/}" class="nav-link px-2 text-secondary">Home</a></li>
+        <!--        <li><a href="#" class="nav-link px-2 text-white">Features</a></li>-->
+        <!--        <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>-->
+        <!--        <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>-->
+        <!--        <li><a href="#" class="nav-link px-2 text-white">About</a></li>-->
+      </ul>
+
+      <!--            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">-->
+      <!--                <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">-->
+      <!--            </form>-->
+
+      <div class="text-end">
+        <button type="button" class="btn btn-outline-light me-2"><a th:href="@{/login}" class="nav-link px-2 text-secondary">Iniciar Sesion</a></button>
+        <button type="button" class="btn btn-warning"><a th:href="@{/registrar}" class="nav-link px-2 text-secondary">Registrarse</a></button>
+      </div>
+    </div>
   </div>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse elementosNav" id="navbarNavDropdown">
-    <ul class="navbar-nav ms-auto elementos">
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Libros
-        </a>
-        <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
-
-          <li><a class="dropdown-item" th:href="@{/libro/registrar}">Crear Libro</a></li>
-          <li><hr class="dropdown-divider"></li>
-
-          <li><a class="dropdown-item" th:href="@{/libro/lista}">Listar Libros</a></li>
-        </ul>
-      </li>
-
-
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Autores
-        </a>
-        <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
-
-          <li><a class="dropdown-item" th:href="@{/autor/registrar}">Crear Autor</a></li>
-          <li><hr class="dropdown-divider"></li>
-
-          <li><a class="dropdown-item" th:href="@{/autor/lista}">Listar Autores</a></li>
-        </ul>
-      </li>
-
-
-
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown3" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Editoriales
-        </a>
-        <ul class="dropdown-menu" aria-labelledby="navbarDropdown3">
-
-          <li><a class="dropdown-item" th:href="@{/editorial/registrar}">Crear Editorial</a></li>
-          <li><hr class="dropdown-divider"></li>
-
-          <li><a class="dropdown-item" th:href="@{/editorial/lista}">Listar Editoriales</a></li>
-        </ul>
-      </li>
-    </ul>
-  </div>
-</nav>
-
+</header>
 
 <div class="container-fluid m-5 contenedor">
 
@@ -81,7 +51,7 @@
         <p class="card-text" th:text="${exito}"></p>
       </div>
     </div>
-    <h2 class="mb-2">Registrar Usuario Cliente</h2>
+    <h2 class="mb-2">Registrar Usuario Proveedor</h2>
     <div class="form-group my-3">
       <input type="text" class="form-control" name="nombre" placeholder="Nombre">
     </div>

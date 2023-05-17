@@ -25,7 +25,7 @@ public class Proveedor {
     @Enumerated(EnumType.STRING)
     private Rol rol;
 
-    private Double precioPorHora;
+    private Integer precioPorHora;
 
     @Enumerated(EnumType.STRING)
     private CategoriaServicio categoriaServicio;
@@ -87,11 +87,11 @@ public class Proveedor {
         this.telefono = telefono;
     }
 
-    public Double getPrecioPorHora() {
+    public Integer getPrecioPorHora() {
         return precioPorHora;
     }
 
-    public void setPrecioPorHora(Double precioPorHora) {
+    public void setPrecioPorHora(Integer precioPorHora) {
         this.precioPorHora = precioPorHora;
     }
 

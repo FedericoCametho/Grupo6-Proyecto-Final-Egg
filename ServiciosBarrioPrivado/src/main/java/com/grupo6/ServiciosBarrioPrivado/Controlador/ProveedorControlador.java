@@ -32,25 +32,29 @@ public class ProveedorControlador {
 
 
     @PostMapping("/registro")
-    public String registro_proveedor(@RequestParam String nombre, @RequestParam String email, @RequestParam String password,
+    public String registro_proveedor(@RequestParam String nombre, @RequestParam String apellido, @RequestParam String email, @RequestParam String password,
                                      @RequestParam String password2, @RequestParam String telefono,
-                                     @RequestParam CategoriaServicio categoria, @RequestParam Double precioPorHora,
-                                     @RequestParam  ModelMap modelo){
+                                     @RequestParam CategoriaServicio categoria, @RequestParam Integer precioPorHora,
+                                     ModelMap modelo){
         try{
-            proveedorServicio.registrar(nombre, email, password, password2, telefono, categoria, precioPorHora);
+            proveedorServicio.registrar(nombre, apellido, email, password, password2, telefono, categoria, precioPorHora);
             return "index";
 
         } catch (MiException ex){
             modelo.put("error", ex.getMessage());
             modelo.put("nombre", nombre);
+            modelo.put("apellido", apellido);
             modelo.put("email", email);
             modelo.put("telefono", telefono);
             List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
             modelo.addAttribute("categoriaServicio", categoriaServicio);
             modelo.put("precioPorhora", precioPorHora);
 
-            return "registro_usuario";
+            return "registro_proveedor";
         }
     }
+
+
+
 
 }
