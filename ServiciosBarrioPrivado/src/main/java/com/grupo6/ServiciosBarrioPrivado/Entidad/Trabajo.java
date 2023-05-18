@@ -26,8 +26,11 @@ public class Trabajo {
 
     private CategoriaServicio categoria ;
 
-    private String comentario;
+    private String detalles;
 
+    // Para comentarios sobre el trabajo realizado, inicialmente en blanco
+    private String comentario;
+    // para calificar post realizacion de trabajo, inicialmente en 5
     private Integer calificacion;
 
 
@@ -85,5 +88,13 @@ public class Trabajo {
 
     public void setCalificacion(Integer calificacion) {
         this.calificacion = calificacion;
+    }
+
+    public String getDetalles() {
+        return detalles;
+    }
+
+    public void setDetalles(String detalles) {
+        this.detalles = detalles;
     }
 }

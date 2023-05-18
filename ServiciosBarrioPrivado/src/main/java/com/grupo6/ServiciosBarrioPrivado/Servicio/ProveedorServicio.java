@@ -59,6 +59,7 @@ public class ProveedorServicio implements UserDetailsService {
         return proveedorRepositorio.getOne(id);
     }
 
+
     public void validar(String nombre, String apellido, String email, String password, String password2, String telefono,
                         CategoriaServicio categoria, Integer precioPorHora) throws MiException{
 
