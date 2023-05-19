@@ -41,26 +41,34 @@
   <table class="table table-dark">
     <thead>
     <tr>
-      <th scope="col">Nombre</th>
-      <th scope="col">Apellido</th>
-      <th scope="col">Email</th>
-      <th scope="col">Telefono</th>
+      <th scope="col">Fecha</th>
+      <th scope="col">Cliente</th>
+      <th scope="col">Proveedor</th>
+      <th scope="col">Tipo de Servicio</th>
+      <th scope="col">Detalles</th>
+      <th scope="col">Estado</th>
+      <th th:if="${tra.finalizado}" scope="col">Comentarios</th>
+      <th th:if="${tra.finalizado}" scope="col">Calificacion</th>
       <th></th>
       <th></th>
 
     </tr>
     </thead>
-    <tbody th:each="usu : ${usuarios}">
+    <tbody th:each="tra : ${trabajos}">
     <tr>
-      <th scope="row" th:text="${usu.nombre}"></th>
-      <td th:text="${usu.apellido}"></td>
-      <td th:text="${usu.email}"></td>
-      <td th:text="${usu.telefono}"></td>
+      <th scope="row" th:text="${tra.fecha}"></th>
+      <td th:text="${tra.cliente.getNombreCompleto()}"></td>
+      <td th:text="${tra.proveedor.getNombreCompleto()}"></td>
+      <td th:text="${tra.categoria}"></td>
+      <td th:text="${tra.detalles}"></td>
+      <td th:text="${tra.categoria}"></td>
+      <td th:if="${tra.finalizado}" th:text="${tra.comentario}"></td>
+      <td th:if="${tra.finalizado}" th:text="${tra.calificacion}"></td>
       <td>
-        <a th:href= "@{/usuario/modificar/__${usu.id}__}"><i class="fas fa-feather-alt">  </i> Modificar </a>
+        <a th:href= "@{/trabajo/modificar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Modificar </a>
       </td>
       <td>
-        <a th:href= "@{/usuario/borrar/__${usu.id}__}"><i class="fas fa-feather-alt">  </i> Borrar </a>
+        <a th:href= "@{/trabajo/borrar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Borrar </a>
       </td>
 
     </tr>
@@ -68,12 +76,12 @@
     </tbody>
   </table>
 
-  <section class=" text-center container">
-    <div class="row mt-3">
-      <div class="divVolver">
-        <a th:href="@{/}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
-      </div>
+  section class=" text-center container">
+  <div class="row mt-3">
+    <div class="divVolver">
+      <a th:href="@{/}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
     </div>
+  </div>
   </section>
 
 </div>

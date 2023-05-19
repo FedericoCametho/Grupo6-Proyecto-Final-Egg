@@ -1,5 +1,6 @@
 package com.grupo6.ServiciosBarrioPrivado.Servicio;
 
+import com.grupo6.ServiciosBarrioPrivado.Entidad.Trabajo;
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Usuario;
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.Rol;
 import com.grupo6.ServiciosBarrioPrivado.Excepciones.MiException;
@@ -16,7 +17,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +27,9 @@ public class UsuarioServicio implements UserDetailsService {
 
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
+
+    @Autowired
+    private TrabajoServicio trabajoServicio;
 
     @Transactional
     public void registrar(String nombre,String apellido, String email, String password, String password2, String telefono) throws MiException {
@@ -75,6 +78,12 @@ public class UsuarioServicio implements UserDetailsService {
             usuarioRepositorio.delete(usuario);
         }
     }
+
+
+    public List<Trabajo> trabajosDeUnUsuario(String idUsuario) throws MiException{
+        return trabajoServicio.listarPorUsuario(idUsuario);
+    }
+
 
     ///// METODOS DE CONSULTA
 
