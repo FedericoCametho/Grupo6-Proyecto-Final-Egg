@@ -84,6 +84,8 @@ public class Usuario {
         this.telefono = telefono;
     }
 
-
+    public String getNombreCompleto(){
+        return this.nombre+" "+this.apellido;
+    }
 
 }

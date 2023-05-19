@@ -103,6 +103,8 @@ public class Proveedor {
         this.categoriaServicio = categoriaServicio;
     }
 
-
+    public String getNombreCompleto(){
+        return this.nombre+" "+this.apellido;
+    }
 
 }

@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,10 +28,10 @@ public class TrabajoServicio {
     private TrabajoRepositorio trabajoRepositorio;
 
     @Autowired
-    private UsuarioServicio usuarioServicio;
+    private UsuarioRepositorio usuarioRepositorio;
 
     @Autowired
-    private ProveedorServicio proveedorServicio;
+    private ProveedorRepositorio proveedorRepositorio;
 
     @Transactional
     public void registrar(Date fecha, String idCliente, String idProveedor, CategoriaServicio categoria,
@@ -38,8 +39,8 @@ public class TrabajoServicio {
 
         this.validar(fecha, idCliente, idProveedor, categoria);
 
-        Usuario cliente = usuarioServicio.getUsuarioById(idCliente);
-        Proveedor proveedor = proveedorServicio.getProveedorById(idProveedor);
+        Usuario cliente = usuarioRepositorio.findById(idCliente).get();
+        Proveedor proveedor = proveedorRepositorio.findById(idProveedor).get();
 
         Trabajo trabajo = new Trabajo();
 
@@ -108,6 +109,20 @@ public class TrabajoServicio {
         return trabajos;
     }
 
+    public List<Trabajo> listarPorUsuario(String idUsuario) throws MiException{
+        if (idUsuario == null || idUsuario.isEmpty()){
+            throw new MiException("El id del usuario no puede ser nulo o estar vacio");
+        }
+        return trabajoRepositorio.buscarPorUsuario(idUsuario);
+    }
+
+    public List<Trabajo> listarPorProveedor(String idProveedor) throws MiException{
+        if (idProveedor == null || idProveedor.isEmpty()){
+            throw new MiException("El id del proveedor no puede ser nulo o estar vacio");
+        }
+        return trabajoRepositorio.buscarPorProveedor(idProveedor);
+    }
+
     public Trabajo getTrabajoById(String id) {
         return trabajoRepositorio.getOne(id);
     }
@@ -115,7 +130,7 @@ public class TrabajoServicio {
     public void validar(Date fecha,String idCliente,String idProveedor,CategoriaServicio categoria) throws MiException {
 
         if (fecha == null) {
-            throw new MiException("La fecha no puede ser nula");
+            throw new MiException("La fecha no puede ser nula ni puede ser anterior a la fecha de hoy");
         }
 
         if (categoria.toString().isEmpty() || categoria == null) {

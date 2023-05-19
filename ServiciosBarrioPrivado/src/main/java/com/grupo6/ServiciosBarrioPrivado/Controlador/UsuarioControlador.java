@@ -64,6 +64,30 @@ public class UsuarioControlador {
         }
     }
 
+
+    @GetMapping("borrar/{id}")
+    public String borrarUsuario(@PathVariable String id, ModelMap modelo){
+        Usuario usuario = usuarioServicio.getUsuarioById(id);
+        modelo.addAttribute("usuario", usuario);
+        return "usuario_borrar";
+    }
+
+    @PostMapping("/confirmarBorrar/{id}")
+    public String borrar(@PathVariable String id, ModelMap modelo) throws MiException{
+        try{
+            if (usuarioServicio.trabajosDeUnUsuario(id).isEmpty()){
+                usuarioServicio.eliminarUsuario(id);
+                return "redirect:../listar";
+            }
+            modelo.put("error", "El Usuario que desea borrar de la base de datos, Posee Trabajos asociados. Debera primero eliminar los trabajos asociados a dicho usuario para luego eliminarlo");
+            return "index";
+        }catch(MiException ex){
+            modelo.put("error", ex.getMessage());
+            return "index";
+        }
+    }
+
+
     @GetMapping("/listar")
     public String listarTodos(ModelMap modelo){
         List<Usuario> usuarios = usuarioServicio.listarUsuarios();
