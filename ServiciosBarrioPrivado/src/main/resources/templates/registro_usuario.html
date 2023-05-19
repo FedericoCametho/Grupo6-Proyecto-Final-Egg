@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Registrar Usuario - SERVICE+</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-  <link rel="stylesheet" href="/static/assets/css/formulario.css">
+  <link rel="stylesheet" href="/static/assets/css/formulario.css" th:href="@{/css/formulario.css}">
 </head>
 <body>
 
@@ -36,7 +36,7 @@
 </header>
 
 
-<div class="container-fluid m-5 contenedor">
+<div class="container-fluid contenedor">
   <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError" >
     <div class="card-body">
       <h5 class="card-title">Error 👎</h5>
@@ -49,7 +49,7 @@
       <p class="card-text" th:text="${exito}"></p>
     </div>
   </div>
-  <form class="formulario" th:action="@{/usuario/registro}"  method="POST">
+  <form class="shadow p-3 mb-5 bg-body-tertiary rounded formulario" th:action="@{/usuario/registro}"  method="POST">
 
     
     <h2 class="mb-2">Registrar Usuario Cliente</h2>

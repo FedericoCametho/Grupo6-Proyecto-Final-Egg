@@ -16,7 +16,7 @@
       </a>
 
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-        <li><a th:href="@{/}" class="nav-link px-2 text-secondary">Home</a></li>
+        <li ><a th:href="@{/}" class="nav-link px-2 text-secondary"><img src="/static/assets/imagenes/Logo 2.png"><b class="letra">SERVICE+</b></a></li>
         <!--        <li><a href="#" class="nav-link px-2 text-white">Features</a></li>-->
         <!--        <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>-->
         <!--        <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>-->
@@ -35,9 +35,9 @@
   </div>
 </header>
 
-<div class="container-fluid m-5 contenedor">
+<div class="container-fluid contenedor">
 
-  <form class="formulario" th:action="@{/proveedor/registro}"  method="POST">
+  <form class="shadow p-3 mb-5 bg-body-tertiary rounded formulario" th:action="@{/proveedor/registro}"  method="POST">
 
     <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError" >
       <div class="card-body">
@@ -52,16 +52,16 @@
       </div>
     </div>
     <h2 class="mb-2">Registrar Usuario Proveedor</h2>
-    <div class="form-group my-3">
+    <div class="form-group my-3 campo">
       <input type="text" class="form-control" name="nombre" placeholder="Nombre">
     </div>
-    <div class="form-group my-3">
+    <div class="form-group my-3 campo">
       <input type="text" class="form-control" name="apellido" placeholder="Apellido">
     </div>
-    <div class="form-group my-3">
+    <div class="form-group my-3 campo">
       <input type="text" class="form-control" name="email" placeholder="Email">
     </div>
-    <div class="form-group my-3">
+    <div class="form-group my-3 campo">
       <input type="text" class="form-control" name="telefono" placeholder="Telefono">
     </div>
     <div class="form-group my-3 seleccion">
@@ -76,23 +76,23 @@
         >
       </select>
     </div>
-    <div class="form-group my-3">
+    <div class="form-group my-3 campo">
       <input type="number" class="form-control" name="precioPorHora" placeholder="Precio Por Hora">
     </div>
-    <div class="form-group my-3">
+    <div class="form-group my-3 campo">
       <input type="password" class="form-control" name="password" placeholder="Contraseña">
     </div>
-    <div class="form-group my-3">
+    <div class="form-group my-3 campo">
       <input type="password" class="form-control" name="password2" placeholder="Repita la contraseña">
     </div>
 
-    <button type="submit" class="btn btn-primary mt-3 botones">Registrarse</button>
+    <button type="submit" class="btn btn-primary mt-3 boton">Registrarse</button>
   </form>
 
 
 
   <section class=" text-center container">
-    <div class="row mt-3">
+    <div class="row mt-2">
       <div class="divVolver">
         <a th:href="@{/}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
       </div>

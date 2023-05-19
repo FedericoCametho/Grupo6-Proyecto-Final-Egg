@@ -27,12 +27,12 @@ input{
 
 .boton{
     background-color: #8282d4;
-    
+    margin-left: 40%;
 }
 
 
 
-h2{
+h3{
     text-align: center;
 }
 
@@ -40,6 +40,7 @@ h2{
     text-align: center;
     width: 200px;
     display: inline-block;
+    
     
 }
 .mensajeExito{
@@ -52,6 +53,7 @@ h2{
 img{
     width: 100px;
     height: 100px;
+    padding-bottom: 0px;
     border-radius: 100px;
     background-color: #8282d4;
 }
@@ -64,4 +66,3 @@ img{
 .contenedor{
     text-align: center;
 }
-

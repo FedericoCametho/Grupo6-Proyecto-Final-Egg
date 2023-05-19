@@ -37,6 +37,7 @@ img{
     width: 250px;
     cursor: default;
     transition: all 400ms ease;
+    text-align: center;
     
     
 }
@@ -46,6 +47,7 @@ img{
     width: 250px;
     cursor: default;
     transition: all 400ms ease;
+    text-align: center;
 }
 
 .tarjeta1:hover{
