@@ -1,0 +1,53 @@
+.letra{
+    font-size: xx-large;
+    color: whitesmoke;
+}
+
+img{
+    width: 100px;
+    height: 100px;
+    padding-bottom: 0px;
+    border-radius: 100px;
+    background-color: #8282d4;
+}
+
+
+
+.formulario{
+    width: 500px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    background-color: whitesmoke;
+    padding: 20px 50px 20px 50px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.mensajeError{
+width: 10%;
+margin: auto;
+text-align: center;
+
+}
+.mensajeExito{
+width: 10%;
+margin: auto;
+text-align: center;
+}
+
+.botones{
+    background-color: #8282d4;
+    width: 100px;
+    margin: auto;
+}
+
+input{
+    text-align: center;
+}
+
+.campo{
+    width: 50%;
+    align-items: center;
+    margin: auto;
+}

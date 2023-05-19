@@ -1,14 +1,58 @@
 .container{
     padding-top: 5%;
-    align-content: center;
-    align-items: center;
-
+    
 }
-.col-lg-4{
-    margin-left: 16%;
 
+.grupobotones{
+    
+    background-color: whitesmoke;
 }
+
+.botones{
+    background-color: #8282d4;
+}
+
 
 .row{
-    width: 100%;
+   align-items: center;
+    
+}
+
+.letra{
+    font-size: xx-large;
+    color: whitesmoke;
+}
+
+img{
+    width: 100px;
+    height: 100px;
+    padding-bottom: 0px;
+    border-radius: 100px;
+    background-color: #8282d4;
+}
+
+.tarjeta1{
+    background-color: whitesmoke;
+    margin-left: 25%;
+    width: 250px;
+    cursor: default;
+    transition: all 400ms ease;
+    
+    
+}
+.tarjeta2{
+    background-color: blue;
+    margin-left: 5%;
+    width: 250px;
+    cursor: default;
+    transition: all 400ms ease;
+}
+
+.tarjeta1:hover{
+    transform: translateY(-10%);
+    
+}
+.tarjeta2:hover{
+    transform: translateY(-10%);
+    
 }
