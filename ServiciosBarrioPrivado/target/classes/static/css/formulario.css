@@ -17,10 +17,17 @@
 .containerImg{
     width: 20%;
 }
-
+h2{
+    text-align: center;
+}
 .logo{
     width: 40%;
     margin: auto;
+}
+
+.letra{
+    font-size: xx-large;
+    color: whitesmoke;
 }
 
 
@@ -37,11 +44,15 @@
 }
 
 .formulario{
-    width: 50%;
+    width: 500px;
     margin: auto;
     display: flex;
     flex-direction: column;
+    background-color: whitesmoke;
+    padding: 20px 50px 20px 50px;
+    border-radius: 10px;
 }
+
 
 .divVolver{
     width: 50%;
@@ -59,6 +70,10 @@
     box-shadow: 0px 2px 16px 4px rgba(0,0,0,0.36);
     -webkit-box-shadow: 0px 2px 16px 4px rgba(0,0,0,0.36);
     -moz-box-shadow: 0px 2px 16px 4px rgba(0,0,0,0.36);
+    width: 100px;
+    background-color: #8282d4;
+    margin: auto;
+
 }
 
 .botones:active{
@@ -69,4 +84,12 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
+}
+
+img{
+    width: 100px;
+    height: 100px;
+    padding-bottom: 0px;
+    border-radius: 100px;
+    background-color: #8282d4;
 }
