@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
@@ -25,9 +25,13 @@
             <!--                <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">-->
             <!--            </form>-->
 
-            <div class="text-end">
-                <button type="button" class="btn btn-outline-light me-2"><a th:href="@{/login}" class="nav-link px-2 text-secondary">Iniciar Sesion</a></button>
-                <button type="button" class="btn btn-warning"><a th:href="@{/registrar}" class="nav-link px-2 text-secondary">Registrarse</a></button>
+            <div class="text-end" sec:authorize="isAuthenticated()">
+                <button type="button" class="btn btn-outline-light me-2"><a th:href="@{/}" class="nav-link px-2 text-secondary">Perfil</a></button> <!--TODO llenar ruta th:href="@{/}-->
+                <button type="button" class="btn btn-warning"><a th:href="@{/logout}" class="nav-link px-2 text-secondary">Cerrar Sesión</a></button>
+            </div>
+            <div class="text-end" sec:authorize!="isAuthenticated()">
+                <button type="button" class="btn btn-outline-light me-2"><a th:href="@{/login_bifurcation.html}" class="nav-link px-2 text-secondary">Iniciar Sesión</a></button>
+                <button type="button" class="btn btn-warning"><a th:href="@{/registro_bifurcation.html}" class="nav-link px-2 text-secondary">Registrarse</a></button>
             </div>
         </div>
     </div>
@@ -93,19 +97,19 @@
 
             <!-- Three columns of text below the carousel -->
             <div class="row">
-                <div class="col-lg-4">
+                <div class="col-lg-4" sec:authorize="hasRole('ADMIN')">
                     <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg>
                     <h2 class="fw-normal">Listado de usuarios</h2>
                     <p></p>
                     <p><a class="btn btn-secondary" th:href="@{/usuario/listar}">Ver usuarios &raquo;</a></p>
                 </div><!-- /.col-lg-4 -->
-                <div class="col-lg-4">
+                <div class="col-lg-4" sec:authorize="hasAnyRole('USER' ,'ADMIN')">
                     <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg>
                     <h2 class="fw-normal">Listado de Proveedores</h2>
                     <p></p>
                     <p><a class="btn btn-secondary" th:href="@{/proveedor/listar}">View details &raquo;</a></p>
                 </div><!-- /.col-lg-4 -->
-                <div class="col-lg-4">
+                <div class="col-lg-4" sec:authorize="hasAnyRole('PROVEEDOR' ,'ADMIN')">
                     <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg>
                     <h2 class="fw-normal">Listado de Trabajos</h2>
                     <p></p>
