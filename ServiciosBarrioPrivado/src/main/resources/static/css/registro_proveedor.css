@@ -1,0 +1,66 @@
+.formulario{
+    width: 40%;
+    margin: auto;
+    background-color: whitesmoke;
+}
+
+
+input{
+    text-align: center;
+
+}
+
+.campo{
+    width: 60%;
+    margin: auto;
+
+}
+
+.seleccion{
+    text-align: center;
+}
+
+.botones{
+    background-color: #8282d4;
+
+}
+
+.boton{
+    background-color: #8282d4;
+
+}
+
+
+
+h2{
+    text-align: center;
+}
+
+.mensajeError{
+    text-align: center;
+    width: 200px;
+    display: inline-block;
+
+}
+.mensajeExito{
+    text-align: center;
+    width: 200px;
+    display: inline-block;
+
+}
+
+img{
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+    background-color: #8282d4;
+}
+
+.letra{
+    font-size: xx-large;
+    color: whitesmoke;
+}
+
+.contenedor{
+    text-align: center;
+}
