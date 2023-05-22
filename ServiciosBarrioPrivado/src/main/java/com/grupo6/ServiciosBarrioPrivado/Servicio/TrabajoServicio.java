@@ -6,7 +6,7 @@ import com.grupo6.ServiciosBarrioPrivado.Entidad.Proveedor;
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Trabajo;
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Usuario;
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.CategoriaServicio;
-import com.grupo6.ServiciosBarrioPrivado.Enumeracion.Rol;
+
 import com.grupo6.ServiciosBarrioPrivado.Excepciones.MiException;
 import com.grupo6.ServiciosBarrioPrivado.Repositorio.ProveedorRepositorio;
 import com.grupo6.ServiciosBarrioPrivado.Repositorio.TrabajoRepositorio;
@@ -17,9 +17,9 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+
 
 @Service
 public class TrabajoServicio {
@@ -34,7 +34,7 @@ public class TrabajoServicio {
     private ProveedorRepositorio proveedorRepositorio;
 
     @Transactional
-    public void registrar(Date fecha, String idCliente, String idProveedor, CategoriaServicio categoria,
+    public void registrar(LocalDate fecha, String idCliente, String idProveedor, CategoriaServicio categoria,
                           String detalles) throws MiException {
 
         this.validar(fecha, idCliente, idProveedor, categoria);
@@ -61,42 +61,83 @@ public class TrabajoServicio {
     // MODIFICAR ENTIDAD DE LIBRO DE BIBLIOTECA, COMO REFERENCIA PARA IR A BUSCAR EN NUESTRA ENTIDAD TRABAJO
     // EL CLIENTE Y EL PROVEEDOR
 
-    /*
+
     @Transactional
-    public void modificarLibro(Long isbn, String titulo, Integer ejemplares, String idAutor, String idEditorial) throws MiException{
-        this.validarDatos(isbn, titulo, ejemplares, idAutor, idEditorial);
+    public void modificar(String id, LocalDate fecha, String idCliente, String idProveedor, CategoriaServicio categoria,
+                          String detalles) throws MiException{
 
-        Optional<Libro> respuestaLibro = libroRepositorio.findById(isbn);
-        Optional<Autor> respuestaAutor = autorRepositorio.findById(idAutor);
-        Optional<Editorial> respuestaEditorial = editorialRepositorio.findById(idEditorial);
+        this.validar(fecha, idCliente, idProveedor, categoria);
 
-        Autor autor = new Autor();
-        Editorial editorial = new Editorial();
+        Optional<Trabajo> respuestaTrabajo = trabajoRepositorio.findById(id);
+        Optional<Proveedor> respuestaProveedor = proveedorRepositorio.findById(idProveedor);
+        Optional<Usuario> respuestaCliente = usuarioRepositorio.findById(idCliente);
 
-        if (respuestaAutor.isPresent()){
-            autor = respuestaAutor.get();
+        Proveedor proveedor = new Proveedor();
+        Usuario cliente = new Usuario();
+
+        if (respuestaCliente.isPresent()){
+            cliente = respuestaCliente.get();
         }
 
-        if(respuestaEditorial.isPresent()){
-            editorial = respuestaEditorial.get();
+        if(respuestaProveedor.isPresent()){
+            proveedor = respuestaProveedor.get();
         }
 
-        if (respuestaLibro.isPresent()){
-            Libro libro = respuestaLibro.get();
+        if (respuestaTrabajo.isPresent()){
+            Trabajo trabajo = respuestaTrabajo.get();
 
-            libro.setTitulo(titulo);
-            libro.setEjemplares(ejemplares);
-            libro.setAutor(autor);
-            libro.setEditorial(editorial);
+            trabajo.setFecha(fecha);
+            trabajo.setDetalles(detalles);
+            trabajo.setCliente(cliente);
+            trabajo.setProveedor(proveedor);
+            trabajo.setCategoria(categoria);
 
-            libroRepositorio.save(libro);
+            trabajoRepositorio.save(trabajo);
         }
 
     }
 
+    @Transactional
+    public void calificarTrabajo(String id, String comentario, Integer calificacion)throws MiException{
+        if (id == null || id.isEmpty()){
+            throw new MiException("El id ingresado no puede ser nulo o estar vacio");
+        }
+        Optional<Trabajo> respuesta = trabajoRepositorio.findById(id);
+        if(respuesta.isPresent()){
+            Trabajo trabajo = respuesta.get();
+
+            if(trabajo.getFinalizado()) {
+                trabajo.setComentario(comentario);
+                trabajo.setCalificacion(calificacion);
 
 
-     */
+                trabajoRepositorio.save(trabajo);
+            }
+        }
+    }
+
+    @Transactional
+    public void finalizarTrabajo(String id) {
+        Optional<Trabajo> respuesta = trabajoRepositorio.findById(id);
+        if(respuesta.isPresent()){
+            Trabajo trabajo = respuesta.get();
+            trabajo.setFinalizado(true);
+            trabajoRepositorio.save(trabajo);
+        }
+    }
+
+    @Transactional
+    public void eliminarTrabajo(String id)throws MiException{
+        if (id == null || id.isEmpty()){
+            throw new MiException("El id ingresado no puede ser nulo o estar vacio");
+        }
+        Optional<Trabajo> respuesta = trabajoRepositorio.findById(id);
+        if(respuesta.isPresent()){
+            Trabajo trabajo = respuesta.get();
+            trabajoRepositorio.delete(trabajo);
+        }
+    }
+
 
 
 
@@ -123,13 +164,20 @@ public class TrabajoServicio {
         return trabajoRepositorio.buscarPorProveedor(idProveedor);
     }
 
+    public List<Trabajo> listarPorCategoria(CategoriaServicio categoria) throws MiException{
+        if (categoria == null || categoria.toString().isEmpty()){
+            throw new MiException("La categoria no puede ser nulo o estar vacio");
+        }
+        return trabajoRepositorio.buscarPorCategoria(categoria);
+    }
+
     public Trabajo getTrabajoById(String id) {
         return trabajoRepositorio.getOne(id);
     }
 
-    public void validar(Date fecha,String idCliente,String idProveedor,CategoriaServicio categoria) throws MiException {
+    public void validar(LocalDate fecha,String idCliente,String idProveedor,CategoriaServicio categoria) throws MiException {
 
-        if (fecha == null) {
+        if (fecha == null || fecha.isBefore(LocalDate.now())) {
             throw new MiException("La fecha no puede ser nula ni puede ser anterior a la fecha de hoy");
         }
 

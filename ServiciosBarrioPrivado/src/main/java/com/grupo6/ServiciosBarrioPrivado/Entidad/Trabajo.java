@@ -6,6 +6,7 @@ import com.grupo6.ServiciosBarrioPrivado.Enumeracion.CategoriaServicio;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -16,7 +17,7 @@ public class Trabajo {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
     @Temporal(TemporalType.DATE)
-    private Date fecha;
+    private LocalDate fecha;
 
     private Boolean finalizado;
     @ManyToOne
@@ -34,11 +35,11 @@ public class Trabajo {
     private Integer calificacion;
 
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
