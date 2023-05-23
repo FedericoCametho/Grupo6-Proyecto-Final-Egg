@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="/fragments/head :: head" </head>
+<head th:replace="/fragments/head :: head"> </head>
 
 <body>
-<header th:replace="/fragments/header :: header" </header>
+<header th:replace="/fragments/header :: header"> </header>
 <div class="container-fluid contenedor">
   <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError">
     <div class="card-body">
@@ -26,11 +26,13 @@
     </div>
 
     <div class="form-group my-3 campo">
-      <input type="email" class="form-control" name="email" placeholder="EMAIL">
+      <label for="email">Email</label>
+      <input type="email" class="form-control" name="email" id="email" placeholder="EMAIL">
     </div>
 
     <div class="form-group my-3 campo">
-      <input type="password" class="form-control" name="password" placeholder="CONTRASEÑA">
+      <label for="password">Contraseña</label>
+      <input type="password" class="form-control" name="password" id="password" placeholder="CONTRASEÑA">
     </div>
     <button type="submit" class="btn btn-primary mt-3 botones">Ingresar</button>
   </form>

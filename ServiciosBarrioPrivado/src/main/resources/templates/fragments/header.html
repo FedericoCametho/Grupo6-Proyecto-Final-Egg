@@ -20,11 +20,11 @@
 
 
 
-            <!--            <div class="text-end" sec:authorize="isAuthenticated()">-->
-            <!--                <button type="button" class="btn btn-outline-light me-2 botones"><a th:href="@{/}" class="nav-link px-2 text-secondary" style="color:#d8e3e9" >Perfil</a></button> &lt;!&ndash;TODO llenar ruta th:href="@{/}&ndash;&gt;-->
-            <!--                <button type="button" class="btn btn-warning botones"><a th:href="@{/logout}" class="nav-link px-2 text-secondary" style="color:#d8e3e9" >Cerrar Sesión</a></button>-->
-            <!--            </div>-->
-            <div class="text-end" sec:authorize!="isAuthenticated()">
+                        <div class="text-end" th:if="${session.usuariosession!=null}">
+                            <button type="button" class="btn btn-outline-light me-2 botones"><a th:href="@{/}" class="nav-link px-2 text-secondary" style="color:#d8e3e9" >Perfil</a></button>
+                            <button type="button" class="btn btn-warning botones"><a th:href="@{/logout}" class="nav-link px-2 text-secondary" style="color:#d8e3e9" >Cerrar Sesión</a></button>
+                        </div>
+            <div class="text-end" th:if="${session.usuariosession==null}">
                 <button type="button" class="btn btn-outline-light me-2 botones"><a th:href="@{/login}" style="color:#d8e3e9"  class="nav-link px-2 text-secondary">Iniciar Sesión</a></button>
                 <button type="button" class="btn btn-warning botones"><a th:href="@{/registrar}" style="color:#d8e3e9" class="nav-link px-2 text-secondary">Registrarse</a></button>
             </div>
