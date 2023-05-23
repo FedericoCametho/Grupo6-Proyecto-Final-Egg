@@ -59,7 +59,18 @@
             </button>
         </div>
 
-
+        <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError" >
+            <div class="card-body">
+                <h5 class="card-title">Error!</h5>
+                <p class="card-text" th:text="${error}"></p>
+            </div>
+        </div>
+        <div th:if="${exito != null}" class="card text-white bg-success mb-3 mt-3 mensajeExito" >
+            <div class="card-body">
+                <h5 class="card-title">Exito!</h5>
+                <p class="card-text" th:text="${exito}"></p>
+            </div>
+        </div>
         <!-- Marketing messaging and featurettes
         ================================================== -->
         <!-- Wrap the rest of the page in another container to center all the content. -->
@@ -75,13 +86,13 @@
                     <p></p>
                     <p><a class="btn btn-secondary botones" th:href="@{/usuario/listar}">Ver usuarios &raquo;</a></p>
                 </div><!-- /.col-lg-4 -->
-                <div class="col-lg-4" sec:authorize="hasAnyRole('USER' ,'ADMIN')">
+                <div class="col-lg-4"  sec:authorize="hasAnyRole('USER' ,'ADMIN')">
                     <img class="rounded-image" src="https://drive.google.com/uc?id=1cmb9ITlL4Pf2AUEVMKFvTAsogeBpRKpq" alt="proveedor">
                     <h2 class="fw-normal">Listado de Proveedores</h2>
                     <p></p>
                     <p><a class="btn btn-secondary botones" th:href="@{/proveedor/listar}">View details &raquo;</a></p>
                 </div><!-- /.col-lg-4 -->
-                <div class="col-lg-4" sec:authorize="hasAnyRole('PROVEEDOR' ,'ADMIN')">
+                <div class="col-lg-4"  sec:authorize="hasAnyRole('PROVEEDOR' ,'ADMIN')">
                     <img class="rounded-image" src="https://drive.google.com/uc?id=1i0RZhyOdMk0bzUmcqxev0AOnXlhSuH8a" alt="trabajos" style="background-color: lightgray">
                     <h2 class="fw-normal">Listado de Trabajos</h2>
                     <p></p>

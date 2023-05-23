@@ -28,15 +28,15 @@ public class PortalControlador {
         return "registro_bifurcation";
     }
 
-    @GetMapping("/login-proveedor")
-    public String loginProveedor(@RequestParam(required = false) String error, ModelMap modelo){
-        if (error != null){
-            modelo.put("error", "Usuario o contraseña invalida");
-        }
-        return "login_proveedor";
-    }
+//    @GetMapping("/login-proveedor")
+//    public String loginProveedor(@RequestParam(required = false) String error, ModelMap modelo){
+//        if (error != null){
+//            modelo.put("error", "Usuario o contraseña invalida");
+//        }
+//        return "login_proveedor";
+//    }
 
-    @GetMapping("/login-usuario")
+    @GetMapping("/login-usuario-proveedor")
     public String loginUsuario(@RequestParam(required = false) String error, ModelMap modelo){
         if (error != null){
             modelo.put("error", "Usuario o contraseña invalida");
@@ -46,7 +46,15 @@ public class PortalControlador {
 
     @PostMapping("/logincheck")
     public String loginCheck(){
-        return "inicio";
+        return "index";
+    }
+
+
+    @GetMapping("/testLogin")
+    public String testAfterLogin(ModelMap modelo){
+        modelo.put("exito", "usuario Loggeado exitosamente");
+        modelo.put("Error", "Usuario no loggeado");
+        return "index";
     }
 
 }

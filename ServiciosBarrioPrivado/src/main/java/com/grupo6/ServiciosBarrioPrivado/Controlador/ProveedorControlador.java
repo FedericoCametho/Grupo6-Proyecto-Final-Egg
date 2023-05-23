@@ -1,20 +1,20 @@
 package com.grupo6.ServiciosBarrioPrivado.Controlador;
 
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Proveedor;
-import com.grupo6.ServiciosBarrioPrivado.Entidad.Usuario;
+
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.CategoriaServicio;
 import com.grupo6.ServiciosBarrioPrivado.Excepciones.MiException;
 import com.grupo6.ServiciosBarrioPrivado.Servicio.ProveedorServicio;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.Nullable;
+
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @Controller
 @RequestMapping("/proveedor")
