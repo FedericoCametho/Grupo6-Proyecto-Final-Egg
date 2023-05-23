@@ -2,24 +2,15 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
-  <title>Lista de trabajos</title>
+  <title>Modificar Trabajo</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-  <link rel="stylesheet" href="/css/index.css">
+  <link rel="stylesheet" href="/static/css/mod_usuario.css">
   <style>
-    .formulario{
-      margin: auto;
-      display: flex;
-      background-color: whitesmoke;
-      padding: 10px 20px 10px 20px;
-      border-radius: 10px;
-      text-align: left;
+    .letra{
+      font-size: x-large;
+      color: whitesmoke;
     }
 
-    .botones{
-      background-color: #8282d4;
-      width: 100px;
-      margin: auto;
-    }
     img{
       width: 70px;
       height: 70px;
@@ -27,22 +18,55 @@
       border-radius: 100px;
       background-color: #8282d4;
     }
-    .table{
+
+
+
+    .formulario{
+      width: 500px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
       background-color: whitesmoke;
+      padding: 20px 50px 20px 50px;
+      border-radius: 10px;
+      text-align: center;
     }
-    a{
-      font-weight: bolder;
+
+    .mensajeError{
+      text-align: center;
+      width: 150px;
+      margin: auto;
+
+
+    }
+    .mensajeExito{
+      text-align: center;
+      width: 150px;
+      margin: auto;
+    }
+
+    .botones{
+      background-color: #8282d4;
+      width: 100px;
+      margin: auto;
+    }
+
+    input{
+      text-align: center;
+    }
+
+    .campo{
+      width: 50%;
+      align-items: center;
+      margin: auto;
     }
     header{
       max-height: 120px;
     }
-    .letra{
-      font-size: x-large;
-      color: whitesmoke;
-    }
   </style>
 </head>
 <body>
+
 <header class="p-3 text-bg-dark">
   <div class="header-container">
     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -79,81 +103,89 @@
 </header>
 
 
+<div class="container-fluid m-5 contenedor">
+
+  <form class="formulario" th:action="@{/trabajo/modificar/__${trabajo.id}__}"  method="POST">
 
 
-<div class="container m-5" >
+    <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError" >
+      <div class="card-body">
+        <h5 class="card-title">Error 👎</h5>
+        <p class="card-text" th:text="${error}"></p>
+      </div>
+    </div>
+    <div th:if="${exito != null}" class="card text-white bg-success mb-3 mt-3 mensajeExito" >
+      <div class="card-body">
+        <h5 class="card-title">Exito!</h5>
+        <p class="card-text" th:text="${exito}"></p>
+      </div>
+    </div>
+    <h2 class="mb-2">Registrar un Trabajo</h2>
+    <label for="fecha"> Seleccione una fecha</label>
+    <div class="form-group my-3 campo">
+      <input type="date" class="form-control" name="fecha" id="fecha" th:value="${trabajo.fecha}">
+    </div>
+    <div class="form-group my-3 seleccion">
 
-  <form class="formulario" th:action="@{/trabajo/listarPorCategoria}"  method="POST">
-    <div class="form-group my-3">
-      <select name="categoria" id="categoria-filtrar">
+      <select name="categoria">
 
-        <option>Todos</option>
+        <option>Seleccionar Categoria</option>
 
         <option th:each="cat : ${categoriaServicio}"
-                th:value="${cat.toString()}"
+                th:value="${cat}"
                 th:text="${cat.toString()}"
-                th:selected="${categoriaSeleccionada == cat}"
-        />
+                th:selected="${trabajo.categoria == cat}"
+        >
       </select>
-      <button type="submit" class="botones">Filtrar</button>
+    </div>
+    <div class="form-group my-3 seleccion">
+
+      <select name="idCliente">
+
+        <option>Seleccionar Cliente</option>
+
+        <option th:each="cli : ${clientes}"
+                th:value="${cli.getId()}"
+                th:text="${cli.getNombreCompleto()}"
+                th:selected="${trabajo.cliente == cli}"
+        >
+      </select>
     </div>
 
+    <div class="form-group my-3 seleccion">
+
+      <select name="idProveedor">
+
+        <option>Seleccionar Proveedor</option>
+
+        <option th:each="pro : ${proveedores}"
+                th:value="${pro.getId()}"
+                th:text="${pro.getNombreCompleto()}"
+                th:selected="${trabajo.proveedor == pro}"
+        >
+      </select>
+    </div>
+    <label for="detalles"> Ingrese detalles del trabajo solicitado</label>
+    <div class="form-group my-3 campo">
+      <input type="text" class="form-control" name="detalles" id="detalles" th:value="${trabajo.detalles}">
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3 botones">Modificar</button>
   </form>
 
-  <table class="table">
-    <thead>
-    <tr>
-      <th scope="col">Fecha</th>
-      <th scope="col">Cliente</th>
-      <th scope="col">Proveedor</th>
-      <th scope="col">Tipo de Servicio</th>
-      <th scope="col">Detalles</th>
-<!--      <th scope="col">Estado</th>-->
-<!--      <th  scope="col">Comentarios</th>-->
-<!--      <th  scope="col">Calificacion</th>-->
-      <th></th>
-      <th></th>
-
-    </tr>
-    </thead>
-    <tbody th:each="tra : ${trabajos}">
-      <tr>
-        <th scope="row" th:text="${tra.fecha.toString()}"></th>
-        <td th:text="${tra.cliente.getNombreCompleto()}"></td>
-        <td th:text="${tra.proveedor.getNombreCompleto()}"></td>
-        <td th:text="${tra.categoria}"></td>
-        <td th:text="${tra.detalles}"></td>
-<!--        <td th:if="${tra.finalizado}" th:text="Finalizado"></td>-->
-<!--        <td th:if="${tra.finalizado}" th:text="${tra.comentario}"></td>-->
-<!--        <td th:if="${tra.finalizado}" th:text="${tra.calificacion}"></td>-->
-        <td>
-          <a th:href= "@{/trabajo/modificar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Modificar </a>
-        </td>
-        <td>
-          <a th:href= "@{/trabajo/borrar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Borrar </a>
-        </td>
-
-      </tr>
-
-    </tbody>
-  </table>
 
   <section class=" text-center container">
-  <div class="row mt-3">
-
-    <div class="divVolver">
-      <a th:href="@{/}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+    <div class="row mt-3">
+      <div class="divVolver">
+        <a th:href="@{/proveedor/listar}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+      </div>
     </div>
-    <div class="divCrear">
-      <a th:href="@{/trabajo/registrar}" class="btn btn-secondary my-2 botonVolver botones">Registrar un trabajo</a>
-    </div>
-  </div>
-
-
-
   </section>
-
 </div>
+
+
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 </body>
 </html>

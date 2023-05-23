@@ -2,43 +2,78 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
-  <title>Lista de trabajos</title>
+  <title>Registrar Trabajo</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-  <link rel="stylesheet" href="/css/index.css">
+  <link rel="stylesheet" href="/static/css/registro_proveedor.css">
   <style>
     .formulario{
+      width: 40%;
       margin: auto;
-      display: flex;
       background-color: whitesmoke;
-      padding: 10px 20px 10px 20px;
-      border-radius: 10px;
-      text-align: left;
+    }
+
+
+    input{
+      text-align: center;
+
+    }
+
+    .campo{
+      width: 60%;
+      margin: auto;
+
+    }
+
+    .seleccion{
+      text-align: center;
     }
 
     .botones{
       background-color: #8282d4;
-      width: 100px;
-      margin: auto;
+
     }
+
+    .boton{
+      background-color: #8282d4;
+
+    }
+
+
+
+    h2{
+      text-align: center;
+    }
+
+    .mensajeError{
+      text-align: center;
+      width: 200px;
+      display: inline-block;
+
+    }
+    .mensajeExito{
+      text-align: center;
+      width: 200px;
+      display: inline-block;
+
+    }
+
     img{
       width: 70px;
       height: 70px;
-      padding-bottom: 0px;
       border-radius: 100px;
       background-color: #8282d4;
     }
-    .table{
-      background-color: whitesmoke;
-    }
-    a{
-      font-weight: bolder;
-    }
-    header{
-      max-height: 120px;
-    }
+
     .letra{
       font-size: x-large;
       color: whitesmoke;
+    }
+
+    .contenedor{
+      text-align: center;
+    }
+    header{
+      max-height: 120px;
     }
   </style>
 </head>
@@ -78,82 +113,86 @@
   </div>
 </header>
 
+<div class="container-fluid contenedor">
 
+  <form class="shadow p-3 mb-5 bg-body-tertiary rounded formulario" th:action="@{/trabajo/registro}"  method="POST">
 
+    <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError" >
+      <div class="card-body">
+        <h5 class="card-title">Error 👎</h5>
+        <p class="card-text" th:text="${error}"></p>
+      </div>
+    </div>
+    <div th:if="${exito != null}" class="card text-white bg-success mb-3 mt-3 mensajeExito" >
+      <div class="card-body">
+        <h5 class="card-title">Exito!</h5>
+        <p class="card-text" th:text="${exito}"></p>
+      </div>
+    </div>
+    <h2 class="mb-2">Registrar un Trabajo</h2>
+    <label for="fecha"> Seleccione una fecha</label>
+    <div class="form-group my-3 campo">
+      <input type="date" class="form-control" name="fecha" id="fecha">
+    </div>
+    <div class="form-group my-3 seleccion">
 
-<div class="container m-5" >
+      <select name="categoria">
 
-  <form class="formulario" th:action="@{/trabajo/listarPorCategoria}"  method="POST">
-    <div class="form-group my-3">
-      <select name="categoria" id="categoria-filtrar">
-
-        <option>Todos</option>
+        <option>Seleccionar Categoria</option>
 
         <option th:each="cat : ${categoriaServicio}"
-                th:value="${cat.toString()}"
+                th:value="${cat}"
                 th:text="${cat.toString()}"
-                th:selected="${categoriaSeleccionada == cat}"
-        />
+        >
       </select>
-      <button type="submit" class="botones">Filtrar</button>
+    </div>
+    <div class="form-group my-3 seleccion">
+
+      <select name="idCliente">
+
+        <option>Seleccionar Cliente</option>
+
+        <option th:each="cli : ${clientes}"
+                th:value="${cli.getId()}"
+                th:text="${cli.getNombreCompleto()}"
+        >
+      </select>
     </div>
 
+    <div class="form-group my-3 seleccion">
+
+      <select name="idProveedor">
+
+        <option>Seleccionar Proveedor</option>
+
+        <option th:each="pro : ${proveedores}"
+                th:value="${pro.getId()}"
+                th:text="${pro.getNombreCompleto()}"
+        >
+      </select>
+    </div>
+    <label for="detalles"> Ingrese detalles del trabajo solicitado</label>
+    <div class="form-group my-3 campo">
+      <input type="text" class="form-control" name="detalles" id="detalles">
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3 boton">Registrar</button>
   </form>
 
-  <table class="table">
-    <thead>
-    <tr>
-      <th scope="col">Fecha</th>
-      <th scope="col">Cliente</th>
-      <th scope="col">Proveedor</th>
-      <th scope="col">Tipo de Servicio</th>
-      <th scope="col">Detalles</th>
-<!--      <th scope="col">Estado</th>-->
-<!--      <th  scope="col">Comentarios</th>-->
-<!--      <th  scope="col">Calificacion</th>-->
-      <th></th>
-      <th></th>
 
-    </tr>
-    </thead>
-    <tbody th:each="tra : ${trabajos}">
-      <tr>
-        <th scope="row" th:text="${tra.fecha.toString()}"></th>
-        <td th:text="${tra.cliente.getNombreCompleto()}"></td>
-        <td th:text="${tra.proveedor.getNombreCompleto()}"></td>
-        <td th:text="${tra.categoria}"></td>
-        <td th:text="${tra.detalles}"></td>
-<!--        <td th:if="${tra.finalizado}" th:text="Finalizado"></td>-->
-<!--        <td th:if="${tra.finalizado}" th:text="${tra.comentario}"></td>-->
-<!--        <td th:if="${tra.finalizado}" th:text="${tra.calificacion}"></td>-->
-        <td>
-          <a th:href= "@{/trabajo/modificar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Modificar </a>
-        </td>
-        <td>
-          <a th:href= "@{/trabajo/borrar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Borrar </a>
-        </td>
-
-      </tr>
-
-    </tbody>
-  </table>
 
   <section class=" text-center container">
-  <div class="row mt-3">
-
-    <div class="divVolver">
-      <a th:href="@{/}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+    <div class="row mt-2">
+      <div class="divVolver">
+        <a th:href="@{/}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+      </div>
     </div>
-    <div class="divCrear">
-      <a th:href="@{/trabajo/registrar}" class="btn btn-secondary my-2 botonVolver botones">Registrar un trabajo</a>
-    </div>
-  </div>
-
-
-
   </section>
-
 </div>
+
+
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 </body>
 </html>

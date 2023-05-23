@@ -12,11 +12,16 @@ import com.grupo6.ServiciosBarrioPrivado.Repositorio.ProveedorRepositorio;
 import com.grupo6.ServiciosBarrioPrivado.Repositorio.TrabajoRepositorio;
 import com.grupo6.ServiciosBarrioPrivado.Repositorio.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,8 +39,16 @@ public class TrabajoServicio {
     private ProveedorRepositorio proveedorRepositorio;
 
     @Transactional
-    public void registrar(LocalDate fecha, String idCliente, String idProveedor, CategoriaServicio categoria,
-                          String detalles) throws MiException {
+    public void registrar(String fechaString, String idCliente, String idProveedor, CategoriaServicio categoria,
+                          String detalles) throws MiException, ParseException {
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
+        Date fecha;
+        try {
+            fecha = formatoFecha.parse(fechaString);
+
+        }catch(ParseException ex){
+            throw ex;
+        }
 
         this.validar(fecha, idCliente, idProveedor, categoria);
 
@@ -63,9 +76,17 @@ public class TrabajoServicio {
 
 
     @Transactional
-    public void modificar(String id, LocalDate fecha, String idCliente, String idProveedor, CategoriaServicio categoria,
-                          String detalles) throws MiException{
+    public void modificar(String id, String fechaString, String idCliente, String idProveedor, CategoriaServicio categoria,
+                          String detalles) throws MiException, ParseException{
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
 
+        Date fecha;
+        try {
+            fecha = formatoFecha.parse(fechaString);
+
+        }catch(ParseException ex){
+            throw ex;
+        }
         this.validar(fecha, idCliente, idProveedor, categoria);
 
         Optional<Trabajo> respuestaTrabajo = trabajoRepositorio.findById(id);
@@ -175,9 +196,11 @@ public class TrabajoServicio {
         return trabajoRepositorio.getOne(id);
     }
 
-    public void validar(LocalDate fecha,String idCliente,String idProveedor,CategoriaServicio categoria) throws MiException {
+    public void validar(Date fecha,String idCliente,String idProveedor,CategoriaServicio categoria) throws MiException {
 
-        if (fecha == null || fecha.isBefore(LocalDate.now())) {
+        LocalDate fechaLocalDate = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        if (fecha == null || fechaLocalDate.isBefore(LocalDate.now())) {
             throw new MiException("La fecha no puede ser nula ni puede ser anterior a la fecha de hoy");
         }
 

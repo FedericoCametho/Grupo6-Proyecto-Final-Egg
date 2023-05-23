@@ -17,7 +17,7 @@ public class Trabajo {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
     @Temporal(TemporalType.DATE)
-    private LocalDate fecha;
+    private Date fecha;
 
     private Boolean finalizado;
     @ManyToOne
@@ -34,12 +34,23 @@ public class Trabajo {
     // para calificar post realizacion de trabajo, inicialmente en 5
     private Integer calificacion;
 
-
-    public LocalDate getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDate fecha) {
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setFinalizado(Boolean finalizado) {
+        this.finalizado = finalizado;
+    }
+
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
@@ -47,7 +58,7 @@ public class Trabajo {
         return finalizado;
     }
 
-    public void setFinalizado(Boolean finalizado) {
+    public void setFinalizado(boolean finalizado) {
         this.finalizado = finalizado;
     }
 

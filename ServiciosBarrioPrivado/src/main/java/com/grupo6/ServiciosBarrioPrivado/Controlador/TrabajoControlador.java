@@ -13,8 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -30,21 +32,21 @@ public class TrabajoControlador {
     @Autowired
     private UsuarioServicio usuarioServicio;
 
-    @GetMapping("/registrar/{idCliente}")
-    public String registrar(@PathVariable String idCliente, ModelMap modelo){
+    @GetMapping("/registrar")
+    public String registrar(ModelMap modelo){
         List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
         modelo.addAttribute("categoriaServicio", categoriaServicio);
         List<Proveedor> proveedores = proveedorServicio.listarProveedores();
-        Usuario cliente = usuarioServicio.getUsuarioById(idCliente);
-        modelo.addAttribute("cliente", cliente);
+        List<Usuario> clientes = usuarioServicio.listarUsuarios();
+        modelo.addAttribute("clientes", clientes);
         modelo.addAttribute("proveedores", proveedores);
         return "registro_trabajo";
     }
 
 
     @PostMapping("/registro")
-    public String registroTrabajo(@RequestParam LocalDate fecha,@RequestParam String idCliente,@RequestParam String idProveedor,
-                                  @RequestParam CategoriaServicio categoria,@RequestParam String detalles, ModelMap modelo){
+    public String registroTrabajo(@RequestParam String fecha, @RequestParam String idCliente, @RequestParam String idProveedor,
+                                  @RequestParam CategoriaServicio categoria, @RequestParam String detalles, ModelMap modelo){
         try{
             trabajoServicio.registrar(fecha, idCliente, idProveedor, categoria, detalles);
             return "index";
@@ -55,11 +57,21 @@ public class TrabajoControlador {
             List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
             modelo.addAttribute("categoriaServicio", categoriaServicio);
             List<Proveedor> proveedores = proveedorServicio.listarProveedores();
-            Usuario cliente = usuarioServicio.getUsuarioById(idCliente);
-            modelo.addAttribute("cliente", cliente);
+            List<Usuario> clientes = usuarioServicio.listarUsuarios();
+            modelo.addAttribute("clientes", clientes);
             modelo.addAttribute("proveedores", proveedores);
 
-            return "registro_proveedor";
+            return "registro_trabajo";
+        }catch (ParseException e){
+            modelo.put("error", e.getMessage());
+
+            List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
+            modelo.addAttribute("categoriaServicio", categoriaServicio);
+            List<Proveedor> proveedores = proveedorServicio.listarProveedores();
+            List<Usuario> clientes = usuarioServicio.listarUsuarios();
+            modelo.addAttribute("clientes", clientes);
+            modelo.addAttribute("proveedores", proveedores);
+            return "registro_trabajo";
         }
     }
 
@@ -71,14 +83,16 @@ public class TrabajoControlador {
         modelo.addAttribute("categoriaServicio", categoriaServicio);
         List<Proveedor> proveedores = proveedorServicio.listarProveedores();
         modelo.addAttribute("proveedores", proveedores);
+        List<Usuario> clientes = usuarioServicio.listarUsuarios();
+        modelo.addAttribute("clientes", clientes);
         return "modificar_trabajo";
     }
 
 
     @PostMapping("/modificar/{id}")
-    public String modificar(@PathVariable String id,@RequestParam LocalDate fecha,@RequestParam String idCliente,
+    public String modificar(@PathVariable String id,@RequestParam String fecha,@RequestParam String idCliente,
                             @RequestParam String idProveedor, @RequestParam CategoriaServicio categoria,
-                            @RequestParam String detalles, ModelMap modelo) throws MiException{
+                            @RequestParam String detalles, ModelMap modelo) throws MiException, ParseException{
         try{
             trabajoServicio.modificar(id,fecha, idCliente, idProveedor, categoria, detalles);
 
@@ -86,6 +100,10 @@ public class TrabajoControlador {
             modelo.addAttribute("proveedores", proveedores);
             List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
             modelo.addAttribute("categoriaServicio", categoriaServicio);
+            List<Usuario> clientes = usuarioServicio.listarUsuarios();
+            modelo.addAttribute("clientes", clientes);
+            List<Trabajo> trabajos = trabajoServicio.listarTrabajo();
+            modelo.addAttribute("trabajos", trabajos);
 
             return "trabajo_lista";
 
@@ -97,6 +115,8 @@ public class TrabajoControlador {
             modelo.addAttribute("categoriaServicio", categoriaServicio);
             List<Proveedor> proveedores = proveedorServicio.listarProveedores();
             modelo.addAttribute("proveedores", proveedores);
+            List<Usuario> clientes = usuarioServicio.listarUsuarios();
+            modelo.addAttribute("clientes", clientes);
             modelo.put("error", ex.getMessage());
 
             return "modificar_trabajo";
@@ -129,6 +149,7 @@ public class TrabajoControlador {
         modelo.addAttribute("categoriaServicio", categoriaServicio);
         List<Proveedor> proveedores = proveedorServicio.listarProveedores();
         modelo.addAttribute("proveedores", proveedores);
+
         return "trabajo_lista";
     }
 
