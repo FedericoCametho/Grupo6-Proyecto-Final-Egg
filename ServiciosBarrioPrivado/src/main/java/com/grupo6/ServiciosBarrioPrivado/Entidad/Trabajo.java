@@ -6,6 +6,7 @@ import com.grupo6.ServiciosBarrioPrivado.Enumeracion.CategoriaServicio;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -33,9 +34,20 @@ public class Trabajo {
     // para calificar post realizacion de trabajo, inicialmente en 5
     private Integer calificacion;
 
-
     public Date getFecha() {
         return fecha;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setFinalizado(Boolean finalizado) {
+        this.finalizado = finalizado;
     }
 
     public void setFecha(Date fecha) {
@@ -46,7 +58,7 @@ public class Trabajo {
         return finalizado;
     }
 
-    public void setFinalizado(Boolean finalizado) {
+    public void setFinalizado(boolean finalizado) {
         this.finalizado = finalizado;
     }
 
