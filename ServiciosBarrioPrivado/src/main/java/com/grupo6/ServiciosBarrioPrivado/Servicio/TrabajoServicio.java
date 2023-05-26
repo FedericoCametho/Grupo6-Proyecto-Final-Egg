@@ -112,14 +112,31 @@ public class TrabajoServicio {
             trabajo.setCliente(cliente);
             trabajo.setProveedor(proveedor);
             trabajo.setCategoria(categoria);
-
+           
             trabajoRepositorio.save(trabajo);
         }
 
     }
 
     @Transactional
-    public void calificarTrabajo(String id, String comentario, Integer calificacion)throws MiException{
+    public void calificar(String id, Integer calificacion)throws MiException{
+        if (id == null || id.isEmpty()){
+            throw new MiException("El id ingresado no puede ser nulo o estar vacio");
+        }
+        Optional<Trabajo> respuesta = trabajoRepositorio.findById(id);
+        if(respuesta.isPresent()){
+            Trabajo trabajo = respuesta.get();
+
+            if(trabajo.getFinalizado()) {
+                trabajo.setCalificacion(calificacion);
+
+                trabajoRepositorio.save(trabajo);
+            }
+        }
+    }
+
+    @Transactional
+    public void comentar(String id, String comentario)throws MiException{
         if (id == null || id.isEmpty()){
             throw new MiException("El id ingresado no puede ser nulo o estar vacio");
         }
@@ -129,16 +146,14 @@ public class TrabajoServicio {
 
             if(trabajo.getFinalizado()) {
                 trabajo.setComentario(comentario);
-                trabajo.setCalificacion(calificacion);
-
 
                 trabajoRepositorio.save(trabajo);
             }
         }
-    }
-
+    }    
+    
     @Transactional
-    public void finalizarTrabajo(String id) {
+    public void finalizar(String id) {
         Optional<Trabajo> respuesta = trabajoRepositorio.findById(id);
         if(respuesta.isPresent()){
             Trabajo trabajo = respuesta.get();

@@ -22,8 +22,8 @@
       <th scope="col">Tipo de Servicio</th>
       <th scope="col">Detalles</th>
       <th scope="col">Estado</th>
-      <th th:if="${tra.finalizado}" scope="col">Comentarios</th>
-      <th th:if="${tra.finalizado}" scope="col">Calificacion</th>
+      <th scope="col">Comentario</th>
+      <th scope="col">Calificacion</th>
       <th></th>
       <th></th>
 
@@ -36,11 +36,20 @@
       <td th:text="${tra.proveedor.getNombreCompleto()}"></td>
       <td th:text="${tra.categoria}"></td>
       <td th:text="${tra.detalles}"></td>
-      <td th:text="${tra.categoria}"></td>
-      <td th:if="${tra.finalizado}" th:text="${tra.comentario}"></td>
-      <td th:if="${tra.finalizado}" th:text="${tra.calificacion}"></td>
+      <td th:text="${tra.finalizado}"></td>
+      <td th:if="${tra.comentario}" th:text="${tra.comentario}"></td>
+      <td th:if="${tra.calificacion}" th:text="${tra.calificacion}"></td>
+      <td>
+        <a th:href= "@{/trabajo/comentar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Comentar </a>
+      </td>
+      <td>
+        <a th:href= "@{/trabajo/calificar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Calificar </a>
+      </td>  
       <td>
         <a th:href= "@{/trabajo/modificar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Modificar </a>
+      </td>
+      <td>
+        <a th:href= "@{/trabajo/finalizar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Finalizar </a>
       </td>
       <td>
         <a th:href= "@{/trabajo/borrar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Borrar </a>

@@ -28,7 +28,7 @@ public class Trabajo {
     private CategoriaServicio categoria ;
 
     private String detalles;
-
+    
     // Para comentarios sobre el trabajo realizado, inicialmente en blanco
     private String comentario;
     // para calificar post realizacion de trabajo, inicialmente en 5

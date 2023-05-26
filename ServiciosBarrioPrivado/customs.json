@@ -1,0 +1,14 @@
+{
+    "elements": {
+        "rect": {}
+    },
+    "attributes": {
+        "focusable": {},
+        "th:replace": {
+            "context": "head"
+        },
+        "preserveaspectratio": {
+            "context": "img"
+        }
+    }
+}
