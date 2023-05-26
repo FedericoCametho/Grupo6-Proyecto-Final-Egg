@@ -19,18 +19,21 @@
 }
 
 .letra{
-    font-size: xx-large;
+    font-size: x-large;
     color: whitesmoke;
 }
 
 img{
-    width: 100px;
-    height: 100px;
+    width: 70px;
+    height: 70px;
     padding-bottom: 0px;
     border-radius: 100px;
     background-color: #8282d4;
 }
-
+.rounded-image{
+    width: 150px;
+    height: 150px
+}
 .tarjeta1{
     background-color: whitesmoke;
     margin-left: 25%;
@@ -55,4 +58,7 @@ img{
 .tarjeta2:hover{
     transform: translateY(-10%);
 
+}
+header{
+    max-height: 120px;
 }

@@ -1,11 +1,11 @@
 .letra{
-    font-size: xx-large;
+    font-size: x-large;
     color: whitesmoke;
 }
 
 img{
-    width: 100px;
-    height: 100px;
+    width: 70px;
+    height: 70px;
     padding-bottom: 0px;
     border-radius: 100px;
     background-color: #8282d4;
@@ -50,4 +50,7 @@ input{
     width: 50%;
     align-items: center;
     margin: auto;
+}
+header{
+    max-height: 120px;
 }

@@ -51,18 +51,21 @@ h3{
 }
 
 img{
-    width: 100px;
-    height: 100px;
+    width: 70px;
+    height: 70px;
     padding-bottom: 0px;
     border-radius: 100px;
     background-color: #8282d4;
 }
 
 .letra{
-    font-size: xx-large;
+    font-size: x-large;
     color: whitesmoke;
 }
 
 .contenedor{
     text-align: center;
+}
+header{
+    max-height: 120px;
 }
