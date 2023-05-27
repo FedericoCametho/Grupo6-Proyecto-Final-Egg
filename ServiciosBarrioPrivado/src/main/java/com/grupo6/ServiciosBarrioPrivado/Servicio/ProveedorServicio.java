@@ -1,6 +1,7 @@
 package com.grupo6.ServiciosBarrioPrivado.Servicio;
 
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Proveedor;
+import com.grupo6.ServiciosBarrioPrivado.Entidad.Trabajo;
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Usuario;
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.CategoriaServicio;
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.Rol;
@@ -20,12 +21,16 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProveedorServicio implements UserDetailsService {
 
     @Autowired
     private ProveedorRepositorio proveedorRepositorio;
+
+    @Autowired
+    private TrabajoServicio trabajoServicio;
 
     @Transactional
     public void registrar(String nombre, String apellido, String email, String password, String password2, String telefono,
@@ -38,6 +43,7 @@ public class ProveedorServicio implements UserDetailsService {
         proveedor.setNombre(nombre);
         proveedor.setApellido(apellido);
         proveedor.setEmail(email);
+        proveedor.setTelefono(telefono);
         proveedor.setPassword(new BCryptPasswordEncoder().encode(password));
         proveedor.setRol(Rol.PROVEEDOR);
         proveedor.setCategoriaServicio(categoria);
@@ -47,6 +53,39 @@ public class ProveedorServicio implements UserDetailsService {
     }
 
 
+    @Transactional
+    public void modificar(String id, String nombre, String apellido, String telefono,
+                          CategoriaServicio categoria, Integer precioPorHora) throws MiException{
+        this.validarParcial(nombre,apellido,telefono, categoria, precioPorHora);
+
+        Optional<Proveedor> respuesta = proveedorRepositorio.findById(id);
+
+        if (respuesta.isPresent()){
+            Proveedor proveedor = respuesta.get();
+
+            proveedor.setNombre(nombre);
+            proveedor.setApellido(apellido);
+            proveedor.setTelefono(telefono);
+            proveedor.setCategoriaServicio(categoria);
+            proveedor.setPrecioPorHora(precioPorHora);
+
+            proveedorRepositorio.save(proveedor);
+        }
+
+    }
+
+    @Transactional
+    public void eliminarProveedor(String id)throws MiException{
+        if (id == null || id.isEmpty()){
+            throw new MiException("El id ingresado no puede ser nulo o estar vacio");
+        }
+        Optional<Proveedor> respuesta = proveedorRepositorio.findById(id);
+        if(respuesta.isPresent()){
+            Proveedor proveedor = respuesta.get();
+            proveedorRepositorio.delete(proveedor);
+        }
+    }
+
     // METODOS DE CONSULTA
 
     public List<Proveedor> listarProveedores(){
@@ -55,8 +94,20 @@ public class ProveedorServicio implements UserDetailsService {
         return proveedores;
     }
 
+    public List<Proveedor> listarPorCategoria(CategoriaServicio categoria){
+        List<Proveedor> proveedores = new ArrayList();
+        proveedores = proveedorRepositorio.buscarPorCategoria(categoria);
+        return proveedores;
+    }
+
     public Proveedor getProveedorById(String id){
         return proveedorRepositorio.getOne(id);
+    }
+
+
+
+    public List<Trabajo> trabajosDeUnProveedor(String idProveedor) throws MiException{
+        return trabajoServicio.listarPorProveedor(idProveedor);
     }
 
     public void validar(String nombre, String apellido, String email, String password, String password2, String telefono,
@@ -93,6 +144,30 @@ public class ProveedorServicio implements UserDetailsService {
         }
 
     }
+
+    public void validarParcial( String nombre, String apellido, String telefono,
+                        CategoriaServicio categoria, Integer precioPorHora) throws MiException{
+
+        if(nombre.isEmpty() || nombre == null){
+            throw new MiException("El nombre no puede ser nulo o estar vacio");
+        }
+
+        if(apellido.isEmpty() || apellido == null){
+            throw new MiException("El apellido no puede ser nulo o estar vacio");
+        }
+
+        if(telefono.isEmpty() || telefono == null){
+            throw new MiException("El telefono no puede ser nulo o estar vacio");
+        }
+        if(categoria.toString().isEmpty() || categoria == null){
+            throw new MiException("La categoria no puede ser nulo o estar vacio");
+        }
+        if(precioPorHora == null){
+            throw new MiException("El precio por hora no puede ser nulo");
+        }
+
+    }
+
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {

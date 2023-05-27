@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Proveedores</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  <link th:href="@{/css/index.css}" rel="stylesheet" />
+
+</head>
+<body>
+<header th:replace="/fragments/header :: header"> </header>
+
+
+<div class="container m-5" >
+  <form class="formulario" th:action="@{/proveedor/listarPorCategoria}"  method="POST">
+    <div class="form-group my-3">
+      <select name="categoria" id="categoria-filtrar">
+
+        <option>Todos</option>
+
+        <option th:each="cat : ${categoriaServicio}"
+                th:value="${cat.toString()}"
+                th:text="${cat.toString()}"
+                th:selected="${categoriaSeleccionada == cat}"
+        />
+      </select>
+      <button type="submit" class="botones">Filtrar</button>
+    </div>
+
+  </form>
+
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col">Nombre</th>
+      <th scope="col">Apellido</th>
+      <th scope="col">Email</th>
+      <th scope="col">Telefono</th>
+      <th scope="col">Precio Por Hora</th>
+      <th scope="col">Categoria de Servicio</th>
+      <th></th>
+      <th></th>
+
+    </tr>
+    </thead>
+    <tbody th:each="prov : ${proveedores}">
+    <tr>
+      <th scope="row" th:text="${prov.nombre}"></th>
+      <td th:text="${prov.apellido}"></td>
+      <td th:text="${prov.email}"></td>
+      <td th:text="${prov.telefono}"></td>
+      <td th:text="${prov.precioPorHora}"></td>
+      <td th:text="${prov.categoriaServicio.toString()}"></td>
+      <td>
+        <a th:href= "@{/proveedor/modificar/__${prov.id}__}"><i class="fas fa-feather-alt">  </i> Modificar </a>
+      </td>
+      <td>
+        <a th:href= "@{/proveedor/borrar/__${prov.id}__}"><i class="fas fa-feather-alt">  </i> Borrar </a>
+      </td>
+
+    </tr>
+
+    </tbody>
+  </table>
+
+  <section class=" text-center container">
+    <div class="row mt-3">
+      <div class="divVolver">
+        <a th:href="@{/}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
+
+<!-- cards para mostrar a los proveedores con su puntaje y calificacion, 
+con boton para poder contactarlos-->
+
+
+ <div class="row" id="card">        
+     <div th:each="prov : ${proveedores}" class="col-3">
+<div class="card mb-3" style="width: 18rem;">
+    <img src="..." class="card-img-top" alt="...">
+  <div class="card-body" >
+      <p class="card-text" th:text="${prov.nombre + ' ' + prov.apellido}"></p>
+      <p class="card-text" th:text="${prov.categoriaServicio.toString()}"></p>
+      <!--  <p class="card-text"th:text="${prov.trabajo.getComentario()}"></p>
+      <p class="card-text"th:text="${prov.trabajo.getCalificacion()}"></p>
+      
+         <!><!--       aca deberia ir el comentario y puntuacion pero no se de donde tomarlo
+         <p class="card-text" th:text="${}"></p>
+    <p class="card-text" th:text="${}"> </p>    -->
+              <a href="#" class="btn btn-primary botones">Contactar</a>
+
+  </div></div></div>
+
+
+
+
+
+
+</body>
+</html>

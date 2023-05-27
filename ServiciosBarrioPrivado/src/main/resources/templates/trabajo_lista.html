@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de trabajos</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  <link th:href="@{/css/index.css}" rel="stylesheet" />
+
+</head>
+<body>
+<header th:replace="/fragments/header :: header"> </header>
+
+
+<div class="container m-5" >
+
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col">Fecha</th>
+      <th scope="col">Cliente</th>
+      <th scope="col">Proveedor</th>
+      <th scope="col">Tipo de Servicio</th>
+      <th scope="col">Detalles</th>
+      <th scope="col">Estado</th>
+    <!--  <th th:if="${tra.finalizado}" scope="col">Comentarios</th>
+      <th th:if="${tra.finalizado}" scope="col">Calificacion</th>  -->
+      <th></th>
+      <th></th>
+
+    </tr>
+    </thead>
+    <tbody th:each="tra : ${trabajos}">
+    <tr>
+      <th scope="row" th:text="${tra.fecha}"></th>
+      <td th:text="${tra.cliente.getNombreCompleto()}"></td>
+      <td th:text="${tra.proveedor.getNombreCompleto()}"></td>
+      <td th:text="${tra.categoria}"></td>
+      <td th:text="${tra.detalles}"></td>
+      <td th:text="${tra.categoria}"></td>
+      <td th:if="${tra.finalizado}" th:text="${tra.comentario}"></td>
+      <td th:if="${tra.finalizado}" th:text="${tra.calificacion}"></td>
+      <td>
+        <a th:href= "@{/trabajo/modificar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Modificar </a>
+      </td>
+      <td>
+        <a th:href= "@{/trabajo/borrar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Borrar </a>
+      </td>
+
+    </tr>
+
+    </tbody>
+  </table>
+
+  <section class=" text-center container">
+  <div class="row mt-3">
+    <div class="divVolver">
+      <a th:href="@{/}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+    </div>
+  </div>
+  </section>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+
+<!-- cards para mostrar los trabajos cargados con boton para puntuar o calificar-->
+
+<div class="row" id="card">
+  <div th:each="tra : ${trabajos}" class="col-3">
+    <div class="card mb-3" style="width: 18rem;">
+      <img src="..." class="card-img-top" alt="...">
+      <div class="card-body">
+        <p class="card-text" th:text="${tra.fecha}"></p>
+        <p class="card-text" th:text="${tra.categoria.toString()}">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <p class="card-text" th:text="${tra.proveedor.getNombreCompleto()}"></p>
+        <p class="card-text" th:text="${tra.cliente.getNombreCompleto()}"></p>  
+        <p class="card-text" th:text="${tra.detalles}"></p>
+        <a href="#" class="btn btn-primary botones">Calificar</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+</body>
+</html>
