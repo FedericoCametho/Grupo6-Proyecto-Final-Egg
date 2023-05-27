@@ -1,0 +1,64 @@
+.container{
+    padding-top: 5%;
+
+}
+
+.grupobotones{
+
+    background-color: whitesmoke;
+}
+
+.botones{
+    background-color: #8282d4;
+}
+
+
+.row{
+    align-items: center;
+
+}
+
+.letra{
+    font-size: x-large;
+    color: whitesmoke;
+}
+
+img{
+    width: 70px;
+    height: 70px;
+    padding-bottom: 0px;
+    border-radius: 100px;
+    background-color: #8282d4;
+}
+.rounded-image{
+    width: 150px;
+    height: 150px
+}
+.tarjeta1{
+    background-color: whitesmoke;
+    margin-left: 25%;
+    width: 250px;
+    cursor: default;
+    transition: all 400ms ease;
+
+
+}
+.tarjeta2{
+    background-color: blue;
+    margin-left: 5%;
+    width: 250px;
+    cursor: default;
+    transition: all 400ms ease;
+}
+
+.tarjeta1:hover{
+    transform: translateY(-10%);
+
+}
+.tarjeta2:hover{
+    transform: translateY(-10%);
+
+}
+header{
+    max-height: 120px;
+}
