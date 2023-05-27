@@ -7,6 +7,7 @@ import com.grupo6.ServiciosBarrioPrivado.Entidad.Trabajo;
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Usuario;
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.CategoriaServicio;
 
+import com.grupo6.ServiciosBarrioPrivado.Enumeracion.EstadoTrabajo;
 import com.grupo6.ServiciosBarrioPrivado.Excepciones.MiException;
 import com.grupo6.ServiciosBarrioPrivado.Repositorio.ProveedorRepositorio;
 import com.grupo6.ServiciosBarrioPrivado.Repositorio.TrabajoRepositorio;
@@ -64,7 +65,7 @@ public class TrabajoServicio {
         trabajo.setDetalles(detalles);
         trabajo.setComentario("");
         trabajo.setCalificacion(5);
-        trabajo.setFinalizado(false);
+        trabajo.setEstado(EstadoTrabajo.valueOf("PENDIENTE"));
 
         trabajoRepositorio.save(trabajo);
     }
@@ -127,7 +128,7 @@ public class TrabajoServicio {
         if(respuesta.isPresent()){
             Trabajo trabajo = respuesta.get();
 
-            if(trabajo.getFinalizado()) {
+            if(trabajo.getEstado().toString().equals("FINALIZADO")) {
                 trabajo.setComentario(comentario);
                 trabajo.setCalificacion(calificacion);
 
@@ -142,7 +143,7 @@ public class TrabajoServicio {
         Optional<Trabajo> respuesta = trabajoRepositorio.findById(id);
         if(respuesta.isPresent()){
             Trabajo trabajo = respuesta.get();
-            trabajo.setFinalizado(true);
+            trabajo.setEstado(EstadoTrabajo.valueOf("FINALIZADO"));
             trabajoRepositorio.save(trabajo);
         }
     }
