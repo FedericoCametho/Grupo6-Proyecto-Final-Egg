@@ -108,7 +108,7 @@
       </div><!-- /.row -->
 
       <!-- START THE FEATURETTES -->
-
+    <div th:if="${!session.usuariosesion.rol.toString().equals('ADMIN')}">
       <hr class="featurette-divider">
 
       <div class="row featurette">
@@ -152,7 +152,7 @@
       </div>
 
       <hr class="featurette-divider">
-
+    </div>
       <!-- /END THE FEATURETTES -->
 
     <!-- /.container -->

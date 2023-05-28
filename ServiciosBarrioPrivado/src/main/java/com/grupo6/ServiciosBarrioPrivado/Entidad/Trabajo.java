@@ -20,11 +20,13 @@ public class Trabajo {
     @Temporal(TemporalType.DATE)
     private Date fecha;
 
+    @Enumerated(EnumType.STRING)
     private EstadoTrabajo estado;
     @ManyToOne
     private Usuario cliente;
+
     @ManyToOne
-    private Proveedor proveedor;
+    private Usuario proveedor;
 
     private CategoriaServicio categoria ;
 
@@ -69,11 +71,11 @@ public class Trabajo {
         this.cliente = cliente;
     }
 
-    public Proveedor getProveedor() {
+    public Usuario getProveedor() {
         return proveedor;
     }
 
-    public void setProveedor(Proveedor proveedor) {
+    public void setProveedor(Usuario proveedor) {
         this.proveedor = proveedor;
     }
 

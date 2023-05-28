@@ -2,18 +2,15 @@ package com.grupo6.ServiciosBarrioPrivado.Servicio;
 
 
 
-import com.grupo6.ServiciosBarrioPrivado.Entidad.Proveedor;
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Trabajo;
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Usuario;
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.CategoriaServicio;
 
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.EstadoTrabajo;
 import com.grupo6.ServiciosBarrioPrivado.Excepciones.MiException;
-import com.grupo6.ServiciosBarrioPrivado.Repositorio.ProveedorRepositorio;
 import com.grupo6.ServiciosBarrioPrivado.Repositorio.TrabajoRepositorio;
 import com.grupo6.ServiciosBarrioPrivado.Repositorio.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -37,7 +34,7 @@ public class TrabajoServicio {
     private UsuarioRepositorio usuarioRepositorio;
 
     @Autowired
-    private ProveedorRepositorio proveedorRepositorio;
+    private ProveedorServicio proveedorServicio;
 
     @Transactional
     public void registrar(String fechaString, String idCliente, String idProveedor, CategoriaServicio categoria,
@@ -54,7 +51,7 @@ public class TrabajoServicio {
         this.validar(fecha, idCliente, idProveedor, categoria);
 
         Usuario cliente = usuarioRepositorio.findById(idCliente).get();
-        Proveedor proveedor = proveedorRepositorio.findById(idProveedor).get();
+        Usuario proveedor = proveedorServicio.getProveedorById(idProveedor);
 
         Trabajo trabajo = new Trabajo();
 
@@ -91,10 +88,10 @@ public class TrabajoServicio {
         this.validar(fecha, idCliente, idProveedor, categoria);
 
         Optional<Trabajo> respuestaTrabajo = trabajoRepositorio.findById(id);
-        Optional<Proveedor> respuestaProveedor = proveedorRepositorio.findById(idProveedor);
+        Optional<Usuario> respuestaProveedor = usuarioRepositorio.findById(idProveedor);
         Optional<Usuario> respuestaCliente = usuarioRepositorio.findById(idCliente);
 
-        Proveedor proveedor = new Proveedor();
+        Usuario proveedor = new Usuario();
         Usuario cliente = new Usuario();
 
         if (respuestaCliente.isPresent()){
@@ -144,6 +141,16 @@ public class TrabajoServicio {
         if(respuesta.isPresent()){
             Trabajo trabajo = respuesta.get();
             trabajo.setEstado(EstadoTrabajo.valueOf("FINALIZADO"));
+            trabajoRepositorio.save(trabajo);
+        }
+    }
+
+    @Transactional
+    public void modificarEstado(String id, EstadoTrabajo estado) {
+        Optional<Trabajo> respuesta = trabajoRepositorio.findById(id);
+        if(respuesta.isPresent()){
+            Trabajo trabajo = respuesta.get();
+            trabajo.setEstado(estado);
             trabajoRepositorio.save(trabajo);
         }
     }

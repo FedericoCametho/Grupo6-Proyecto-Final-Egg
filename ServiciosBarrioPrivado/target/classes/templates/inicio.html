@@ -69,21 +69,6 @@
         <h1 style="color: #2b353a; padding-top: 5%">Welcome back <span th:text="${session.usuariosesion.getNombreCompleto()}"/></h1>
       </div>
 
-      <!-- Three columns of text below the carousel -->
-      <div class="row">
-        <div class="col-lg-4"  th:if="${session.usuariosesion.rol.toString().equals('USER')}">
-          <img class="rounded-image" src="https://drive.google.com/uc?id=1cmb9ITlL4Pf2AUEVMKFvTAsogeBpRKpq" alt="proveedor">
-          <h2 class="fw-normal">Listado de Proveedores</h2>
-          <p></p>
-          <p><a class="btn btn-secondary botones" th:href="@{/proveedor/listar}">View details &raquo;</a></p>
-        </div><!-- /.col-lg-4 -->
-        <div class="col-lg-4"  th:if="${session.usuariosesion.rol.toString().equals('USER') || session.usuariosesion.rol.toString().equals('PROVEEDOR') }">
-          <img class="rounded-image" src="https://drive.google.com/uc?id=1i0RZhyOdMk0bzUmcqxev0AOnXlhSuH8a" alt="trabajos" style="background-color: lightgray">
-          <h2 class="fw-normal">Listado de Trabajos</h2>
-          <p><a class="btn btn-secondary botones" th:href="@{/trabajo/listar}">View details &raquo;</a></p>
-        </div><!-- /.col-lg-4 -->
-
-      </div><!-- /.row -->
 
       <div class="container marketing">
 
@@ -123,7 +108,7 @@
       </div><!-- /.row -->
 
       <!-- START THE FEATURETTES -->
-
+    <div th:if="${!session.usuariosesion.rol.toString().equals('ADMIN')}">
       <hr class="featurette-divider">
 
       <div class="row featurette">
@@ -167,7 +152,7 @@
       </div>
 
       <hr class="featurette-divider">
-
+    </div>
       <!-- /END THE FEATURETTES -->
 
     <!-- /.container -->

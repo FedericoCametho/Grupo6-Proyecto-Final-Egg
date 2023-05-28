@@ -56,7 +56,7 @@ public class PortalControlador {
 
 
     @GetMapping("/inicio")
-    public String afterLogin(HttpSession session){
+    public String afterLogin(){
 //        Usuario loggedUser = (Usuario) session.getAttribute("userSession");
 //
 //        if (loggedUser.getRol().toString().equals("ADMIN")) {

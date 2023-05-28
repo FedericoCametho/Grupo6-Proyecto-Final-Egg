@@ -80,10 +80,10 @@ public class UsuarioControlador {
                 return "redirect:../listar";
             }
             modelo.put("error", "El Usuario que desea borrar de la base de datos, Posee Trabajos asociados. Debera primero eliminar los trabajos asociados a dicho usuario para luego eliminarlo");
-            return "index";
+            return "inicio";
         }catch(MiException ex){
             modelo.put("error", ex.getMessage());
-            return "index";
+            return "inicio";
         }
     }
 

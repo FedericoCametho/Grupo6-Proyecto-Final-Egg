@@ -1,39 +1,31 @@
 package com.grupo6.ServiciosBarrioPrivado.Servicio;
 
-import com.grupo6.ServiciosBarrioPrivado.Entidad.Proveedor;
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Trabajo;
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Usuario;
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.CategoriaServicio;
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.Rol;
 import com.grupo6.ServiciosBarrioPrivado.Excepciones.MiException;
-import com.grupo6.ServiciosBarrioPrivado.Repositorio.ProveedorRepositorio;
 
+import com.grupo6.ServiciosBarrioPrivado.Repositorio.TrabajoRepositorio;
+import com.grupo6.ServiciosBarrioPrivado.Repositorio.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
-public class ProveedorServicio implements UserDetailsService {
+public class ProveedorServicio {
 
     @Autowired
-    private ProveedorRepositorio proveedorRepositorio;
+    private UsuarioRepositorio proveedorRepositorio;
 
     @Autowired
-    private TrabajoServicio trabajoServicio;
+    private TrabajoRepositorio trabajoRepositorio;
 
     @Transactional
     public void registrar(String nombre, String apellido, String email, String password, String password2, String telefono,
@@ -41,7 +33,7 @@ public class ProveedorServicio implements UserDetailsService {
 
         this.validar(nombre,apellido, email,password,password2, telefono, categoria, precioPorHora);
 
-        Proveedor proveedor = new Proveedor();
+        Usuario proveedor = new Usuario();
 
         proveedor.setNombre(nombre);
         proveedor.setApellido(apellido);
@@ -61,10 +53,10 @@ public class ProveedorServicio implements UserDetailsService {
                           CategoriaServicio categoria, Integer precioPorHora) throws MiException{
         this.validarParcial(nombre,apellido,telefono, categoria, precioPorHora);
 
-        Optional<Proveedor> respuesta = proveedorRepositorio.findById(id);
+        Optional<Usuario> respuesta = proveedorRepositorio.findById(id);
 
         if (respuesta.isPresent()){
-            Proveedor proveedor = respuesta.get();
+            Usuario proveedor = respuesta.get();
 
             proveedor.setNombre(nombre);
             proveedor.setApellido(apellido);
@@ -82,35 +74,35 @@ public class ProveedorServicio implements UserDetailsService {
         if (id == null || id.isEmpty()){
             throw new MiException("El id ingresado no puede ser nulo o estar vacio");
         }
-        Optional<Proveedor> respuesta = proveedorRepositorio.findById(id);
+        Optional<Usuario> respuesta = proveedorRepositorio.findById(id);
         if(respuesta.isPresent()){
-            Proveedor proveedor = respuesta.get();
+            Usuario proveedor = respuesta.get();
             proveedorRepositorio.delete(proveedor);
         }
     }
 
     // METODOS DE CONSULTA
 
-    public List<Proveedor> listarProveedores(){
-        List<Proveedor> proveedores = new ArrayList();
-        proveedores = proveedorRepositorio.findAll();
+    public List<Usuario> listarProveedores(){
+        List<Usuario> proveedores = new ArrayList();
+        proveedores = proveedorRepositorio.findAll().stream().filter( u -> u.getRol().toString().equals("PROVEEDOR")).collect(Collectors.toList());
         return proveedores;
     }
 
-    public List<Proveedor> listarPorCategoria(CategoriaServicio categoria){
-        List<Proveedor> proveedores = new ArrayList();
+    public List<Usuario> listarPorCategoria(CategoriaServicio categoria){
+        List<Usuario> proveedores = new ArrayList();
         proveedores = proveedorRepositorio.buscarPorCategoria(categoria);
         return proveedores;
     }
 
-    public Proveedor getProveedorById(String id){
+    public Usuario getProveedorById(String id){
         return proveedorRepositorio.getOne(id);
     }
 
 
 
     public List<Trabajo> trabajosDeUnProveedor(String idProveedor) throws MiException{
-        return trabajoServicio.listarPorProveedor(idProveedor);
+        return trabajoRepositorio.buscarPorProveedor(idProveedor);
     }
 
     public void validar(String nombre, String apellido, String email, String password, String password2, String telefono,
@@ -172,23 +164,5 @@ public class ProveedorServicio implements UserDetailsService {
     }
 
 
-    @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-
-        Proveedor proveedor = proveedorRepositorio.buscarPorEmail(email);
-
-        if (proveedor != null){
-            List<GrantedAuthority> permisos = new ArrayList();
-            GrantedAuthority p = new SimpleGrantedAuthority("ROLE_"+proveedor.getRol().toString());
-            permisos.add(p);
-            ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-            HttpSession session = attr.getRequest().getSession(true);
-
-            session.setAttribute("usuariosesion", proveedor);
-            return new User(proveedor.getEmail(), proveedor.getPassword(), permisos);
-        } else {
-            return null;
-        }
-    }
 
 }

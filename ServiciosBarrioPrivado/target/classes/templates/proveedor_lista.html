@@ -38,8 +38,8 @@
       <th scope="col">Telefono</th>
       <th scope="col">Precio Por Hora</th>
       <th scope="col">Categoria de Servicio</th>
-      <th></th>
-      <th></th>
+      <th th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}"></th>
+      <th th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}"></th>
 
     </tr>
     </thead>
@@ -51,10 +51,10 @@
       <td th:text="${prov.telefono}"></td>
       <td th:text="${prov.precioPorHora}"></td>
       <td th:text="${prov.categoriaServicio.toString()}"></td>
-      <td>
+      <td th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}">
         <a th:href= "@{/proveedor/modificar/__${prov.id}__}"><i class="fas fa-feather-alt">  </i> Modificar </a>
       </td>
-      <td>
+      <td th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}">
         <a th:href= "@{/proveedor/borrar/__${prov.id}__}"><i class="fas fa-feather-alt">  </i> Borrar </a>
       </td>
 
@@ -65,7 +65,10 @@
 
   <section class=" text-center container">
     <div class="row mt-3">
-      <div class="divVolver">
+      <div class="divVolver" th:if="${session.usuariosesion != null}">
+        <a th:href="@{/inicio}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+      </div>
+      <div class="divVolver" th:if="${session.usuariosesion == null}">
         <a th:href="@{/}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
       </div>
     </div>

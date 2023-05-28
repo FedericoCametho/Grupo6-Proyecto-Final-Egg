@@ -1,5 +1,6 @@
 package com.grupo6.ServiciosBarrioPrivado.Entidad;
 
+import com.grupo6.ServiciosBarrioPrivado.Enumeracion.CategoriaServicio;
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.Rol;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -23,6 +24,11 @@ public class Usuario {
     private String password;
     @Enumerated(EnumType.STRING)
     private Rol rol;
+
+    private Integer precioPorHora;
+
+    @Enumerated(EnumType.STRING)
+    private CategoriaServicio categoriaServicio;
 
 
     public Usuario() {
@@ -88,4 +94,19 @@ public class Usuario {
         return this.nombre+" "+this.apellido;
     }
 
+    public Integer getPrecioPorHora() {
+        return precioPorHora;
+    }
+
+    public void setPrecioPorHora(Integer precioPorHora) {
+        this.precioPorHora = precioPorHora;
+    }
+
+    public CategoriaServicio getCategoriaServicio() {
+        return categoriaServicio;
+    }
+
+    public void setCategoriaServicio(CategoriaServicio categoriaServicio) {
+        this.categoriaServicio = categoriaServicio;
+    }
 }
