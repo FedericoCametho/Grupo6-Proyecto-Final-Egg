@@ -30,13 +30,13 @@ public class TrabajoControlador {
     @Autowired
     private UsuarioServicio usuarioServicio;
 
-    @GetMapping("/registrar")
-    public String registrar(ModelMap modelo){
+    @GetMapping("/registrar/{idCliente}")
+    public String registrar(@PathVariable String idCliente, ModelMap modelo){
         List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
         modelo.addAttribute("categoriaServicio", categoriaServicio);
         List<Usuario> proveedores = proveedorServicio.listarProveedores();
-        List<Usuario> clientes = usuarioServicio.listarUsuarios();
-        modelo.addAttribute("clientes", clientes);
+        Usuario cliente = usuarioServicio.getUsuarioById(idCliente);
+        modelo.addAttribute("cliente", cliente);
         modelo.addAttribute("proveedores", proveedores);
         return "registro_trabajo";
     }
@@ -71,6 +71,17 @@ public class TrabajoControlador {
             modelo.addAttribute("proveedores", proveedores);
             return "registro_trabajo";
         }
+    }
+
+    @GetMapping("/registrarRapido/{idProveedor}/{idCliente}")
+    public String registrarRapido(@PathVariable String idCliente, @PathVariable String idProveedor, ModelMap modelo){
+        Usuario proveedor = proveedorServicio.getProveedorById(idProveedor);
+        modelo.addAttribute("categoriaServicio", proveedor.getCategoriaServicio());
+        modelo.addAttribute("proveedor", proveedor);
+        Usuario cliente = usuarioServicio.getUsuarioById(idCliente);
+        modelo.addAttribute("cliente", cliente);
+
+        return "registroRapido_trabajo";
     }
 
     @GetMapping("/modificar/{id}")

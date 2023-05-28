@@ -65,7 +65,7 @@
           <a th:href="@{/}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
         </div>
 
-        <a th:href="@{/trabajo/registrar}" class="btn btn-secondary my-2 botonVolver botones">Solicitar un Trabajo</a>
+        <a th:href="@{/trabajo/registrar/__${session.usuariosesion.id}__}" class="btn btn-secondary my-2 botonVolver botones">Solicitar un Trabajo</a>
 
       </div>
     </div>

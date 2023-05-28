@@ -60,8 +60,13 @@
       </div>
     </div>
     <h2 class="mb-2">Registrar un Trabajo</h2>
-    <label for="fecha"> Seleccione una fecha</label>
+    <div class="form-group my-3 seleccion">
+      <label> Cliente: <span style="font-weight:bolder;"  th:text="${cliente.getNombreCompleto()}"></span></label>
+      <input name="idCliente" hidden th:value="${cliente.id}">
+    </div>
+
     <div class="form-group my-3 campo">
+      <label for="fecha"> Seleccione una fecha</label>
       <input type="date" class="form-control" name="fecha" id="fecha">
     </div>
     <div class="form-group my-3 seleccion">
@@ -76,18 +81,7 @@
         >
       </select>
     </div>
-    <div class="form-group my-3 seleccion">
 
-      <select name="idCliente">
-
-        <option>Seleccionar Cliente</option>
-
-        <option th:each="cli : ${clientes}"
-                th:value="${cli.getId()}"
-                th:text="${cli.getNombreCompleto()}"
-        >
-      </select>
-    </div>
 
     <div class="form-group my-3 seleccion">
 

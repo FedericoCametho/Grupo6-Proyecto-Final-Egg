@@ -18,22 +18,8 @@
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
         <li><a th:href="@{/}" class="nav-link px-2 text-secondary logo"><img class="img-header" src="https://drive.google.com/uc?id=17FvOE5zIHqZJNz-XgZhKY-irwDM2GeB2" alt="logo"><b class="letra">  SERVICE+</b></a></li>
 
-        <!--        <li><a href="#" class="nav-link px-2 text-white">Features</a></li>-->
-        <!--        <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>-->
-        <!--        <li><a href="#" class="nav-link px-2 text-white">FAQs</a></li>-->
-        <!--        <li><a href="#" class="nav-link px-2 text-white">About</a></li>-->
       </ul>
 
-      <!--            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">-->
-      <!--                <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">-->
-      <!--            </form>-->
-
-
-
-      <!--            <div class="text-end" sec:authorize="isAuthenticated()">-->
-      <!--                <button type="button" class="btn btn-outline-light me-2 botones"><a th:href="@{/}" class="nav-link px-2 text-secondary" style="color:#d8e3e9" >Perfil</a></button> &lt;!&ndash;TODO llenar ruta th:href="@{/}&ndash;&gt;-->
-      <!--                <button type="button" class="btn btn-warning botones"><a th:href="@{/logout}" class="nav-link px-2 text-secondary" style="color:#d8e3e9" >Cerrar Sesión</a></button>-->
-      <!--            </div>-->
       <div class="text-end" sec:authorize!="isAuthenticated()">
         <button type="button" class="btn btn-outline-light me-2 botones"><a th:href="@{/login}" style="color:#d8e3e9"  class="nav-link px-2 text-secondary">Iniciar Sesión</a></button>
         <button type="button" class="btn btn-warning botones"><a th:href="@{/registrar}" style="color:#d8e3e9" class="nav-link px-2 text-secondary">Registrarse</a></button>
@@ -70,31 +56,16 @@
       <input type="date" class="form-control" name="fecha" id="fecha">
     </div>
     <div class="form-group my-3 seleccion">
-
-      <select name="categoria">
-
-        <option>Seleccionar Categoria</option>
-
-        <option th:each="cat : ${categoriaServicio}"
-                th:value="${cat}"
-                th:text="${cat.toString()}"
-        >
-      </select>
+      <label> Categoria: <span style="font-weight:bolder;"  th:text="${categoriaServicio.toString()}"></span></label>
+      <input name="categoria" hidden th:value="${categoriaServicio}">
     </div>
 
 
     <div class="form-group my-3 seleccion">
-
-      <select name="idProveedor">
-
-        <option>Seleccionar Proveedor</option>
-
-        <option th:each="pro : ${proveedores}"
-                th:value="${pro.getId()}"
-                th:text="${pro.getNombreCompleto()}"
-        >
-      </select>
+      <label> Proveedor: <span style="font-weight:bolder;"  th:text="${proveedor.getNombreCompleto()}"></span></label>
+      <input name="idProveedor" hidden th:value="${proveedor.id}">
     </div>
+
     <label for="detalles"> Ingrese detalles del trabajo solicitado</label>
     <div class="form-group my-3 campo">
       <input type="text" class="form-control" name="detalles" id="detalles">

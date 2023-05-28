@@ -12,7 +12,7 @@
 
 
 <div class="container m-5" >
-  <form class="formulario" th:action="@{/proveedor/listarPorCategoria}"  method="POST">
+  <form class="formulario" th:action="@{/listarPorCategoria}"  method="POST">
     <div class="form-group my-3">
       <select name="categoria" id="categoria-filtrar">
 
@@ -38,9 +38,7 @@
       <th scope="col">Telefono</th>
       <th scope="col">Precio Por Hora</th>
       <th scope="col">Categoria de Servicio</th>
-      <th th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}"></th>
-      <th th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}"></th>
-      <th th:if="${session.usuariosesion.rol.toString().equals('USER')}"></th>
+
 
     </tr>
     </thead>
@@ -52,15 +50,6 @@
       <td th:text="${prov.telefono}"></td>
       <td th:text="${prov.precioPorHora}"></td>
       <td th:text="${prov.categoriaServicio.toString()}"></td>
-      <td th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}">
-        <a th:href= "@{/proveedor/modificar/__${prov.id}__}"><i class="fas fa-feather-alt">  </i> Modificar </a>
-      </td>
-      <td th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}">
-        <a th:href= "@{/proveedor/borrar/__${prov.id}__}"><i class="fas fa-feather-alt">  </i> Borrar </a>
-      </td>
-      <td th:if="${session.usuariosesion.rol.toString().equals('USER')}">
-        <a th:href= "@{/trabajo/registrarRapido/__${prov.id}__/__${session.usuariosesion.id}__}"><i class="fas fa-feather-alt">  </i> Solicitar trabajo </a>
-      </td>
 
     </tr>
 

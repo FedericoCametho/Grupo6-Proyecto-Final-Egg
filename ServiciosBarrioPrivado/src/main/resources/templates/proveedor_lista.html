@@ -40,6 +40,7 @@
       <th scope="col">Categoria de Servicio</th>
       <th th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}"></th>
       <th th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}"></th>
+      <th th:if="${session.usuariosesion.rol.toString().equals('USER')}"></th>
 
     </tr>
     </thead>
@@ -56,6 +57,9 @@
       </td>
       <td th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}">
         <a th:href= "@{/proveedor/borrar/__${prov.id}__}"><i class="fas fa-feather-alt">  </i> Borrar </a>
+      </td>
+      <td th:if="${session.usuariosesion.rol.toString().equals('USER')}">
+        <a th:href= "@{/trabajo/registrarRapido/__${prov.id}__/__${session.usuariosesion.id}__}"><i class="fas fa-feather-alt">  </i> Solicitar trabajo </a>
       </td>
 
     </tr>
