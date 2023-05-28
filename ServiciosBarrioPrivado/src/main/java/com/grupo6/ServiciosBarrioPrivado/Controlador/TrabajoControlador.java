@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/trabajo")
@@ -247,6 +248,20 @@ public class TrabajoControlador {
 
     }
 
+    @GetMapping("/listarPorUsuarioFinalizado/{idCliente}")
+    public String listarPorClienteFinalizado(@PathVariable String idCliente, ModelMap modelo) throws MiException{
+
+        List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
+        modelo.addAttribute("categoriaServicio", categoriaServicio);
+
+        List<Trabajo> trabajos = trabajoServicio.listarPorUsuario(idCliente).stream().filter(t -> t.getEstado().toString().equals("FINALIZADO")).collect(Collectors.toList());
+        modelo.addAttribute("trabajos", trabajos);
+        List<Usuario> proveedores = proveedorServicio.listarProveedores();
+        modelo.addAttribute("proveedores", proveedores);
+        return "trabajo_lista";
+
+    }
+
     @PostMapping("/listarPorUsuario/{idCliente}")
     public String filtrarPorCliente(@PathVariable String idCliente, ModelMap modelo) throws MiException{
 
@@ -262,13 +277,27 @@ public class TrabajoControlador {
     }
 
 
-    @GetMapping("/listarPorProveedor/{idProveedor}")
-    public String listarPorProveedor(@PathVariable String idProveedor, ModelMap modelo) throws MiException{
+    @GetMapping("/listarPorProveedorPendiente/{idProveedor}")
+    public String listarPorProveedorPendiente(@PathVariable String idProveedor, ModelMap modelo) throws MiException{
 
         List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
         modelo.addAttribute("categoriaServicio", categoriaServicio);
 
-        List<Trabajo> trabajos = trabajoServicio.listarPorProveedor(idProveedor);
+        List<Trabajo> trabajos = trabajoServicio.listarPorProveedor(idProveedor).stream().filter( t -> t.getEstado().toString().equals("PENDIENTE")).collect(Collectors.toList());
+        modelo.addAttribute("trabajos", trabajos);
+        List<Usuario> proveedores = proveedorServicio.listarProveedores();
+        modelo.addAttribute("proveedores", proveedores);
+        return "trabajo_lista";
+
+    }
+
+    @GetMapping("/listarPorProveedorFinalizado/{idProveedor}")
+    public String listarPorProveedorFinalizado(@PathVariable String idProveedor, ModelMap modelo) throws MiException{
+
+        List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
+        modelo.addAttribute("categoriaServicio", categoriaServicio);
+
+        List<Trabajo> trabajos = trabajoServicio.listarPorProveedor(idProveedor).stream().filter( t -> t.getEstado().toString().equals("FINALIZADO")).collect(Collectors.toList());
         modelo.addAttribute("trabajos", trabajos);
         List<Usuario> proveedores = proveedorServicio.listarProveedores();
         modelo.addAttribute("proveedores", proveedores);
