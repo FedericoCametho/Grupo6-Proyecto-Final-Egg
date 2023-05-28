@@ -44,16 +44,12 @@
 </header>
 
 <div class="container-fluid contenedor">
-
-    <div class="form-group my-3 campo">
-      <h1 style="color: #2b353a; padding-top: 5%">Bienvenido a la solicitud de trabajos <span th:text="${session.usuariosesion.getNombreCompleto()}"/></h1>
-    </div>
     <div class="form-group my-3 campo">
       <form class="formulario" th:action="@{/trabajo/registrarConListarProveedoresSegunCategoria/__${session.usuariosesion.id}__}"  method="POST">
         <div class="form-group my-3">
-          <label for="categoria-filtrar"> Por favor seleccione una Categoria para solicitar el trabajo</label>
+          <label for="categoria-filtrar"> Seleccione una Categoria para solicitar el trabajo</label>
           <select name="categoria" id="categoria-filtrar">
-            
+
 
             <option th:each="cat : ${categoriaServicio}"
                     th:value="${cat.toString()}"
@@ -66,66 +62,71 @@
 
       </form>
     </div>
-<!--  <form class="shadow p-3 mb-5 bg-body-tertiary rounded formulario" th:action="@{/trabajo/registro}"  method="POST">-->
+  <form class="shadow p-3 mb-5 bg-body-tertiary rounded formulario" th:action="@{/trabajo/registro}"  method="POST">
 
-<!--    <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError" >-->
-<!--      <div class="card-body">-->
-<!--        <h5 class="card-title">Error 👎</h5>-->
-<!--        <p class="card-text" th:text="${error}"></p>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    <div th:if="${exito != null}" class="card text-white bg-success mb-3 mt-3 mensajeExito" >-->
-<!--      <div class="card-body">-->
-<!--        <h5 class="card-title">Exito!</h5>-->
-<!--        <p class="card-text" th:text="${exito}"></p>-->
-<!--      </div>-->
-<!--    </div>-->
-
-
-
-<!--    <h2 class="mb-2">Registrar un Trabajo</h2>-->
-<!--    <div class="form-group my-3 seleccion">-->
-<!--      <label> Cliente: <span style="font-weight:bolder;"  th:text="${cliente.getNombreCompleto()}"></span></label>-->
-<!--      <input name="idCliente" hidden th:value="${cliente.id}">-->
-<!--    </div>-->
-
-<!--    <div class="form-group my-3 campo">-->
-<!--      <label for="fecha"> Seleccione una fecha</label>-->
-<!--      <input type="date" class="form-control" name="fecha" id="fecha">-->
-<!--    </div>-->
-<!--&lt;!&ndash;    <div class="form-group my-3 seleccion">&ndash;&gt;-->
-
-<!--&lt;!&ndash;      <select name="categoria">&ndash;&gt;-->
-
-<!--&lt;!&ndash;        <option>Seleccionar Categoria</option>&ndash;&gt;-->
-
-<!--&lt;!&ndash;        <option th:each="cat : ${categoriaServicio}"&ndash;&gt;-->
-<!--&lt;!&ndash;                th:value="${cat}"&ndash;&gt;-->
-<!--&lt;!&ndash;                th:text="${cat.toString()}"&ndash;&gt;-->
-<!--&lt;!&ndash;        >&ndash;&gt;-->
-<!--&lt;!&ndash;      </select>&ndash;&gt;-->
-<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+    <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError" >
+      <div class="card-body">
+        <h5 class="card-title">Error 👎</h5>
+        <p class="card-text" th:text="${error}"></p>
+      </div>
+    </div>
+    <div th:if="${exito != null}" class="card text-white bg-success mb-3 mt-3 mensajeExito" >
+      <div class="card-body">
+        <h5 class="card-title">Exito!</h5>
+        <p class="card-text" th:text="${exito}"></p>
+      </div>
+    </div>
 
 
+
+    <h2 class="mb-2">Registrar un Trabajo</h2>
+    <div class="form-group my-3 seleccion">
+      <label> Cliente: <span style="font-weight:bolder;"  th:text="${cliente.getNombreCompleto()}"></span></label>
+      <input name="idCliente" hidden th:value="${cliente.id}">
+    </div>
+
+    <div class="form-group my-3 campo">
+      <label for="fecha"> Seleccione una fecha</label>
+      <input type="date" class="form-control" name="fecha" id="fecha">
+    </div>
+
+    <div class="form-group my-3 seleccion">
+      <label> Categoria Seleccionada: <span style="font-weight:bolder;"  th:text="${categoria.toString()}"></span></label>
+      <input name="categoria" hidden th:value="${categoria}">
+    </div>
 <!--    <div class="form-group my-3 seleccion">-->
 
-<!--      <select name="idProveedor">-->
+<!--      <select name="categoria">-->
 
-<!--        <option>Seleccionar Proveedor</option>-->
+<!--        <option>Seleccionar Categoria</option>-->
 
-<!--        <option th:each="pro : ${proveedores}"-->
-<!--                th:value="${pro.getId()}"-->
-<!--                th:text="${pro.getNombreCompleto()}"-->
+<!--        <option th:each="cat : ${categoriaServicio}"-->
+<!--                th:value="${cat}"-->
+<!--                th:text="${cat.toString()}"-->
 <!--        >-->
 <!--      </select>-->
 <!--    </div>-->
-<!--    <label for="detalles"> Ingrese detalles del trabajo solicitado</label>-->
-<!--    <div class="form-group my-3 campo">-->
-<!--      <input type="text" class="form-control" name="detalles" id="detalles">-->
-<!--    </div>-->
 
-<!--    <button type="submit" class="btn btn-primary mt-3 boton">Registrar</button>-->
-<!--  </form>-->
+
+    <div class="form-group my-3 seleccion">
+
+      <select name="idProveedor">
+
+        <option>Seleccionar Proveedor</option>
+
+        <option th:each="pro : ${proveedores}"
+                th:value="${pro.getId()}"
+                th:text="${pro.getNombreCompleto()}"
+        >
+      </select>
+    </div>
+    <label for="detalles"> Ingrese detalles del trabajo solicitado</label>
+    <div class="form-group my-3 campo">
+      <input type="text" class="form-control" name="detalles" id="detalles">
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3 boton">Registrar</button>
+  </form>
 
 
 

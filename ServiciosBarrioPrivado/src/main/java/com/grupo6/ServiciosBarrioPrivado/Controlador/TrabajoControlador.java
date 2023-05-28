@@ -41,6 +41,23 @@ public class TrabajoControlador {
         return "registro_trabajo";
     }
 
+    @PostMapping("/registrarConListarProveedoresSegunCategoria/{idCliente}")
+    public String registrarFiltrandoProveedores(@PathVariable String idCliente, @RequestParam String categoria,
+                                                ModelMap modelo){
+        List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
+        modelo.addAttribute("categoriaServicio", categoriaServicio);
+
+
+        modelo.addAttribute("categoria", categoria);
+        List<Usuario> proveedores = proveedorServicio.listarPorCategoria(CategoriaServicio.valueOf(categoria));
+        Usuario cliente = usuarioServicio.getUsuarioById(idCliente);
+        modelo.addAttribute("cliente", cliente);
+        modelo.addAttribute("proveedores", proveedores);
+        return "registro_trabajo_filtrado";
+
+
+    }
+
 
     @PostMapping("/registro")
     public String registroTrabajo(@RequestParam String fecha, @RequestParam String idCliente, @RequestParam String idProveedor,
