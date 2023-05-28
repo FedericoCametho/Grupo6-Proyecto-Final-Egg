@@ -24,10 +24,15 @@ public class SeguridadWeb extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(new BCryptPasswordEncoder());
     }
 
+
+//    .antMatchers("/admin/*").hasRole("ADMIN")
+//                .antMatchers(("/usuario/*")).hasRole(("USER"))
+//            .antMatchers(("/proveedor/*")).hasRole(("PROVEEDOR"))
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http
                 .authorizeRequests()
+
                 .antMatchers("/css/*","/js/*","/img/*","/**")
                 .permitAll()
                 .and().formLogin()
@@ -35,12 +40,12 @@ public class SeguridadWeb extends WebSecurityConfigurerAdapter {
                 .loginProcessingUrl("/logincheck")
                 .usernameParameter("email")
                 .passwordParameter("password")
-                .defaultSuccessUrl("/testLogin")
+                .defaultSuccessUrl("/inicio")
                 .permitAll()
                 .and().logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/")
-                .permitAll();
+                .permitAll().and().csrf().disable();
 
     }
 
