@@ -16,6 +16,8 @@
 
   <form class="formulario" th:action="@{/proveedor/modificar/__${proveedor.id}__}"  method="POST">
 
+    <input hidden th:value ="${id}" name="id">
+
     <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError" >
       <div class="card-body">
         <h5 class="card-title">Error 👎</h5>

@@ -61,7 +61,7 @@ public class ProveedorControlador {
         modelo.addAttribute("proveedor", proveedor);
         List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
         modelo.addAttribute("categoriaServicio", categoriaServicio);
-        return "modificar_proveedor";
+        return "modificar_proveedor.html";
     }
 
 
@@ -75,14 +75,14 @@ public class ProveedorControlador {
             modelo.addAttribute("proveedores", proveedores);
             List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
             modelo.addAttribute("categoriaServicio", categoriaServicio);
-            return "proveedor_lista";
+            return "redirect:../proveedor_lista";
         }catch(MiException ex){
             Proveedor proveedor = proveedorServicio.getProveedorById(id);
             modelo.addAttribute("proveedor", proveedor);
             List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
             modelo.addAttribute("categoriaServicio", categoriaServicio);
             modelo.put("error", ex.getMessage());
-            return "modificar_proveedor";
+            return "modificar_proveedor.html";
         }
     }
 
