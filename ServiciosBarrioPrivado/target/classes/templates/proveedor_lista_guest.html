@@ -29,32 +29,61 @@
 
   </form>
 
-  <table class="table">
-    <thead>
-    <tr>
-      <th scope="col">Nombre</th>
-      <th scope="col">Apellido</th>
-      <th scope="col">Email</th>
-      <th scope="col">Telefono</th>
-      <th scope="col">Precio Por Hora</th>
-      <th scope="col">Categoria de Servicio</th>
+<!--  <table class="table">-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--      <th scope="col">Nombre</th>-->
+<!--      <th scope="col">Apellido</th>-->
+<!--      <th scope="col">Email</th>-->
+<!--      <th scope="col">Telefono</th>-->
+<!--      <th scope="col">Precio Por Hora</th>-->
+<!--      <th scope="col">Categoria de Servicio</th>-->
 
 
-    </tr>
-    </thead>
-    <tbody th:each="prov : ${proveedores}">
-    <tr>
-      <th scope="row" th:text="${prov.nombre}"></th>
-      <td th:text="${prov.apellido}"></td>
-      <td th:text="${prov.email}"></td>
-      <td th:text="${prov.telefono}"></td>
-      <td th:text="${prov.precioPorHora}"></td>
-      <td th:text="${prov.categoriaServicio.toString()}"></td>
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody th:each="prov : ${proveedores}">-->
+<!--    <tr>-->
+<!--      <th scope="row" th:text="${prov.nombre}"></th>-->
+<!--      <td th:text="${prov.apellido}"></td>-->
+<!--      <td th:text="${prov.email}"></td>-->
+<!--      <td th:text="${prov.telefono}"></td>-->
+<!--      <td th:text="${prov.precioPorHora}"></td>-->
+<!--      <td th:text="${prov.categoriaServicio.toString()}"></td>-->
 
-    </tr>
+<!--    </tr>-->
 
-    </tbody>
-  </table>
+<!--    </tbody>-->
+<!--  </table>-->
+
+  <div class="album py-5 bg-body-tertiary">
+    <div class="container">
+
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <div th:each="prov : ${proveedores}"  class="col">
+          <div class="card shadow-sm">
+            <img class="image-cards" src="https://drive.google.com/uc?id=1cmb9ITlL4Pf2AUEVMKFvTAsogeBpRKpq" alt="proveedor">
+            <div class="card-body">
+              <ul>
+                <li> Nombre:<span th:text="${prov.nombre}"></span> </li>
+                <li> Apellido:<span th:text="${prov.apellido}"></span> </li>
+<!--                <li> Email: <span th:text="${prov.email}"></span></li>-->
+<!--                <li> Telefono: <span th:text="${prov.telefono}"></span></li>-->
+                <li> Precio Por Hora: <span th:text="${prov.precioPorHora}"></span> </li>
+                <li> Categoria de Servicio: <span th:text="${prov.categoriaServicio.toString()}"></span></li>
+              </ul>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <p> Para ver detalles de contacto, por favor registrese <a th:href="@{/registrar}"> aqui</a></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 
   <section class=" text-center container">
     <div class="row mt-3">

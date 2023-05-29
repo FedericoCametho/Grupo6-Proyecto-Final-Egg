@@ -9,14 +9,15 @@
     border-radius: 100px;
     background-color: #8282d4;
 }
-.rounded-image{
-    width: 150px;
-    height: 150px
-}
+
 .rounded-image{
     width: 150px;
     height: 150px;
     border-radius: 100%;
+}
+.image-cards{
+    width: 40px;
+    height: 40px
 }
 .botones{
     background-color: #8282d4;

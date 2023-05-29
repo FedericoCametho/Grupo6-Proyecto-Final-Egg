@@ -28,7 +28,7 @@
     </div>
 
   </form>
-
+<div class="vista-admin" th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}">
   <table class="table">
     <thead>
     <tr>
@@ -58,15 +58,46 @@
       <td th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}">
         <a th:href= "@{/proveedor/borrar/__${prov.id}__}"><i class="fas fa-feather-alt">  </i> Borrar </a>
       </td>
-      <td th:if="${session.usuariosesion.rol.toString().equals('USER')}">
-        <a th:href= "@{/trabajo/registrarRapido/__${prov.id}__/__${session.usuariosesion.id}__}"><i class="fas fa-feather-alt">  </i> Solicitar trabajo </a>
-      </td>
+<!--      <td th:if="${session.usuariosesion.rol.toString().equals('USER')}">-->
+<!--        <a th:href= "@{/trabajo/registrarRapido/__${prov.id}__/__${session.usuariosesion.id}__}"><i class="fas fa-feather-alt">  </i> Solicitar trabajo </a>-->
+<!--      </td>-->
 
     </tr>
 
     </tbody>
   </table>
+</div>
 
+  <div class="vista-user" th:if="${session.usuariosesion.rol.toString().equals('USER')}">
+    <div class="album py-5 bg-body-tertiary">
+      <div class="container">
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+          <div th:each="prov : ${proveedores}"  class="col">
+            <div class="card shadow-sm">
+              <img class="image-cards" src="https://drive.google.com/uc?id=1cmb9ITlL4Pf2AUEVMKFvTAsogeBpRKpq" alt="proveedor">
+              <div class="card-body">
+                <ul>
+                  <li> Nombre:<span th:text="${prov.nombre}"></span> </li>
+                  <li> Apellido:<span th:text="${prov.apellido}"></span> </li>
+                  <li> Email: <span th:text="${prov.email}"></span></li>
+                  <li> Telefono: <span th:text="${prov.telefono}"></span></li>
+                  <li> Precio Por Hora: <span th:text="${prov.precioPorHora}"></span> </li>
+                  <li> Categoria de Servicio: <span th:text="${prov.categoriaServicio.toString()}"></span></li>
+                </ul>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-outline-secondary"><a th:href= "@{/trabajo/registrarRapido/__${prov.id}__/__${session.usuariosesion.id}__}">Solicitar trabajo </a></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
   <section class=" text-center container">
     <div class="row mt-3">
       <div class="divVolver" th:if="${session.usuariosesion != null}">
