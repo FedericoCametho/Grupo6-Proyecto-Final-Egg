@@ -24,9 +24,10 @@
       <th scope="col">Estado</th>
       <th scope="col">Comentarios</th>
       <th scope="col">Calificacion</th>
+      <th th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}">Acciones</th>
       <th th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}"></th>
-      <th th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}"></th>
-      <th th:if="${session.usuariosesion.rol.toString().equals('PROVEEDOR')}"></th>
+      <th th:if="${session.usuariosesion.rol.toString().equals('PROVEEDOR')}">Acciones</th>
+      <th th:if="${session.usuariosesion.rol.toString().equals('USER')}">Acciones</th>
 
     </tr>
     </thead>
@@ -48,6 +49,9 @@
       </td>
       <td th:if="${session.usuariosesion.rol.toString().equals('PROVEEDOR')}">
         <a th:href= "@{/trabajo/confirmar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Cambiar Estado </a>
+      </td>
+      <td th:if="${session.usuariosesion.rol.toString().equals('USER') && tra.estado.toString().equals('FINALIZADO') && tra.calificacion == 0}">
+        <a th:href= "@{/trabajo/calificar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Calificar </a>
       </td>
 
     </tr>

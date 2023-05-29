@@ -196,6 +196,28 @@ public class TrabajoControlador {
         }
     }
 
+    @GetMapping("/calificar/{id}")
+    public String calificarTrabajo(@PathVariable String id, ModelMap modelo){
+        Trabajo trabajo = trabajoServicio.getTrabajoById(id);
+        modelo.addAttribute("trabajo", trabajo);
+        return "trabajo_calificacion";
+    }
+
+    @PostMapping("/calificar/{id}")
+    public String confirmarCalificacion(@PathVariable String id, @RequestParam Integer calificacion, @RequestParam String comentarios, ModelMap modelo){
+        try{
+            if (calificacion == null){
+                throw new MiException("La calificacion no puede ser nula");
+            }
+            trabajoServicio.calificarTrabajo(id, calificacion, comentarios);
+            return "inicio";
+        } catch(MiException ex){
+            modelo.put("error", ex.getMessage());
+            return "trabajo_confirmacion";
+        }
+    }
+
+
     @GetMapping("/listar")
     public String listarTodos(ModelMap modelo){
         List<Trabajo> trabajos = trabajoServicio.listarTrabajo();

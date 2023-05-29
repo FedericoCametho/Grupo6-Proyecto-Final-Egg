@@ -61,7 +61,7 @@ public class TrabajoServicio {
         trabajo.setCategoria(categoria);
         trabajo.setDetalles(detalles);
         trabajo.setComentario("");
-        trabajo.setCalificacion(5);
+        trabajo.setCalificacion(0);
         trabajo.setEstado(EstadoTrabajo.valueOf("PENDIENTE"));
 
         trabajoRepositorio.save(trabajo);
@@ -151,6 +151,17 @@ public class TrabajoServicio {
         if(respuesta.isPresent()){
             Trabajo trabajo = respuesta.get();
             trabajo.setEstado(estado);
+            trabajoRepositorio.save(trabajo);
+        }
+    }
+
+    @Transactional
+    public void calificarTrabajo(String id, Integer calificacion, String comentarios) {
+        Optional<Trabajo> respuesta = trabajoRepositorio.findById(id);
+        if(respuesta.isPresent()){
+            Trabajo trabajo = respuesta.get();
+            trabajo.setCalificacion(calificacion);
+            trabajo.setComentario(comentarios);
             trabajoRepositorio.save(trabajo);
         }
     }
