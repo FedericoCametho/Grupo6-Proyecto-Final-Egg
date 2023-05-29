@@ -22,7 +22,7 @@
 
 
             <div class="text-end" th:if="${session.usuariosesion != null}" >
-                <button type="button" class="btn btn-outline-light me-2 botones"><a th:href="@{/}" class="nav-link px-2 text-secondary" style="color:#d8e3e9" >Perfil</a></button>
+                <button type="button" class="btn btn-outline-light me-2 botones"><a th:href="@{/usuario/perfil/__${session.usuariosesion.id}__/__${session.usuariosesion.rol}__}" class="nav-link px-2 text-secondary" style="color:#d8e3e9" >Perfil</a></button>
                 <button type="button" class="btn btn-warning botones"><a th:href="@{/logout}" class="nav-link px-2 text-secondary" style="color:#d8e3e9" >Cerrar Sesión</a></button>
             </div>
             <div class="text-end" th:if="${session.usuariosesion == null}">

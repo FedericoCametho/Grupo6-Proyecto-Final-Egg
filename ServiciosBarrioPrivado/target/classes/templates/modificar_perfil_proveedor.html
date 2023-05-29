@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
-  <title>Modificar Proveedor</title>
+  <title>Modificar Perfil</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
   <link th:href="@{/css/mod_usuario.css}" rel="stylesheet" />
 
@@ -14,7 +14,7 @@
 
 <div class="container-fluid m-5 contenedor">
 
-  <form class="formulario" th:action="@{/proveedor/modificar/__${proveedor.id}__}"  method="POST">
+  <form class="formulario" th:action="@{/proveedor/modificarPerfilProveedor/__${proveedor.id}__}"  method="POST">
 
     <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError" >
       <div class="card-body">
@@ -28,7 +28,7 @@
         <p class="card-text" th:text="${exito}"></p>
       </div>
     </div>
-    <h2 class="mb-2">Modificar Usuario Proveedor</h2>
+    <h2 class="mb-2">Modificar Mi Perfil</h2>
     <div class="form-group my-3">
       <input type="text" class="form-control" name="nombre" th:value="${proveedor.nombre}">
     </div>
@@ -39,6 +39,10 @@
       <input type="text" class="form-control" name="telefono" th:value="${proveedor.telefono}">
     </div>
     <div class="form-group my-3">
+      <label class="form-control" th:text="${proveedor.email}"></label>
+    </div>
+
+    <div class="form-group my-3" >
 
       <select name="categoria">
 
@@ -51,7 +55,7 @@
         />
       </select>
     </div>
-    <div class="form-group my-3">
+    <div class="form-group my-3" >
       <input type="text" class="form-control" name="precioPorHora" th:value="${proveedor.precioPorHora}">
     </div>
 

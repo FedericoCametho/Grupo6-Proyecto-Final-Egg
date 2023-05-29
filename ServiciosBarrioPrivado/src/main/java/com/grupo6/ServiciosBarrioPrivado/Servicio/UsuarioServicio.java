@@ -89,6 +89,22 @@ public class UsuarioServicio implements UserDetailsService {
         return trabajoServicio.listarPorUsuario(idUsuario);
     }
 
+    @Transactional
+    public void modificarPerfil(String id, String nombre,String apellido, String telefono) throws MiException{
+        this.validarParcial(nombre, apellido, telefono);
+        Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
+
+        if (respuesta.isPresent()){
+            Usuario usuario = respuesta.get();
+
+            usuario.setNombre(nombre);
+            usuario.setApellido(apellido);
+            usuario.setTelefono(telefono);
+
+            usuarioRepositorio.save(usuario);
+        }
+
+    }
 
     ///// METODOS DE CONSULTA
 
@@ -145,6 +161,31 @@ public class UsuarioServicio implements UserDetailsService {
         if (telefono.isEmpty() || telefono == null) {
             throw new MiException("El email no puede ser nulo o estar vacio");
         }
+    }
+
+    public void validarPerfil(String nombre,String apellido, String telefono, String password, String password2) throws MiException{
+
+        if(nombre.isEmpty() || nombre == null){
+            throw new MiException("El nombre no puede ser nulo o estar vacio");
+        }
+
+        if(apellido.isEmpty() || apellido == null){
+            throw new MiException("El nombre no puede ser nulo o estar vacio");
+        }
+
+
+        if(password.isEmpty() || password == null || password.length() < 6){
+            throw new MiException("La contraseña no puede ser nula o estar vacia y debe tener mas de 5 digitos");
+        }
+
+        if (!password.equals(password2)){
+            throw new MiException("Las contraseñas ingresadas deben ser iguales");
+        }
+
+        if(telefono.isEmpty() || telefono == null){
+            throw new MiException("El telefono no puede ser nulo o estar vacio");
+        }
+
     }
 
     @Override

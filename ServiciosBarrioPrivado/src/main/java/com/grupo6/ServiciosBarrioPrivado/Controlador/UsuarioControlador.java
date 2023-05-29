@@ -1,13 +1,18 @@
 package com.grupo6.ServiciosBarrioPrivado.Controlador;
 
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Usuario;
+import com.grupo6.ServiciosBarrioPrivado.Enumeracion.CategoriaServicio;
+import com.grupo6.ServiciosBarrioPrivado.Enumeracion.Rol;
 import com.grupo6.ServiciosBarrioPrivado.Excepciones.MiException;
+import com.grupo6.ServiciosBarrioPrivado.Servicio.ProveedorServicio;
 import com.grupo6.ServiciosBarrioPrivado.Servicio.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -16,6 +21,10 @@ public class UsuarioControlador {
 
     @Autowired
     private UsuarioServicio usuarioServicio;
+
+    @Autowired
+    private ProveedorServicio proveedorServicio;
+
 
     @GetMapping("/registrar")
     public String registrar(){
@@ -64,6 +73,29 @@ public class UsuarioControlador {
         }
     }
 
+    @GetMapping("/modificarPerfilUsuario/{id}")
+    public String modificarPerfilUsuario(@PathVariable String id, ModelMap modelo){
+        Usuario usuario = usuarioServicio.getUsuarioById(id);
+        modelo.addAttribute("usuario", usuario);
+        return "modificar_perfil_usuario";
+    }
+
+
+    @PostMapping("/modificarPerfilUsuario/{id}")
+    public String modificarPerfilU(@PathVariable String id,  @RequestParam String nombre, @RequestParam String apellido,
+                                   @RequestParam String telefono,
+                                   ModelMap modelo) {
+        try{
+            usuarioServicio.modificarPerfil(id,nombre, apellido, telefono);
+            return "inicio";
+        }catch(MiException ex){
+            Usuario usuario = usuarioServicio.getUsuarioById(id);
+            modelo.addAttribute("usuario", usuario);
+            modelo.put("error", ex.getMessage());
+            return "modificar_perfil_usuario";
+        }
+    }
+
 
     @GetMapping("borrar/{id}")
     public String borrarUsuario(@PathVariable String id, ModelMap modelo){
@@ -93,6 +125,20 @@ public class UsuarioControlador {
         List<Usuario> usuarios = usuarioServicio.listarUsuarios();
         modelo.addAttribute("usuarios", usuarios);
         return "usuario_lista";
+    }
+
+    @GetMapping("/perfil/{id}/{rol}")
+    public String perfil(@PathVariable Rol rol, @PathVariable String id, ModelMap modelo){
+        Usuario usuario;
+        if (rol.toString().equals("USER")){
+            usuario = usuarioServicio.getUsuarioById(id);
+            modelo.addAttribute("usuario", usuario);
+        } else if (rol.toString().equals("PROVEEDOR")){
+            usuario = proveedorServicio.getProveedorById(id);
+            modelo.addAttribute("usuario", usuario);
+        }
+
+        return "perfil";
     }
 
 }

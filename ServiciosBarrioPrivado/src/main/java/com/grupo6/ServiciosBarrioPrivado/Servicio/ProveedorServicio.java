@@ -81,6 +81,26 @@ public class ProveedorServicio {
         }
     }
 
+    @Transactional
+    public void modificarPerfil(String id, String nombre,String apellido, String telefono,
+                                CategoriaServicio categoria, Integer precioPorHora) throws MiException{
+        this.validarParcial(nombre, apellido, telefono,categoria, precioPorHora);
+        Optional<Usuario> respuesta = proveedorRepositorio.findById(id);
+
+        if (respuesta.isPresent()){
+            Usuario usuario = respuesta.get();
+
+            usuario.setNombre(nombre);
+            usuario.setApellido(apellido);
+            usuario.setTelefono(telefono);
+            usuario.setCategoriaServicio(categoria);
+            usuario.setPrecioPorHora(precioPorHora);
+
+            proveedorRepositorio.save(usuario);
+        }
+
+    }
+
     // METODOS DE CONSULTA
 
     public List<Usuario> listarProveedores(){
@@ -163,6 +183,35 @@ public class ProveedorServicio {
 
     }
 
+    public void validarPerfil(String nombre, String apellido, String telefono,CategoriaServicio categoria,
+                              Integer precioPorHora, String password, String password2) throws MiException{
 
+        if(nombre.isEmpty() || nombre == null){
+            throw new MiException("El nombre no puede ser nulo o estar vacio");
+        }
+
+        if(apellido.isEmpty() || apellido == null){
+            throw new MiException("El apellido no puede ser nulo o estar vacio");
+        }
+
+        if(password.isEmpty() || password == null || password.length() < 6){
+            throw new MiException("La contraseña no puede ser nula o estar vacia y debe tener mas de 5 digitos");
+        }
+
+        if (!password.equals(password2)){
+            throw new MiException("Las contraseñas ingresadas deben ser iguales");
+        }
+
+        if(telefono.isEmpty() || telefono == null){
+            throw new MiException("El telefono no puede ser nulo o estar vacio");
+        }
+        if(categoria.toString().isEmpty() || categoria == null){
+            throw new MiException("La categoria no puede ser nulo o estar vacio");
+        }
+        if(precioPorHora == null){
+            throw new MiException("El precio por hora no puede ser nulo");
+        }
+
+    }
 
 }

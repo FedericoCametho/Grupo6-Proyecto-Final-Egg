@@ -108,6 +108,34 @@ public class ProveedorControlador {
     }
 
 
+    @GetMapping("/modificarPerfilProveedor/{id}")
+    public String modificarPerfilProveedor(@PathVariable String id, ModelMap modelo){
+        Usuario proveedor = proveedorServicio.getProveedorById(id);
+        modelo.addAttribute("proveedor", proveedor);
+        List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
+        modelo.addAttribute("categoriaServicio", categoriaServicio);
+        return "modificar_perfil_proveedor";
+    }
+
+
+    @PostMapping("/modificarPerfilProveedor/{id}")
+    public String modificarPerfilP(@PathVariable String id, @RequestParam String nombre, @RequestParam String apellido,
+                                   @RequestParam String telefono, @RequestParam CategoriaServicio categoria,
+                                   @RequestParam Integer precioPorHora,
+                                   ModelMap modelo) {
+        try{
+            proveedorServicio.modificarPerfil(id,nombre, apellido, telefono, categoria, precioPorHora);
+            return "inicio";
+        }catch(MiException ex){
+            Usuario proveedor = proveedorServicio.getProveedorById(id);
+            modelo.addAttribute("proveedor", proveedor);
+            List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
+            modelo.addAttribute("categoriaServicio", categoriaServicio);
+            modelo.put("error", ex.getMessage());
+            return "modificar_perfil_proveedor";
+        }
+    }
+
     @GetMapping("/listar")
     public String listarTodos(ModelMap modelo){
         List<Usuario> proveedores = proveedorServicio.listarProveedores();
