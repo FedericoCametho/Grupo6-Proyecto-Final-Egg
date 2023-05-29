@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -163,6 +164,7 @@ public class TrabajoServicio {
             trabajo.setCalificacion(calificacion);
             trabajo.setComentario(comentarios);
             trabajoRepositorio.save(trabajo);
+            this.agregarCalificacionAlProveedor(calificacion, trabajo.getProveedor().getId());
         }
     }
 
@@ -236,5 +238,11 @@ public class TrabajoServicio {
         }
     }
 
+    private void agregarCalificacionAlProveedor(Integer calificacion, String idProveedor){
+        Usuario proveedor = proveedorServicio.getProveedorById(idProveedor);
+        List<Double> calificaciones = trabajoRepositorio.buscarPorProveedor(idProveedor).stream().map(t -> Double.valueOf(""+t.getCalificacion())).collect(Collectors.toList());
+        calificaciones.add(Double.valueOf(""+calificacion));
 
+        proveedor.setCalificacion(calificaciones.stream().reduce(0.0, Double::sum) / calificaciones.size());
+    }
 }

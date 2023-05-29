@@ -30,6 +30,8 @@ public class Usuario {
     @Enumerated(EnumType.STRING)
     private CategoriaServicio categoriaServicio;
 
+    private Double calificacion;
+
 
     public Usuario() {
     }
@@ -108,5 +110,13 @@ public class Usuario {
 
     public void setCategoriaServicio(CategoriaServicio categoriaServicio) {
         this.categoriaServicio = categoriaServicio;
+    }
+
+    public Double getCalificacion() {
+        return calificacion;
+    }
+
+    public void setCalificacion(Double calificacion) {
+        this.calificacion = calificacion;
     }
 }

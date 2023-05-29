@@ -38,9 +38,10 @@
       <th scope="col">Telefono</th>
       <th scope="col">Precio Por Hora</th>
       <th scope="col">Categoria de Servicio</th>
-      <th th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}"></th>
-      <th th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}"></th>
-      <th th:if="${session.usuariosesion.rol.toString().equals('USER')}"></th>
+      <th scope="col">Calificacion</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+<!--      <th th:if="${session.usuariosesion.rol.toString().equals('USER')}"></th>-->
 
     </tr>
     </thead>
@@ -52,10 +53,14 @@
       <td th:text="${prov.telefono}"></td>
       <td th:text="${prov.precioPorHora}"></td>
       <td th:text="${prov.categoriaServicio.toString()}"></td>
-      <td th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}">
+      <td>
+        <span th:if="${prov.calificacion != 0}"><span th:text="${prov.calificacion}"></span></span>
+        <span th:if="${prov.calificacion == 0}">Sin calificaciones</span>
+      </td>
+      <td>
         <a th:href= "@{/proveedor/modificar/__${prov.id}__}"><i class="fas fa-feather-alt">  </i> Modificar </a>
       </td>
-      <td th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}">
+      <td>
         <a th:href= "@{/proveedor/borrar/__${prov.id}__}"><i class="fas fa-feather-alt">  </i> Borrar </a>
       </td>
 <!--      <td th:if="${session.usuariosesion.rol.toString().equals('USER')}">-->
@@ -84,6 +89,10 @@
                   <li> Telefono: <span th:text="${prov.telefono}"></span></li>
                   <li> Precio Por Hora: <span th:text="${prov.precioPorHora}"></span> </li>
                   <li> Categoria de Servicio: <span th:text="${prov.categoriaServicio.toString()}"></span></li>
+                  <li> Calificacion:
+                    <span th:if="${prov.calificacion != 0}"><span th:text="${prov.calificacion}"></span></span>
+                    <span th:if="${prov.calificacion == 0}">Sin calificaciones</span>
+                  </li>
                 </ul>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
