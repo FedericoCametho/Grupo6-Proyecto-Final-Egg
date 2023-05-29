@@ -4,6 +4,7 @@ import com.grupo6.ServiciosBarrioPrivado.Entidad.Proveedor;
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Trabajo;
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Usuario;
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.CategoriaServicio;
+import com.grupo6.ServiciosBarrioPrivado.Enumeracion.EstadoTrabajo;
 import com.grupo6.ServiciosBarrioPrivado.Excepciones.MiException;
 import com.grupo6.ServiciosBarrioPrivado.Servicio.ProveedorServicio;
 import com.grupo6.ServiciosBarrioPrivado.Servicio.TrabajoServicio;
@@ -85,6 +86,8 @@ public class TrabajoControlador {
         modelo.addAttribute("proveedores", proveedores);
         List<Usuario> clientes = usuarioServicio.listarUsuarios();
         modelo.addAttribute("clientes", clientes);
+        List<EstadoTrabajo> estados = Arrays.stream(EstadoTrabajo.values()).toList();
+        modelo.addAttribute("estados", estados);
         return "modificar_trabajo";
     }
 
@@ -104,7 +107,8 @@ public class TrabajoControlador {
             modelo.addAttribute("clientes", clientes);
             List<Trabajo> trabajos = trabajoServicio.listarTrabajo();
             modelo.addAttribute("trabajos", trabajos);
-
+            List<EstadoTrabajo> estados = Arrays.stream(EstadoTrabajo.values()).toList();
+            modelo.addAttribute("estados", estados);
             return "trabajo_lista";
 
         }catch(MiException ex){
@@ -117,6 +121,8 @@ public class TrabajoControlador {
             modelo.addAttribute("proveedores", proveedores);
             List<Usuario> clientes = usuarioServicio.listarUsuarios();
             modelo.addAttribute("clientes", clientes);
+            List<EstadoTrabajo> estados = Arrays.stream(EstadoTrabajo.values()).toList();
+            modelo.addAttribute("estados", estados);
             modelo.put("error", ex.getMessage());
 
             return "modificar_trabajo";

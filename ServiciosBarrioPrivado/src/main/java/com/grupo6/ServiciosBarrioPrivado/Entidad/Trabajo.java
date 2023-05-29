@@ -3,6 +3,7 @@ package com.grupo6.ServiciosBarrioPrivado.Entidad;
 
 
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.CategoriaServicio;
+import com.grupo6.ServiciosBarrioPrivado.Enumeracion.EstadoTrabajo;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -19,7 +20,7 @@ public class Trabajo {
     @Temporal(TemporalType.DATE)
     private Date fecha;
 
-    private Boolean finalizado;
+    private EstadoTrabajo estado;
     @ManyToOne
     private Usuario cliente;
     @ManyToOne
@@ -46,20 +47,18 @@ public class Trabajo {
         this.id = id;
     }
 
-    public void setFinalizado(Boolean finalizado) {
-        this.finalizado = finalizado;
-    }
+
 
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
-    public Boolean getFinalizado() {
-        return finalizado;
+    public EstadoTrabajo getEstado() {
+        return estado;
     }
 
-    public void setFinalizado(boolean finalizado) {
-        this.finalizado = finalizado;
+    public void setEstado(EstadoTrabajo estado) {
+        this.estado = estado;
     }
 
     public Usuario getCliente() {
