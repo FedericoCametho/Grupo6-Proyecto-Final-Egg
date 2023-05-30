@@ -342,7 +342,22 @@ public class TrabajoControlador {
         return "trabajo_lista";
     }
 
-
+    @GetMapping("/mostrarComentarios/{idProveedor}")
+    public String mostrarComentarios(@PathVariable String idProveedor, ModelMap modelo){
+        try {
+            List<AuxComentarioCalificacion> resultados = trabajoServicio.listarPorProveedor(idProveedor).stream().map(t -> new AuxComentarioCalificacion(t.getComentario(), t.getCalificacion())).collect(Collectors.toList());
+            if (resultados.isEmpty()) {
+                resultados.add(new AuxComentarioCalificacion("Sin Comentarios", 0));
+            }
+            Usuario proveedor = proveedorServicio.getProveedorById(idProveedor);
+            modelo.addAttribute("resultados", resultados);
+            modelo.addAttribute("proveedor", proveedor);
+            return "proveedor_comentarios";
+        }  catch(MiException ex){
+                modelo.put("error", ex.getMessage());
+                return "inicio";
+            }
+    }
 
 
 
