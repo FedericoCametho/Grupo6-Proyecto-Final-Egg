@@ -41,6 +41,7 @@
       <th scope="col">Calificacion</th>
       <th scope="col"></th>
       <th scope="col"></th>
+      <th scope="col"></th>
 <!--      <th th:if="${session.usuariosesion.rol.toString().equals('USER')}"></th>-->
 
     </tr>
@@ -55,7 +56,10 @@
       <td th:text="${prov.categoriaServicio.toString()}"></td>
       <td>
         <span th:if="${prov.calificacion != 0}"><span th:text="${prov.calificacion}"></span></span>
-        <span th:if="${prov.calificacion == 0}">Sin calificaciones</span>
+        <span th:if="${prov.calificacion == null}">Sin calificaciones</span>
+      </td>
+      <td>
+        <a th:href= "@{/usuario/perfil/__${prov.id}__/__${prov.rol}__}"><i class="fas fa-feather-alt">  </i> Ver Perfil </a>
       </td>
       <td>
         <a th:href= "@{/proveedor/modificar/__${prov.id}__}"><i class="fas fa-feather-alt">  </i> Modificar </a>
@@ -91,7 +95,7 @@
                   <li> Categoria de Servicio: <span th:text="${prov.categoriaServicio.toString()}"></span></li>
                   <li> Calificacion:
                     <span th:if="${prov.calificacion != 0}"><span th:text="${prov.calificacion}"></span></span>
-                    <span th:if="${prov.calificacion == 0}">Sin calificaciones</span>
+                    <span th:if="${prov.calificacion == null}">Sin calificaciones</span>
                   </li>
                 </ul>
                 <div class="d-flex justify-content-between align-items-center">

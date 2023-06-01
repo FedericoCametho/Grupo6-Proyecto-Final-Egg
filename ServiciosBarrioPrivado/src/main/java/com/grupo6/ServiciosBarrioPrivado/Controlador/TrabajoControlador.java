@@ -189,7 +189,15 @@ public class TrabajoControlador {
                 throw new MiException("El estado a actualizar no puede ser nulo");
             }
             trabajoServicio.modificarEstado(id, estado);
-            return "redirect:../listar";
+
+            String idProveedor = trabajoServicio.getTrabajoById(id).getProveedor().getId();
+            List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
+            modelo.addAttribute("categoriaServicio", categoriaServicio);
+            List<Trabajo> trabajos = trabajoServicio.listarPorProveedor(idProveedor).stream().filter( t -> t.getEstado().toString().equals("PENDIENTE")).collect(Collectors.toList());
+            modelo.addAttribute("trabajos", trabajos);
+            List<Usuario> proveedores = proveedorServicio.listarProveedores();
+            modelo.addAttribute("proveedores", proveedores);
+            return "trabajo_lista";
         } catch(MiException ex){
             modelo.put("error", ex.getMessage());
             return "trabajo_confirmacion";
@@ -276,7 +284,7 @@ public class TrabajoControlador {
         List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
         modelo.addAttribute("categoriaServicio", categoriaServicio);
 
-        List<Trabajo> trabajos = trabajoServicio.listarPorUsuario(idCliente).stream().filter(t -> t.getEstado().toString().equals("FINALIZADO")).collect(Collectors.toList());
+        List<Trabajo> trabajos = trabajoServicio.listarPorUsuario(idCliente).stream().filter(t -> t.getEstado().toString().equals("FINALIZADO") || t.getEstado().toString().equals("CANCELADO") ).collect(Collectors.toList());
         modelo.addAttribute("trabajos", trabajos);
         List<Usuario> proveedores = proveedorServicio.listarProveedores();
         modelo.addAttribute("proveedores", proveedores);
@@ -319,7 +327,7 @@ public class TrabajoControlador {
         List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
         modelo.addAttribute("categoriaServicio", categoriaServicio);
 
-        List<Trabajo> trabajos = trabajoServicio.listarPorProveedor(idProveedor).stream().filter( t -> t.getEstado().toString().equals("FINALIZADO")).collect(Collectors.toList());
+        List<Trabajo> trabajos = trabajoServicio.listarPorProveedor(idProveedor).stream().filter( t -> t.getEstado().toString().equals("FINALIZADO") || t.getEstado().toString().equals("CANCELADO")).collect(Collectors.toList());
         modelo.addAttribute("trabajos", trabajos);
         List<Usuario> proveedores = proveedorServicio.listarProveedores();
         modelo.addAttribute("proveedores", proveedores);

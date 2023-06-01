@@ -44,6 +44,7 @@ public class ProveedorServicio {
         proveedor.setCategoriaServicio(categoria);
         proveedor.setPrecioPorHora(precioPorHora);
 
+
         proveedorRepositorio.save(proveedor);
     }
 

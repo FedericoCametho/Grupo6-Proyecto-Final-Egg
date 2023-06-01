@@ -1,5 +1,6 @@
 package com.grupo6.ServiciosBarrioPrivado.Controlador;
 
+import com.grupo6.ServiciosBarrioPrivado.Entidad.Trabajo;
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Usuario;
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.CategoriaServicio;
 import com.grupo6.ServiciosBarrioPrivado.Excepciones.MiException;
@@ -114,7 +115,15 @@ public class ProveedorControlador {
         modelo.addAttribute("proveedor", proveedor);
         List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
         modelo.addAttribute("categoriaServicio", categoriaServicio);
-        return "modificar_perfil_proveedor";
+        try{
+            List<Trabajo> trabajos = proveedorServicio.trabajosDeUnProveedor(id);
+            modelo.addAttribute("trabajos", trabajos);
+            return "modificar_perfil_proveedor";
+        } catch(MiException ex){
+            modelo.put("error", ex.getMessage());
+            return "modificar_perfil_proveedor";
+        }
+
     }
 
 

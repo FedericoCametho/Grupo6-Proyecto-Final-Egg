@@ -73,7 +73,7 @@
                 <li> Categoria de Servicio: <span th:text="${prov.categoriaServicio.toString()}"></span></li>
                 <li> Calificacion:
                   <span th:if="${prov.calificacion != 0}"><span th:text="${prov.calificacion}"></span></span>
-                  <span th:if="${prov.calificacion == 0}">Sin calificaciones</span>
+                  <span th:if="${prov.calificacion == null}">Sin calificaciones</span>
                 </li>
               </ul>
               <div class="d-flex justify-content-between align-items-center">

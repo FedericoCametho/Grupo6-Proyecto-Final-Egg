@@ -40,14 +40,17 @@
       <td th:text="${tra.detalles}"></td>
       <td th:text="${tra.estado}"></td>
       <td th:text="${tra.comentario}"></td>
-      <td th:text="${tra.calificacion}"></td>
+      <td>
+        <span th:if="${tra.calificacion == 0}"> Sin calificaciones </span>
+        <span th:if="${tra.calificacion != 0}" th:text="${tra.calificacion}"></span>
+      </td>
       <td th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}">
         <a th:href= "@{/trabajo/modificar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Modificar </a>
       </td>
       <td th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}">
         <a th:href= "@{/trabajo/borrar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Borrar </a>
       </td>
-      <td th:if="${session.usuariosesion.rol.toString().equals('PROVEEDOR')}">
+      <td th:if="${session.usuariosesion.rol.toString().equals('PROVEEDOR') && tra.estado.toString().equals('PENDIENTE')}">
         <a th:href= "@{/trabajo/confirmar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Cambiar Estado </a>
       </td>
       <td th:if="${session.usuariosesion.rol.toString().equals('USER') && tra.estado.toString().equals('FINALIZADO') && tra.calificacion == 0}">
@@ -69,7 +72,7 @@
           <a th:href="@{/}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
         </div>
 
-        <a th:href="@{/trabajo/registrar/__${session.usuariosesion.id}__}" class="btn btn-secondary my-2 botonVolver botones">Solicitar un Trabajo</a>
+        <a th:if="${!session.usuariosesion.rol.toString().equals('PROVEEDOR')}" th:href="@{/trabajo/registrar/__${session.usuariosesion.id}__}" class="btn btn-secondary my-2 botonVolver botones">Solicitar un Trabajo</a>
 
       </div>
     </div>

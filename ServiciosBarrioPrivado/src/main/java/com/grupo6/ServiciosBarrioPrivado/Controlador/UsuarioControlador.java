@@ -1,10 +1,12 @@
 package com.grupo6.ServiciosBarrioPrivado.Controlador;
 
+import com.grupo6.ServiciosBarrioPrivado.Entidad.Trabajo;
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Usuario;
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.CategoriaServicio;
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.Rol;
 import com.grupo6.ServiciosBarrioPrivado.Excepciones.MiException;
 import com.grupo6.ServiciosBarrioPrivado.Servicio.ProveedorServicio;
+import com.grupo6.ServiciosBarrioPrivado.Servicio.TrabajoServicio;
 import com.grupo6.ServiciosBarrioPrivado.Servicio.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/usuario")
@@ -24,6 +27,9 @@ public class UsuarioControlador {
 
     @Autowired
     private ProveedorServicio proveedorServicio;
+
+    @Autowired
+    private TrabajoServicio trabajoServicio;
 
 
     @GetMapping("/registrar")
@@ -122,7 +128,7 @@ public class UsuarioControlador {
 
     @GetMapping("/listar")
     public String listarTodos(ModelMap modelo){
-        List<Usuario> usuarios = usuarioServicio.listarUsuarios();
+        List<Usuario> usuarios = usuarioServicio.listarUsuarios().stream().filter(u -> u.getRol().toString().equals("USER")).collect(Collectors.toList());
         modelo.addAttribute("usuarios", usuarios);
         return "usuario_lista";
     }
@@ -130,11 +136,22 @@ public class UsuarioControlador {
     @GetMapping("/perfil/{id}/{rol}")
     public String perfil(@PathVariable Rol rol, @PathVariable String id, ModelMap modelo){
         Usuario usuario;
-        if (rol.toString().equals("USER")){
-            usuario = usuarioServicio.getUsuarioById(id);
-            modelo.addAttribute("usuario", usuario);
-        } else if (rol.toString().equals("PROVEEDOR")){
+        if (rol.toString().equals("PROVEEDOR")){
             usuario = proveedorServicio.getProveedorById(id);
+            modelo.addAttribute("usuario", usuario);
+
+            try{
+                List<AuxComentarioCalificacion> resultados = trabajoServicio.listarPorProveedor(id).stream().map(t -> new AuxComentarioCalificacion(t.getComentario(), t.getCalificacion())).collect(Collectors.toList());
+                if (resultados.isEmpty()) {
+                    resultados.add(new AuxComentarioCalificacion("Sin Comentarios", 0));
+                }
+                modelo.addAttribute("resultados", resultados);
+            } catch(MiException ex){
+                modelo.put("error", ex.getMessage());
+            }
+
+        } else {
+            usuario = usuarioServicio.getUsuarioById(id);
             modelo.addAttribute("usuario", usuario);
         }
 
