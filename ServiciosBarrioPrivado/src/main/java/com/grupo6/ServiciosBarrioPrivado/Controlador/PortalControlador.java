@@ -63,7 +63,7 @@ public class PortalControlador {
 
 
     @GetMapping("/inicio")
-    public String afterLogin(){
+    public String afterLogin(HttpSession session, ModelMap modelo){
 //        Usuario loggedUser = (Usuario) session.getAttribute("userSession");
 //
 //        if (loggedUser.getRol().toString().equals("ADMIN")) {
@@ -77,7 +77,7 @@ public class PortalControlador {
 //        if (loggedUser.getRol().toString().equals("USUARIO")) {
 //            return "redirect:/usuario/inicio";
 //        }
-
+        modelo.addAttribute("usuario", session.getAttribute("usuariosesion"));
         return "inicio";
     }
 

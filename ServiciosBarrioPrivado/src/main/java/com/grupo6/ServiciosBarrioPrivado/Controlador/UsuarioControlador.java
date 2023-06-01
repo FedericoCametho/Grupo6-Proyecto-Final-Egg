@@ -93,6 +93,7 @@ public class UsuarioControlador {
                                    ModelMap modelo) {
         try{
             usuarioServicio.modificarPerfil(id,nombre, apellido, telefono);
+            modelo.addAttribute("usuario", usuarioServicio.getUsuarioById(id));
             return "inicio";
         }catch(MiException ex){
             Usuario usuario = usuarioServicio.getUsuarioById(id);

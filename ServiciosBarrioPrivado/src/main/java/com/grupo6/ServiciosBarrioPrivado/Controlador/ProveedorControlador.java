@@ -134,6 +134,7 @@ public class ProveedorControlador {
                                    ModelMap modelo) {
         try{
             proveedorServicio.modificarPerfil(id,nombre, apellido, telefono, categoria, precioPorHora);
+            modelo.addAttribute("usuario", proveedorServicio.getProveedorById(id));
             return "inicio";
         }catch(MiException ex){
             Usuario proveedor = proveedorServicio.getProveedorById(id);

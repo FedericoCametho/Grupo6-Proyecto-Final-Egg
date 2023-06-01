@@ -41,7 +41,7 @@
       <td th:text="${tra.estado}"></td>
       <td th:text="${tra.comentario}"></td>
       <td>
-        <span th:if="${tra.calificacion == 0}"> Sin calificaciones </span>
+        <span th:if="${tra.calificacion == 0}"> Sin calificacion </span>
         <span th:if="${tra.calificacion != 0}" th:text="${tra.calificacion}"></span>
       </td>
       <td th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}">
