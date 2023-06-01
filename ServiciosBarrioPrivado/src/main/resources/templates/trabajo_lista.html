@@ -72,7 +72,7 @@
           <a th:href="@{/}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
         </div>
 
-        <a th:if="${!session.usuariosesion.rol.toString().equals('PROVEEDOR')}" th:href="@{/trabajo/registrar/__${session.usuariosesion.id}__}" class="btn btn-secondary my-2 botonVolver botones">Solicitar un Trabajo</a>
+        <a th:if="${session.usuariosesion.rol.toString().equals('USER')}" th:href="@{/trabajo/registrar/__${session.usuariosesion.id}__}" class="btn btn-secondary my-2 botonVolver botones">Solicitar un Trabajo</a>
 
       </div>
     </div>

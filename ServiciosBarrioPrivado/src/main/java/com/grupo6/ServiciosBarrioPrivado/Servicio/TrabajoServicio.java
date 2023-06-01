@@ -49,7 +49,7 @@ public class TrabajoServicio {
             throw ex;
         }
 
-        this.validar(fecha, idCliente, idProveedor, categoria);
+        validar(fecha, idCliente, idProveedor, categoria);
 
         Usuario cliente = usuarioRepositorio.findById(idCliente).get();
         Usuario proveedor = proveedorServicio.getProveedorById(idProveedor);
@@ -86,7 +86,7 @@ public class TrabajoServicio {
         }catch(ParseException ex){
             throw ex;
         }
-        this.validar(fecha, idCliente, idProveedor, categoria);
+        validar(fecha, idCliente, idProveedor, categoria);
 
         Optional<Trabajo> respuestaTrabajo = trabajoRepositorio.findById(id);
         Optional<Usuario> respuestaProveedor = usuarioRepositorio.findById(idProveedor);

@@ -68,7 +68,7 @@ public class UsuarioControlador {
     public String modificar(@PathVariable String id,  @RequestParam String nombre, @RequestParam String apellido,  @RequestParam String telefono, ModelMap modelo) throws MiException{
         try{
             usuarioServicio.modificar(id,nombre, apellido, telefono);
-            List<Usuario> usuarios = usuarioServicio.listarUsuarios();
+            List<Usuario> usuarios = usuarioServicio.listarUsuarios().stream().filter(u -> u.getRol().toString().equals("USER")).collect(Collectors.toList());
             modelo.addAttribute("usuarios", usuarios);
             return "usuario_lista";
         }catch(MiException ex){

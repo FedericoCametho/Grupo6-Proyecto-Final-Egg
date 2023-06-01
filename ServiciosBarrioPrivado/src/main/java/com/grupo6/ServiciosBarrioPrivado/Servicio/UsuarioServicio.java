@@ -36,7 +36,7 @@ public class UsuarioServicio implements UserDetailsService {
 
     @Transactional
     public void registrar(String nombre,String apellido, String email, String password, String password2, String telefono) throws MiException {
-        this.validar(nombre,apellido,email,password,password2, telefono);
+        validar(nombre,apellido,email,password,password2, telefono);
 
         Usuario usuario = new Usuario();
 
@@ -55,7 +55,7 @@ public class UsuarioServicio implements UserDetailsService {
 
     @Transactional
     public void modificar(String id, String nombre, String apellido, String telefono) throws MiException{
-        this.validarParcial(nombre,apellido,telefono);
+        validarParcial(nombre,apellido,telefono);
 
         Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
 
@@ -122,19 +122,19 @@ public class UsuarioServicio implements UserDetailsService {
 
     public void validar(String nombre,String apellido, String email, String password, String password2, String telefono) throws MiException{
 
-        if(nombre.isEmpty() || nombre == null){
+        if((nombre.trim().isEmpty() || nombre == null)){
             throw new MiException("El nombre no puede ser nulo o estar vacio");
         }
 
-        if(apellido.isEmpty() || apellido == null){
+        if(apellido.trim().isEmpty() || apellido == null){
             throw new MiException("El nombre no puede ser nulo o estar vacio");
         }
 
-        if(email.isEmpty() || email == null){
+        if(email.trim().isEmpty() || email == null){
             throw new MiException("El email no puede ser nulo o estar vacio");
         }
 
-        if(password.isEmpty() || password == null || password.length() < 6){
+        if(password.trim().isEmpty() || password == null || password.length() < 6){
             throw new MiException("La contraseña no puede ser nula o estar vacia y debe tener mas de 5 digitos");
         }
 
@@ -142,7 +142,7 @@ public class UsuarioServicio implements UserDetailsService {
             throw new MiException("Las contraseñas ingresadas deben ser iguales");
         }
 
-        if(telefono.isEmpty() || telefono == null){
+        if(telefono.trim().isEmpty() || telefono == null){
             throw new MiException("El telefono no puede ser nulo o estar vacio");
         }
 
@@ -150,15 +150,15 @@ public class UsuarioServicio implements UserDetailsService {
 
     public void validarParcial(String nombre, String apellido, String telefono) throws MiException {
 
-        if (nombre.isEmpty() || nombre == null) {
+        if (nombre.trim().isEmpty() || nombre == null) {
             throw new MiException("El nombre no puede ser nulo o estar vacio");
         }
 
-        if (apellido.isEmpty() || apellido == null) {
+        if (apellido.trim().isEmpty() || apellido == null) {
             throw new MiException("El email no puede ser nulo o estar vacio");
         }
 
-        if (telefono.isEmpty() || telefono == null) {
+        if (telefono.trim().isEmpty() || telefono == null) {
             throw new MiException("El email no puede ser nulo o estar vacio");
         }
     }

@@ -65,6 +65,8 @@ public class TrabajoControlador {
                                   @RequestParam CategoriaServicio categoria, @RequestParam String detalles, ModelMap modelo){
         try{
             trabajoServicio.registrar(fecha, idCliente, idProveedor, categoria, detalles);
+            Usuario usuario = usuarioServicio.getUsuarioById(idCliente);
+            modelo.addAttribute("usuario", usuario);
             return "inicio";
 
         } catch (MiException ex){
@@ -217,7 +219,10 @@ public class TrabajoControlador {
             if (calificacion == null){
                 throw new MiException("La calificacion no puede ser nula");
             }
+
             trabajoServicio.calificarTrabajo(id, calificacion, comentarios);
+            Usuario usuario = usuarioServicio.getUsuarioById(trabajoServicio.getTrabajoById(id).getCliente().getId());
+            modelo.addAttribute("usuario", usuario);
             return "inicio";
         } catch(MiException ex){
             modelo.put("error", ex.getMessage());
