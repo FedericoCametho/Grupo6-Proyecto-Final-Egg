@@ -11,14 +11,16 @@ img{
     background-color: #8282d4;
 }
 
-
+.formulario-personalizado{
+    background-color: lightgray;
+}
 
 .formulario{
     width: 500px;
     margin: auto;
     display: flex;
     flex-direction: column;
-    background-color: whitesmoke;
+   
     padding: 20px 50px 20px 50px;
     border-radius: 10px;
     text-align: center;

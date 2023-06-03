@@ -3,7 +3,9 @@
     margin: auto;
     background-color: whitesmoke;
 }
-
+.formulario-personalizado{
+    background-color: lightgray;
+}
 
 input{
     text-align: center;
