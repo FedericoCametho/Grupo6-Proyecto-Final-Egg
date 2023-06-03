@@ -37,7 +37,15 @@
     <div class="form-group my-3">
       <input type="text" class="form-control" name="telefono" th:value="${usuario.telefono}" placeholder="Telefono">
     </div>
-
+    <div class="form-group my-3">
+      <select name="rol">
+        <option th:each="rr : ${roles}"
+                th:value="${rr}"
+                th:text="${rr.toString()}"
+                th:selected="${usuario.rol == rr}"
+        />
+      </select>
+    </div>
     <button type="submit" class="btn btn-primary mt-3 botones">Modificar</button>
   </form>
 

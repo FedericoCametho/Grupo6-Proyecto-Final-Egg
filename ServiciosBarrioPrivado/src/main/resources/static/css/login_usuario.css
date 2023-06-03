@@ -54,3 +54,10 @@ input{
 header{
     max-height: 120px;
 }
+
+
+.botonBorrarComentario {
+    background-color: #8282d4;
+    width: auto;
+    margin: auto;
+}

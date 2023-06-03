@@ -45,9 +45,6 @@
     <div class="form-group my-3" >
 
       <select name="categoria">
-
-        <option>Seleccionar Categoria</option>
-
         <option th:each="cat : ${categoriaServicio}"
                 th:value="${cat}"
                 th:text="${cat.toString()}"

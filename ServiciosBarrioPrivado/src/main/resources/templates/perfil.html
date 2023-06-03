@@ -67,7 +67,12 @@
             <div class="card-body">
               <h5 th:if="${res.calificacion != 0}" >CALIFICACION: <span th:text="${res.calificacion}"></span></h5>
               <h5 th:if="${res.calificacion == 0}">CALIFICACION: <span >No registra calificaciones</span></h5>
-              <p th:text="${res.comentario}">  </p>
+              
+              <h5 th:if="${res.comentario != null}" >  
+                <p><span th:text="${res.comentario}"></span></p>
+                <a th:href="@{/usuario/borrarComentarioTrabajo/__${res.id}__}" class="btn btn-secondary my-2 botonVolver botonBorrarComentario">Borrar comentario</a>
+              </h5>
+
             </div>
           </div>
         </div>

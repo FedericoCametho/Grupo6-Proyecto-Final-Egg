@@ -2,6 +2,7 @@ package com.grupo6.ServiciosBarrioPrivado.Servicio;
 
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Trabajo;
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Usuario;
+import com.grupo6.ServiciosBarrioPrivado.Enumeracion.CategoriaServicio;
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.Rol;
 import com.grupo6.ServiciosBarrioPrivado.Excepciones.MiException;
 import com.grupo6.ServiciosBarrioPrivado.Repositorio.UsuarioRepositorio;
@@ -54,7 +55,7 @@ public class UsuarioServicio implements UserDetailsService {
 
 
     @Transactional
-    public void modificar(String id, String nombre, String apellido, String telefono) throws MiException{
+    public void modificar(String id, String nombre, String apellido, String telefono, Rol rol) throws MiException{
         validarParcial(nombre,apellido,telefono);
 
         Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
@@ -65,11 +66,20 @@ public class UsuarioServicio implements UserDetailsService {
             usuario.setNombre(nombre);
             usuario.setApellido(apellido);
             usuario.setTelefono(telefono);
+            usuario.setRol(rol);
+            
+            if (rol == Rol.PROVEEDOR){
+                usuario.setCategoriaServicio(CategoriaServicio.PLOMERO);
+                usuario.setPrecioPorHora(0);
+            }
+            
+            if (rol == Rol.USER || rol == Rol.ADMIN){
+                usuario.setCategoriaServicio(null);
+                usuario.setPrecioPorHora(null);
+            }
 
             usuarioRepositorio.save(usuario);
         }
-
-
     }
 
     @Transactional
@@ -84,13 +94,12 @@ public class UsuarioServicio implements UserDetailsService {
         }
     }
 
-
     public List<Trabajo> trabajosDeUnUsuario(String idUsuario) throws MiException{
         return trabajoServicio.listarPorUsuario(idUsuario);
     }
 
     @Transactional
-    public void modificarPerfil(String id, String nombre,String apellido, String telefono) throws MiException{
+    public void modificarPerfil(String id, String nombre, String apellido, String telefono, Rol rol) throws MiException{
         this.validarParcial(nombre, apellido, telefono);
         Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
 
@@ -100,7 +109,13 @@ public class UsuarioServicio implements UserDetailsService {
             usuario.setNombre(nombre);
             usuario.setApellido(apellido);
             usuario.setTelefono(telefono);
+            usuario.setRol(rol);
 
+            if (rol == Rol.PROVEEDOR){
+                usuario.setCategoriaServicio(CategoriaServicio.PLOMERO);
+                usuario.setPrecioPorHora(0);
+            }
+            
             usuarioRepositorio.save(usuario);
         }
 
@@ -117,8 +132,6 @@ public class UsuarioServicio implements UserDetailsService {
     public Usuario getUsuarioById(String id){
         return usuarioRepositorio.getOne(id);
     }
-
-
 
     public void validar(String nombre,String apellido, String email, String password, String password2, String telefono) throws MiException{
 
@@ -207,5 +220,18 @@ public class UsuarioServicio implements UserDetailsService {
             } else {
                 return null;
             }
+    }
+
+    @Transactional
+    public void cambiarRol(String id, Rol rol) throws MiException{
+        Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
+
+        if (respuesta.isPresent()){
+            Usuario usuario = respuesta.get();
+
+            usuario.setRol(rol);
+            
+            usuarioRepositorio.save(usuario);
+        }
     }
 }

@@ -51,7 +51,7 @@ public class ProveedorServicio {
 
     @Transactional
     public void modificar(String id, String nombre, String apellido, String telefono,
-                          CategoriaServicio categoria, Integer precioPorHora) throws MiException{
+                          CategoriaServicio categoria, Integer precioPorHora, Rol rol) throws MiException{
         this.validarParcial(nombre,apellido,telefono, categoria, precioPorHora);
 
         Optional<Usuario> respuesta = proveedorRepositorio.findById(id);
@@ -64,6 +64,12 @@ public class ProveedorServicio {
             proveedor.setTelefono(telefono);
             proveedor.setCategoriaServicio(categoria);
             proveedor.setPrecioPorHora(precioPorHora);
+            proveedor.setRol(rol);
+            
+            if (rol == Rol.USER || rol == Rol.ADMIN){
+                proveedor.setCategoriaServicio(null);
+                proveedor.setPrecioPorHora(0);
+            }
 
             proveedorRepositorio.save(proveedor);
         }
@@ -83,21 +89,35 @@ public class ProveedorServicio {
     }
 
     @Transactional
+    public void eliminarComentario(String id)throws MiException{
+        if (id == null || id.isEmpty()){
+            throw new MiException("El id ingresado no puede ser nulo o estar vacio");
+        }
+        Optional<Usuario> respuesta = proveedorRepositorio.findById(id);
+        if(respuesta.isPresent()){
+            Usuario proveedor = respuesta.get();
+            proveedor.setCalificacion(null);
+            
+            proveedorRepositorio.save(proveedor);
+        }
+    }
+    
+    @Transactional
     public void modificarPerfil(String id, String nombre,String apellido, String telefono,
                                 CategoriaServicio categoria, Integer precioPorHora) throws MiException{
         this.validarParcial(nombre, apellido, telefono,categoria, precioPorHora);
         Optional<Usuario> respuesta = proveedorRepositorio.findById(id);
 
         if (respuesta.isPresent()){
-            Usuario usuario = respuesta.get();
+            Usuario proveedor = respuesta.get();
 
-            usuario.setNombre(nombre);
-            usuario.setApellido(apellido);
-            usuario.setTelefono(telefono);
-            usuario.setCategoriaServicio(categoria);
-            usuario.setPrecioPorHora(precioPorHora);
-
-            proveedorRepositorio.save(usuario);
+            proveedor.setNombre(nombre);
+            proveedor.setApellido(apellido);
+            proveedor.setTelefono(telefono);
+            proveedor.setCategoriaServicio(categoria);
+            proveedor.setPrecioPorHora(precioPorHora);
+            
+            proveedorRepositorio.save(proveedor);
         }
 
     }

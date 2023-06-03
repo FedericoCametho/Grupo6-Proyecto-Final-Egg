@@ -3,6 +3,7 @@ package com.grupo6.ServiciosBarrioPrivado.Controlador;
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Trabajo;
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Usuario;
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.CategoriaServicio;
+import com.grupo6.ServiciosBarrioPrivado.Enumeracion.Rol;
 import com.grupo6.ServiciosBarrioPrivado.Excepciones.MiException;
 import com.grupo6.ServiciosBarrioPrivado.Servicio.ProveedorServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,26 +62,31 @@ public class ProveedorControlador {
         modelo.addAttribute("proveedor", proveedor);
         List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
         modelo.addAttribute("categoriaServicio", categoriaServicio);
+        List<Rol> roles = Arrays.stream(Rol.values()).toList();
+        modelo.addAttribute("roles", roles);
         return "modificar_proveedor";
     }
-
 
     @PostMapping("/modificar/{id}")
     public String modificar(@PathVariable String id,  @RequestParam String nombre, @RequestParam String apellido,
                             @RequestParam String telefono,@RequestParam CategoriaServicio categoria,
-                            @RequestParam Integer precioPorHora, ModelMap modelo) throws MiException{
+                            @RequestParam Integer precioPorHora, @RequestParam Rol rol, ModelMap modelo) throws MiException{
         try{
-            proveedorServicio.modificar(id,nombre, apellido, telefono, categoria, precioPorHora);
+            proveedorServicio.modificar(id,nombre, apellido, telefono, categoria, precioPorHora, rol);
             List<Usuario> proveedores = proveedorServicio.listarProveedores();
             modelo.addAttribute("proveedores", proveedores);
             List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
             modelo.addAttribute("categoriaServicio", categoriaServicio);
+            List<Rol> roles = Arrays.stream(Rol.values()).toList();
+            modelo.addAttribute("roles", roles);
             return "proveedor_lista";
         }catch(MiException ex){
             Usuario proveedor = proveedorServicio.getProveedorById(id);
             modelo.addAttribute("proveedor", proveedor);
             List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
             modelo.addAttribute("categoriaServicio", categoriaServicio);
+            List<Rol> roles = Arrays.stream(Rol.values()).toList();
+            modelo.addAttribute("roles", roles);
             modelo.put("error", ex.getMessage());
             return "modificar_proveedor";
         }
@@ -108,7 +114,6 @@ public class ProveedorControlador {
         }
     }
 
-
     @GetMapping("/modificarPerfilProveedor/{id}")
     public String modificarPerfilProveedor(@PathVariable String id, ModelMap modelo){
         Usuario proveedor = proveedorServicio.getProveedorById(id);
@@ -126,16 +131,14 @@ public class ProveedorControlador {
 
     }
 
-
     @PostMapping("/modificarPerfilProveedor/{id}")
     public String modificarPerfilP(@PathVariable String id, @RequestParam String nombre, @RequestParam String apellido,
                                    @RequestParam String telefono, @RequestParam CategoriaServicio categoria,
-                                   @RequestParam Integer precioPorHora,
-                                   ModelMap modelo) {
+                                   @RequestParam Integer precioPorHora, ModelMap modelo) {
         try{
             proveedorServicio.modificarPerfil(id,nombre, apellido, telefono, categoria, precioPorHora);
             modelo.addAttribute("usuario", proveedorServicio.getProveedorById(id));
-            return "inicio";
+            return "redirect:/inicio";
         }catch(MiException ex){
             Usuario proveedor = proveedorServicio.getProveedorById(id);
             modelo.addAttribute("proveedor", proveedor);
@@ -172,7 +175,5 @@ public class ProveedorControlador {
             return "proveedor_lista";
         }
     }
-
-
 
 }

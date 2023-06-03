@@ -358,9 +358,9 @@ public class TrabajoControlador {
     @GetMapping("/mostrarComentarios/{idProveedor}")
     public String mostrarComentarios(@PathVariable String idProveedor, ModelMap modelo){
         try {
-            List<AuxComentarioCalificacion> resultados = trabajoServicio.listarPorProveedor(idProveedor).stream().map(t -> new AuxComentarioCalificacion(t.getComentario(), t.getCalificacion())).collect(Collectors.toList());
+            List<AuxComentarioCalificacion> resultados = trabajoServicio.listarPorProveedor(idProveedor).stream().map(t -> new AuxComentarioCalificacion(t.getId(), t.getComentario(), t.getCalificacion())).collect(Collectors.toList());
             if (resultados.isEmpty()) {
-                resultados.add(new AuxComentarioCalificacion("Sin Comentarios", 0));
+                resultados.add(new AuxComentarioCalificacion("", "Sin Comentarios", 0));
             }
             Usuario proveedor = proveedorServicio.getProveedorById(idProveedor);
             modelo.addAttribute("resultados", resultados);

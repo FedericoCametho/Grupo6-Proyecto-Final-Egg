@@ -6,7 +6,7 @@
 
 
 <div class="container m-5" >
-
+ 
   <table class="table ">
     <thead>
     <tr>
@@ -14,6 +14,7 @@
       <th scope="col">Apellido</th>
       <th scope="col">Email</th>
       <th scope="col">Telefono</th>
+      <th scope="col">Rol</th>
       <th th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}"></th>
       <th th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}"></th>
 
@@ -25,6 +26,7 @@
       <td th:text="${usu.apellido}"></td>
       <td th:text="${usu.email}"></td>
       <td th:text="${usu.telefono}"></td>
+      <td th:text="${usu.rol.toString()}"></td>
       <td th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}">
         <a th:href= "@{/usuario/modificar/__${usu.id}__}"><i class="fas fa-feather-alt">  </i> Modificar </a>
       </td>

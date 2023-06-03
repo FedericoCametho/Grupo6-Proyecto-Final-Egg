@@ -1,10 +1,12 @@
 package com.grupo6.ServiciosBarrioPrivado.Controlador;
 
 public class AuxComentarioCalificacion {
+    private String id;
     private String comentario;
     private Integer calificacion;
 
-    public AuxComentarioCalificacion(String comentario, Integer calificacion){
+    public AuxComentarioCalificacion(String id, String comentario, Integer calificacion){
+        this.id = id;
         this.comentario = comentario;
         this.calificacion = calificacion;
     }
@@ -23,5 +25,9 @@ public class AuxComentarioCalificacion {
 
     public void setCalificacion(Integer calificacion) {
         this.calificacion = calificacion;
+    }
+    
+    public String getId() {
+        return id;
     }
 }
