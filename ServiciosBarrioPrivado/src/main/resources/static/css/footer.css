@@ -1,0 +1,22 @@
+.footer {
+    background-color: #f8f9fa;
+    padding: 20px 0;
+}
+
+.footer-text {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.subscribe-form .input-group {
+    display: flex;
+}
+
+.subscribe-form .form-control {
+    flex: 1;
+}
+
+.subscribe-form .btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
