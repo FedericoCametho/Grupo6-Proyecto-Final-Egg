@@ -11,26 +11,23 @@ img{
     background-color: #8282d4;
 }
 
-
-
 .formulario{
-    width: 500px;
+    width: 800px;
     margin: auto;
     display: flex;
     flex-direction: column;
     background-color: whitesmoke;
     padding: 20px 50px 20px 50px;
     border-radius: 10px;
-    text-align: center;
+    text-align: left;
 }
 
 .mensajeError{
     text-align: center;
     width: 150px;
     margin: auto;
-
-
 }
+
 .mensajeExito{
     text-align: center;
     width: 150px;
@@ -54,4 +51,10 @@ input{
 }
 header{
     max-height: 120px;
+}
+
+.image-cards{
+    width: 150px;
+    height: 150px;
+    border-radius: 200px;
 }

@@ -28,18 +28,28 @@
         <p class="card-text" th:text="${exito}"></p>
       </div>
     </div>
-    <h2 class="mb-2">Modificar Mi Perfil</h2>
+    <br>
+    <h2 class="mb-2">Modificar Perfil</h2>
+    <br>
+
     <div class="form-group my-3">
-      <input type="text" class="form-control" name="nombre" th:value="${usuario.nombre}">
+      <label class="col-form-label col-sm-2">Nombre:</label>
+      <input type="text" class="form-control" style="text-align:left" name="nombre" th:value="${usuario.nombre}">
     </div>
+
     <div class="form-group my-3">
-      <input type="text" class="form-control" name="apellido" th:value="${usuario.apellido}">
+      <label class="col-form-label col-sm-2">Apellido:</label>
+      <input type="text" class="form-control" style="text-align:left" name="apellido" th:value="${usuario.apellido}">
     </div>
+
     <div class="form-group my-3">
-      <input type="text" class="form-control" name="telefono" th:value="${usuario.telefono}">
+      <label class="col-form-label col-sm-2">Telefono:</label>
+      <input type="text" class="form-control" style="text-align:left" name="telefono" th:value="${usuario.telefono}">
     </div>
+
     <div class="form-group my-3">
-      <label class="form-control"  th:text="${usuario.email}"></label>
+      <label class="col-form-label col-sm-2">Email:</label>
+      <label class="form-control" style="background-color:#BBBBBB"  th:text="${usuario.email}"></label>
     </div>
 
 

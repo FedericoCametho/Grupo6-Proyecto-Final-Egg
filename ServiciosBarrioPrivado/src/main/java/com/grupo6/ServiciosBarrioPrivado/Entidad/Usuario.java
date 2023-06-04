@@ -31,6 +31,7 @@ public class Usuario {
     private CategoriaServicio categoriaServicio;
 
     private Double calificacion;
+    private String imagen;
 
 
     public Usuario() {
@@ -118,5 +119,13 @@ public class Usuario {
 
     public void setCalificacion(Double calificacion) {
         this.calificacion = calificacion;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 }

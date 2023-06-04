@@ -7,11 +7,17 @@ import com.grupo6.ServiciosBarrioPrivado.Excepciones.MiException;
 import com.grupo6.ServiciosBarrioPrivado.Servicio.ProveedorServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.data.jpa.domain.JpaSort;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 
@@ -36,9 +42,23 @@ public class ProveedorControlador {
     public String registro_proveedor(@RequestParam String nombre, @RequestParam String apellido, @RequestParam String email, @RequestParam String password,
                                      @RequestParam String password2, @RequestParam String telefono,
                                      @RequestParam CategoriaServicio categoria, @RequestParam Integer precioPorHora,
-                                     ModelMap modelo){
+                                     ModelMap modelo, @RequestParam("file")MultipartFile imagen){
         try{
-            proveedorServicio.registrar(nombre, apellido, email, password, password2, telefono, categoria, precioPorHora);
+            proveedorServicio.registrar(nombre, apellido, email, password, password2, telefono, categoria, precioPorHora, imagen);
+            if(!imagen.isEmpty()) {
+                Path directorioImagenes = Paths.get("src//main//resources//static/images");
+                String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
+
+
+                try {
+                    byte[] bytesImg = imagen.getBytes();
+                    Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + imagen.getOriginalFilename());
+                    Files.write(rutaCompleta, bytesImg);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             return "index";
 
         } catch (MiException ex){
@@ -66,9 +86,9 @@ public class ProveedorControlador {
 
 
     @PostMapping("/modificar/{id}")
-    public String modificar(@PathVariable String id,  @RequestParam String nombre, @RequestParam String apellido,
-                            @RequestParam String telefono,@RequestParam CategoriaServicio categoria,
-                            @RequestParam Integer precioPorHora, ModelMap modelo) throws MiException{
+    public String modificar(@PathVariable String id, @RequestParam String nombre, @RequestParam String apellido,
+                            @RequestParam String telefono, @RequestParam CategoriaServicio categoria,
+                            @RequestParam Integer precioPorHora, ModelMap modelo) throws MiException, IOException {
         try{
             proveedorServicio.modificar(id,nombre, apellido, telefono, categoria, precioPorHora);
             List<Usuario> proveedores = proveedorServicio.listarProveedores();
@@ -84,6 +104,7 @@ public class ProveedorControlador {
             modelo.put("error", ex.getMessage());
             return "modificar_proveedor";
         }
+
     }
 
     @GetMapping("borrar/{id}")
@@ -131,9 +152,24 @@ public class ProveedorControlador {
     public String modificarPerfilP(@PathVariable String id, @RequestParam String nombre, @RequestParam String apellido,
                                    @RequestParam String telefono, @RequestParam CategoriaServicio categoria,
                                    @RequestParam Integer precioPorHora,
-                                   ModelMap modelo) {
+                                   ModelMap modelo, @RequestParam("file")MultipartFile imagen) {
         try{
             proveedorServicio.modificarPerfil(id,nombre, apellido, telefono, categoria, precioPorHora);
+            if(!imagen.isEmpty()) {
+                Path directorioImagenes = Paths.get("src//main//resources//static/images");
+                String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
+
+                proveedorServicio.modificarImagen(id, imagen.getOriginalFilename());
+
+                try {
+                    byte[] bytesImg = imagen.getBytes();
+                    Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + imagen.getOriginalFilename());
+                    Files.write(rutaCompleta, bytesImg);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
             modelo.addAttribute("usuario", proveedorServicio.getProveedorById(id));
             return "inicio";
         }catch(MiException ex){
@@ -144,6 +180,7 @@ public class ProveedorControlador {
             modelo.put("error", ex.getMessage());
             return "modificar_perfil_proveedor";
         }
+
     }
 
     @GetMapping("/listar")
@@ -172,7 +209,4 @@ public class ProveedorControlador {
             return "proveedor_lista";
         }
     }
-
-
-
 }

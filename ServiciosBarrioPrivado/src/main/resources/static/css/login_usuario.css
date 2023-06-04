@@ -11,7 +11,23 @@ img{
     background-color: #8282d4;
 }
 
+.image-cards{
+    width: 150px;
+    height: 150px;
+    border-radius: 200px;
+}
 
+.contenedorPerfil{
+    width: 800px;
+    margin: auto;
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    background-color: whitesmoke;
+    padding: 20px 50px 20px 50px;
+    border-radius: 10px;
+    text-align: center;
+}
 
 .formulario{
     width: 500px;
@@ -48,9 +64,25 @@ input{
 
 .campo{
     width: 50%;
-    align-items: center;
+    align-items:left;
     margin: auto;
 }
 header{
     max-height: 120px;
+}
+
+.rounded-image{
+    width: 200px;
+    height: 200px
+}
+
+.fotoProveedor{
+    border:2px solid black;
+    width:250px;
+    height:250px;
+    border-radius: 100%;
+}
+
+.divVolver{
+    margin-top: 20px;
 }

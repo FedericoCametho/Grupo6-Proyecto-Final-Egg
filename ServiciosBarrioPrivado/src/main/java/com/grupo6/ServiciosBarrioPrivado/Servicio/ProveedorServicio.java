@@ -11,6 +11,7 @@ import com.grupo6.ServiciosBarrioPrivado.Repositorio.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -29,7 +30,7 @@ public class ProveedorServicio {
 
     @Transactional
     public void registrar(String nombre, String apellido, String email, String password, String password2, String telefono,
-                          CategoriaServicio categoria, Integer precioPorHora) throws MiException {
+                          CategoriaServicio categoria, Integer precioPorHora, MultipartFile imagen) throws MiException {
 
         this.validar(nombre,apellido, email,password,password2, telefono, categoria, precioPorHora);
 
@@ -43,6 +44,7 @@ public class ProveedorServicio {
         proveedor.setRol(Rol.PROVEEDOR);
         proveedor.setCategoriaServicio(categoria);
         proveedor.setPrecioPorHora(precioPorHora);
+        proveedor.setImagen(imagen.getOriginalFilename());
 
 
         proveedorRepositorio.save(proveedor);
@@ -68,6 +70,17 @@ public class ProveedorServicio {
             proveedorRepositorio.save(proveedor);
         }
 
+    }
+
+    @Transactional
+    public void modificarImagen(String id, String imagen) {
+        Optional<Usuario> respuesta = proveedorRepositorio.findById(id);
+
+        if (respuesta.isPresent()) {
+            Usuario proveedor = respuesta.get();
+            proveedor.setImagen(imagen);
+            proveedorRepositorio.save(proveedor);
+        }
     }
 
     @Transactional
