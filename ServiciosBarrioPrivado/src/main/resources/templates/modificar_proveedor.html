@@ -30,26 +30,33 @@
     </div>
     <h2 class="mb-2">Modificar Usuario Proveedor</h2>
     <div class="form-group my-3">
-      <input type="text" class="form-control" name="nombre" th:value="${proveedor.nombre}">
+      <label for="nombre">Nombre</label>
+      <input type="text" class="form-control" name="nombre" id="nombre" th:value="${proveedor.nombre}">
     </div>
     <div class="form-group my-3">
-      <input type="text" class="form-control" name="apellido" th:value="${proveedor.apellido}">
+      <label for="apellido">Apellido</label>
+      <input type="text" class="form-control" name="apellido" id="apellido" th:value="${proveedor.apellido}">
     </div>
     <div class="form-group my-3">
-      <input type="text" class="form-control" name="telefono" th:value="${proveedor.telefono}">
+      <label for="telefono">Telefono</label>
+      <input type="text" class="form-control" name="telefono" id="telefono" th:value="${proveedor.telefono}">
     </div>
     <div class="form-group my-3">
+      <label class="form-control" th:text="${proveedor.email}"></label>
+    </div>
+    <div>
+      <label for="categoria">Categoria</label>
 
-      <select name="categoria">
+      <select name="categoria" id="categoria">
 
-        <option>Seleccionar Categoria</option>
+          <option>Seleccionar Categoria</option>
 
-        <option th:each="cat : ${categoriaServicio}"
-                th:value="${cat}"
-                th:text="${cat.toString()}"
-                th:selected="${proveedor.categoriaServicio == cat}"
-        />
-      </select>
+          <option th:each="cat : ${categoriaServicio}"
+                  th:value="${cat}"
+                  th:text="${cat.toString()}"
+                  th:selected="${proveedor.categoriaServicio == cat}"
+          />
+        </select>
     </div>
     <div class="form-group my-3">
       <input type="text" class="form-control" name="precioPorHora" th:value="${proveedor.precioPorHora}">
