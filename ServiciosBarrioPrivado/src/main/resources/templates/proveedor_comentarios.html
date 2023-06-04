@@ -39,7 +39,7 @@
           <div class="card shadow-sm">
             <div class="card-body">
               <h5 th:if="${res.calificacion != 0}">CALIFICACION: <span  th:text="${res.calificacion}"></span></span></h5>
-              <h5 th:if="${res.calificacion == 0}"><span  style="font-weight: normal"> Sin Calificaciones</span></span></h5>
+              <h5 th:if="${res.calificacion == 0}"><span  style="font-weight: normal"> No registra calificaciones</span></span></h5>
               <p th:text="${res.comentario}">  </p>
             </div>
           </div>

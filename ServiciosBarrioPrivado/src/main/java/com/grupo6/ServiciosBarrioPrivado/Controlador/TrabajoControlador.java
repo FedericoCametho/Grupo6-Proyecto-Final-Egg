@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
@@ -31,6 +32,7 @@ public class TrabajoControlador {
 
     @Autowired
     private UsuarioServicio usuarioServicio;
+
 
     @GetMapping("/registrar/{idCliente}")
     public String registrar(@PathVariable String idCliente, ModelMap modelo){
@@ -359,9 +361,10 @@ public class TrabajoControlador {
     @GetMapping("/mostrarComentarios/{idProveedor}")
     public String mostrarComentarios(@PathVariable String idProveedor, ModelMap modelo){
         try {
-            List<AuxComentarioCalificacion> resultados = trabajoServicio.listarPorProveedor(idProveedor).stream().map(t -> new AuxComentarioCalificacion(t.getComentario(), t.getCalificacion())).collect(Collectors.toList());
+            List<AuxComentarioCalificacion> resultados = trabajoServicio.listarPorProveedor(idProveedor).stream()
+                    .map(t -> new AuxComentarioCalificacion(t.getComentario(), t.getCalificacion(), t.getId())).collect(Collectors.toList());
             if (resultados.isEmpty()) {
-                resultados.add(new AuxComentarioCalificacion("Sin Comentarios", 0));
+                resultados.add(new AuxComentarioCalificacion("Sin Comentarios", 0, null));
             }
             Usuario proveedor = proveedorServicio.getProveedorById(idProveedor);
             modelo.addAttribute("resultados", resultados);
@@ -371,6 +374,20 @@ public class TrabajoControlador {
                 modelo.put("error", ex.getMessage());
                 return "inicio";
             }
+    }
+
+    @GetMapping("borrarComentarioTrabajo/{idTrabajo}")
+    public String borrarComentarioT(@PathVariable String idTrabajo, ModelMap modelo){
+        Trabajo trabajo = trabajoServicio.getTrabajoById(idTrabajo);
+        modelo.addAttribute("trabajo", trabajo);
+        return "trabajo_borrar_comentario";
+    }
+
+    @PostMapping("/confirmarBorrarComentarioProveedor/{idTrabajo}")
+    public String borrarComentario(@PathVariable String idTrabajo, ModelMap modelo) throws MiException{
+        trabajoServicio.borrarComentario(idTrabajo);
+
+        return "redirect:/proveedor/listar";
     }
 
 

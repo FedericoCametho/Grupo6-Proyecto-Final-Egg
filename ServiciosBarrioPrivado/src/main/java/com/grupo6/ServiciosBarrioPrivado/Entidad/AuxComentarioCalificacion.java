@@ -4,9 +4,12 @@ public class AuxComentarioCalificacion {
     private String comentario;
     private Integer calificacion;
 
-    public AuxComentarioCalificacion(String comentario, Integer calificacion){
+    private String idTrabajo;
+
+    public AuxComentarioCalificacion(String comentario, Integer calificacion, String idTrabajo){
         this.comentario = comentario;
         this.calificacion = calificacion;
+        this.idTrabajo = idTrabajo;
     }
 
     public String getComentario() {
@@ -23,5 +26,13 @@ public class AuxComentarioCalificacion {
 
     public void setCalificacion(Integer calificacion) {
         this.calificacion = calificacion;
+    }
+
+    public String getIdTrabajo() {
+        return idTrabajo;
+    }
+
+    public void setIdTrabajo(String idTrabajo) {
+        this.idTrabajo = idTrabajo;
     }
 }

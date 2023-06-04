@@ -140,10 +140,10 @@ public class UsuarioControlador {
             modelo.addAttribute("usuario", usuario);
 
             try{
-                List<AuxComentarioCalificacion> resultados = proveedorServicio.trabajosFinalizadosDeUnProveedor(id)
-                        .stream().map(t -> new AuxComentarioCalificacion(t.getComentario(), t.getCalificacion())).collect(Collectors.toList());
+                List<AuxComentarioCalificacion> resultados = proveedorServicio.trabajosFinalizadosDeUnProveedor(id).stream()
+                        .map(t -> new AuxComentarioCalificacion(t.getComentario(), t.getCalificacion(), t.getId())).collect(Collectors.toList());
                 if (resultados.isEmpty()) {
-                    resultados.add(new AuxComentarioCalificacion("Sin Comentarios", 0));
+                    resultados.add(new AuxComentarioCalificacion("Sin Comentarios", 0, null));
                 }
                 modelo.addAttribute("cantCalificaciones", proveedorServicio.cantidadCalificacionesDeUnProveedor(id));
                 modelo.addAttribute("cantComentarios", proveedorServicio.cantidadComentariosDeUnProveedor(id));
@@ -190,9 +190,9 @@ public class UsuarioControlador {
             proveedorServicio.cambiarARolProveedor(idCliente,nombre,apellido,telefono,categoria,precioPorHora);
             try{
                 List<AuxComentarioCalificacion> resultados = proveedorServicio.trabajosFinalizadosDeUnProveedor(idCliente)
-                        .stream().map(t -> new AuxComentarioCalificacion(t.getComentario(), t.getCalificacion())).collect(Collectors.toList());
+                        .stream().map(t -> new AuxComentarioCalificacion(t.getComentario(), t.getCalificacion(), t.getId())).collect(Collectors.toList());
                 if (resultados.isEmpty()) {
-                    resultados.add(new AuxComentarioCalificacion("Sin Comentarios", 0));
+                    resultados.add(new AuxComentarioCalificacion("Sin Comentarios", 0, null));
                 }
                 modelo.addAttribute("cantCalificaciones", proveedorServicio.cantidadCalificacionesDeUnProveedor(idCliente));
                 modelo.addAttribute("cantComentarios", proveedorServicio.cantidadComentariosDeUnProveedor(idCliente));
