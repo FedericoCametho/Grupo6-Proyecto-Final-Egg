@@ -24,10 +24,9 @@
       <th scope="col">Estado</th>
       <th scope="col">Comentarios</th>
       <th scope="col">Calificacion</th>
-      <th th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}">Acciones</th>
+      <th scope="col">Acciones</th>
       <th th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}"></th>
-      <th th:if="${session.usuariosesion.rol.toString().equals('PROVEEDOR')}">Acciones</th>
-      <th th:if="${session.usuariosesion.rol.toString().equals('USER')}">Acciones</th>
+
 
     </tr>
     </thead>
@@ -50,10 +49,10 @@
       <td th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}">
         <a th:href= "@{/trabajo/borrar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Borrar </a>
       </td>
-      <td th:if="${session.usuariosesion.rol.toString().equals('PROVEEDOR') && tra.estado.toString().equals('PENDIENTE')}">
+      <td th:if="${usuario.rol.toString().equals('PROVEEDOR') && tra.estado.toString().equals('PENDIENTE')}">
         <a th:href= "@{/trabajo/confirmar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Cambiar Estado </a>
       </td>
-      <td th:if="${session.usuariosesion.rol.toString().equals('USER') && tra.estado.toString().equals('FINALIZADO') && tra.calificacion == 0}">
+      <td th:if="${usuario.rol.toString().equals('USER') && tra.estado.toString().equals('FINALIZADO') && tra.calificacion == 0}">
         <a th:href= "@{/trabajo/calificar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Calificar </a>
       </td>
 
@@ -66,7 +65,12 @@
     <div class="row mt-3">
       <div class="divVolver">
         <div class="divVolver" th:if="${session.usuariosesion != null}">
-          <a th:href="@{/inicio}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+          <div class="divVolver">
+            <a th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}" th:href="@{/inicio}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+          </div>
+          <div class="divVolver">
+            <a th:if="${!session.usuariosesion.rol.toString().equals('ADMIN')}" th:href="@{/iniciado/__${session.usuariosesion.id}__-__${session.usuariosesion.rol}__}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+          </div>
         </div>
         <div class="divVolver" th:if="${session.usuariosesion == null}">
           <a th:href="@{/}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>

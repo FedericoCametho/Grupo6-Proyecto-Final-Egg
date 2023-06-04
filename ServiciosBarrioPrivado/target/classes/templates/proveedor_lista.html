@@ -77,7 +77,7 @@
   </table>
 </div>
 
-  <div class="vista-user" th:if="${session.usuariosesion.rol.toString().equals('USER')}">
+  <div class="vista-user" th:if="${!session.usuariosesion.rol.toString().equals('ADMIN')}">
     <div class="album py-5 bg-body-tertiary">
       <div class="container">
 
@@ -124,7 +124,12 @@
   <section class=" text-center container">
     <div class="row mt-3">
       <div class="divVolver" th:if="${session.usuariosesion != null}">
-        <a th:href="@{/inicio}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+        <div class="divVolver">
+          <a th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}" th:href="@{/inicio}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+        </div>
+        <div class="divVolver">
+          <a th:if="${!session.usuariosesion.rol.toString().equals('ADMIN')}" th:href="@{/iniciado/__${session.usuariosesion.id}__-__${session.usuariosesion.rol}__}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+        </div>
       </div>
       <div class="divVolver" th:if="${session.usuariosesion == null}">
         <a th:href="@{/}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>

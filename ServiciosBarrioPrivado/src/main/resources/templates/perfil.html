@@ -60,7 +60,10 @@
         <a th:href="@{/usuario/modificarPerfilUsuario/__${usuario.id}__}" class="btn btn-secondary my-2 botonVolver botones">Modificar</a>
       </div>
       <div class="divVolver">
-        <a th:href="@{/inicio}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+        <a th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}" th:href="@{/inicio}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+      </div>
+      <div class="divVolver">
+        <a th:if="${!session.usuariosesion.rol.toString().equals('ADMIN')}" th:href="@{/iniciado/__${session.usuariosesion.id}__-__${session.usuariosesion.rol}__}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
       </div>
     </div>
   </section>

@@ -3,16 +3,15 @@ package com.grupo6.ServiciosBarrioPrivado.Controlador;
 
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Usuario;
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.CategoriaServicio;
+import com.grupo6.ServiciosBarrioPrivado.Enumeracion.Rol;
 import com.grupo6.ServiciosBarrioPrivado.Servicio.ProveedorServicio;
+import com.grupo6.ServiciosBarrioPrivado.Servicio.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.Arrays;
@@ -24,6 +23,9 @@ public class PortalControlador {
 
     @Autowired
     private ProveedorServicio proveedorServicio;
+
+    @Autowired
+    private UsuarioServicio usuarioServicio;
 
     @GetMapping("/")        // localhost:8080/
     public String index() {
@@ -80,6 +82,19 @@ public class PortalControlador {
 //        }
         modelo.addAttribute("usuario", session.getAttribute("usuariosesion"));
         return "inicio";
+    }
+
+    @GetMapping("/iniciado/{id}-{rol}")
+    public String menuInicio(@PathVariable String id, @PathVariable Rol rol, ModelMap modelo){
+        Usuario usuario = new Usuario();
+        if (rol.toString().equals("PROVEEDOR")){
+            usuario = proveedorServicio.getProveedorById(id);
+        } else if (rol.toString().equals("USER")) {
+            usuario = usuarioServicio.getUsuarioById(id);
+        }
+
+        modelo.addAttribute("usuario", usuario);
+        return "iniciado";
     }
 
     @GetMapping("/listarProveedores")
