@@ -27,7 +27,9 @@ public class Usuario {
 
     private Integer precioPorHora;
 
-    @Enumerated(EnumType.STRING)
+//    @Enumerated(EnumType.STRING)
+//    private CategoriaServicio categoriaServicio;
+
     private CategoriaServicio categoriaServicio;
 
     private Double calificacion;

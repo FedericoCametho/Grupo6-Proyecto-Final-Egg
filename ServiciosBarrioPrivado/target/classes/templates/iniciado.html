@@ -79,42 +79,52 @@
           <img class="rounded-image" src="https://drive.google.com/uc?id=1hJ65ZDYFEt5G5U1fbKnkEaVR9T46Jwrg" alt="usuario">
           <h2 class="fw-normal">Listado de usuarios</h2>
           <p></p>
-          <p><a class="btn btn-secondary botones" th:href="@{/usuario/listar}">Ver usuarios &raquo;</a></p>
+          <p><a class="btn btn-secondary botones" th:href="@{/usuario/listar}">Ver Detalles &raquo;</a></p>
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4" th:if="${usuario.rol.toString().equals('USER') || session.usuariosesion.rol.toString().equals('ADMIN')}">
           <img class="rounded-image" src="https://drive.google.com/uc?id=1cmb9ITlL4Pf2AUEVMKFvTAsogeBpRKpq" alt="proveedor">
           <h2 class="fw-normal">Listado de Proveedores</h2>
           <p></p>
-          <p><a class="btn btn-secondary botones" th:href="@{/proveedor/listar}">View details &raquo;</a></p>
+          <p><a class="btn btn-secondary botones" th:href="@{/proveedor/listar}">Ver Detalles &raquo;</a></p>
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4" th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}" >
           <img class="rounded-image" src="https://drive.google.com/uc?id=1i0RZhyOdMk0bzUmcqxev0AOnXlhSuH8a" alt="trabajos" style="background-color: lightgray">
           <h2 class="fw-normal">Listado de Trabajos</h2>
-          <p><a class="btn btn-secondary botones" th:href="@{/trabajo/listar}">View details &raquo;</a></p>
+          <p><a class="btn btn-secondary botones" th:href="@{/trabajo/listar}">Ver Detalles &raquo;</a></p>
         </div><!-- /.col-lg-4 -->
+          <div class="col-lg-4" th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}" >
+            <img class="rounded-image" src="https://drive.google.com/uc?id=1i0RZhyOdMk0bzUmcqxev0AOnXlhSuH8a" alt="trabajos" style="background-color: lightgray">
+            <h2 class="fw-normal">Crear nuevas Categorias de Servicios</h2>
+            <p><a class="btn btn-secondary botones" th:href="@{/admin/listarCategorias}">Comenzar &raquo;</a></p>
+          </div><!-- /.col-lg-4 -->
 
-        <div class="col-lg-4" th:if="${usuario.rol.toString().equals('USER')}" >
-          <img class="rounded-image" src="https://drive.google.com/uc?id=1i0RZhyOdMk0bzUmcqxev0AOnXlhSuH8a" alt="trabajos" style="background-color: lightgray">
-          <h2 class="fw-normal">Mis Trabajos Solicitados</h2>
-          <p><a class="btn btn-secondary botones" th:href="@{/trabajo/listarPorUsuario/__${usuario.id}__}">Ver Detalles &raquo;</a></p>
-        </div><!-- /.col-lg-4 -->
-          <div class="col-lg-4" th:if="${usuario.rol.toString().equals('USER')}" >
+
+        <div class="opciones-usuario" th:if="${usuario.rol.toString().equals('USER')}" >
+          <div class="col-lg-4" >
+            <img class="rounded-image" src="https://drive.google.com/uc?id=1i0RZhyOdMk0bzUmcqxev0AOnXlhSuH8a" alt="trabajos" style="background-color: lightgray">
+            <h2 class="fw-normal">Mis Trabajos Solicitados</h2>
+            <p><a class="btn btn-secondary botones" th:href="@{/trabajo/listarPorUsuario/__${usuario.id}__}">Ver Detalles &raquo;</a></p>
+          </div><!-- /.col-lg-4 -->
+          <div class="col-lg-4" >
             <img class="rounded-image" src="https://drive.google.com/uc?id=1i0RZhyOdMk0bzUmcqxev0AOnXlhSuH8a" alt="trabajos" style="background-color: lightgray">
             <h2 class="fw-normal">Mis Trabajos Finalizados</h2>
             <p><a class="btn btn-secondary botones" th:href="@{/trabajo/listarPorUsuarioFinalizado/__${usuario.id}__}">Ver Detalles &raquo;</a></p>
           </div><!-- /.col-lg-4 -->
+        </div>
 
-        <div class="col-lg-4" th:if="${usuario.rol.toString().equals('PROVEEDOR')}" >
-          <img class="rounded-image" src="https://drive.google.com/uc?id=1i0RZhyOdMk0bzUmcqxev0AOnXlhSuH8a" alt="trabajos" style="background-color: lightgray">
-          <h2 class="fw-normal">Mis Trabajos Pendientes</h2>
-          <p><a class="btn btn-secondary botones" th:href="@{/trabajo/listarPorProveedorPendiente/__${usuario.id}__}">Ver Detalles &raquo;</a></p>
-        </div><!-- /.col-lg-4 -->
-          <div class="col-lg-4" th:if="${usuario.rol.toString().equals('PROVEEDOR')}" >
-            <img class="rounded-image" src="https://drive.google.com/uc?id=1i0RZhyOdMk0bzUmcqxev0AOnXlhSuH8a" alt="trabajos" style="background-color: lightgray">
-            <h2 class="fw-normal">Mis Trabajos Finalizados</h2>
-            <p><a class="btn btn-secondary botones" th:href="@{/trabajo/listarPorProveedorFinalizado/__${usuario.id}__}">Ver Detalles &raquo;</a></p>
-          </div><!-- /.col-lg-4 -->
 
+          <div class="opciones-proveedor" th:if="${usuario.rol.toString().equals('PROVEEDOR')}" >
+            <div class="col-lg-4"  >
+              <img class="rounded-image" src="https://drive.google.com/uc?id=1i0RZhyOdMk0bzUmcqxev0AOnXlhSuH8a" alt="trabajos" style="background-color: lightgray">
+              <h2 class="fw-normal">Mis Trabajos Pendientes</h2>
+              <p><a class="btn btn-secondary botones" th:href="@{/trabajo/listarPorProveedorPendiente/__${usuario.id}__}">Ver Detalles &raquo;</a></p>
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-4" >
+              <img class="rounded-image" src="https://drive.google.com/uc?id=1i0RZhyOdMk0bzUmcqxev0AOnXlhSuH8a" alt="trabajos" style="background-color: lightgray">
+              <h2 class="fw-normal">Mis Trabajos Finalizados</h2>
+              <p><a class="btn btn-secondary botones" th:href="@{/trabajo/listarPorProveedorFinalizado/__${usuario.id}__}">Ver Detalles &raquo;</a></p>
+            </div><!-- /.col-lg-4 -->
+        </div>
       </div><!-- /.row -->
 
       <!-- START THE FEATURETTES -->

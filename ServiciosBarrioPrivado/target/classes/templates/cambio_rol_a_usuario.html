@@ -39,12 +39,12 @@
             <input type="text" class="form-control" name="telefono" id="telefono" th:value="${proveedor.telefono}">
         </div>
         <div class="form-group my-3">
-            <label for="categoria">Categoria Actual: </label>
-            <p th:text="${proveedor.categoriaServicio.toString()}" id="categoria"></p>
+            <label class="form-control" for="categoria">Categoria Actual:  <span th:text="${proveedor.categoriaServicio.toString()}" id="categoria"></span> </label>
+
         </div>
         <div class="form-group my-3">
-            <label for="precioPorHora">Precio por Hora</label>
-            <p th:text="${proveedor.precioPorHora}" id="precioPorHora"></p>
+            <label class="form-control" for="precioPorHora">Precio por Hora <span th:text="${proveedor.precioPorHora}" id="precioPorHora"></span></label>
+
         </div>
 
         <button type="submit" class="btn btn-primary mt-3 botones">Cambiar Rol</button>

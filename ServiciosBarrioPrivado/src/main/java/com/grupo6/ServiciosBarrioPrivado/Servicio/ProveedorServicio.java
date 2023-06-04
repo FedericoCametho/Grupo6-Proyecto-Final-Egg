@@ -74,6 +74,29 @@ public class ProveedorServicio {
     }
 
     @Transactional
+    public void modificarAdmin(String id, String nombre, String apellido, String telefono,
+                          CategoriaServicio categoria, Integer precioPorHora, Rol rol) throws MiException{
+        this.validarParcial(nombre,apellido,telefono, categoria, precioPorHora);
+
+        Optional<Usuario> respuesta = proveedorRepositorio.findById(id);
+
+        if (respuesta.isPresent()){
+            Usuario proveedor = respuesta.get();
+
+            proveedor.setNombre(nombre);
+            proveedor.setApellido(apellido);
+            proveedor.setTelefono(telefono);
+            proveedor.setCategoriaServicio(categoria);
+            proveedor.setPrecioPorHora(precioPorHora);
+            proveedor.setRol(rol);
+
+            proveedorRepositorio.save(proveedor);
+        }
+
+    }
+
+
+    @Transactional
     public void eliminarProveedor(String id)throws MiException{
         if (id == null || id.isEmpty()){
             throw new MiException("El id ingresado no puede ser nulo o estar vacio");

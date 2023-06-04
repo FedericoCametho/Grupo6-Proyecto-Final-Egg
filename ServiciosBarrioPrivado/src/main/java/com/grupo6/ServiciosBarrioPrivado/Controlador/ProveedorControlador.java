@@ -3,6 +3,7 @@ package com.grupo6.ServiciosBarrioPrivado.Controlador;
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Trabajo;
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Usuario;
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.CategoriaServicio;
+import com.grupo6.ServiciosBarrioPrivado.Enumeracion.Rol;
 import com.grupo6.ServiciosBarrioPrivado.Excepciones.MiException;
 import com.grupo6.ServiciosBarrioPrivado.Servicio.ProveedorServicio;
 
@@ -67,6 +68,8 @@ public class ProveedorControlador {
         modelo.addAttribute("proveedor", proveedor);
         List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
         modelo.addAttribute("categoriaServicio", categoriaServicio);
+        List<Rol> roles = Arrays.stream(Rol.values()).toList();
+        modelo.addAttribute("roles", roles);
         return "modificar_proveedor";
     }
 
@@ -74,9 +77,13 @@ public class ProveedorControlador {
     @PostMapping("/modificar/{id}")
     public String modificar(@PathVariable String id,  @RequestParam String nombre, @RequestParam String apellido,
                             @RequestParam String telefono,@RequestParam CategoriaServicio categoria,
-                            @RequestParam Integer precioPorHora, ModelMap modelo) throws MiException{
+                            @RequestParam Integer precioPorHora, Rol rol, ModelMap modelo) throws MiException{
         try{
-            proveedorServicio.modificar(id,nombre, apellido, telefono, categoria, precioPorHora);
+            if (rol != null){
+                proveedorServicio.modificarAdmin(id,nombre, apellido, telefono, categoria, precioPorHora, rol);
+            } else {
+                proveedorServicio.modificar(id,nombre, apellido, telefono, categoria, precioPorHora);
+            }
             List<Usuario> proveedores = proveedorServicio.listarProveedores();
             modelo.addAttribute("proveedores", proveedores);
             List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();

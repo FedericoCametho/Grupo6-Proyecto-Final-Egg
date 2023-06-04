@@ -10,6 +10,7 @@ import com.grupo6.ServiciosBarrioPrivado.Servicio.ProveedorServicio;
 
 import com.grupo6.ServiciosBarrioPrivado.Servicio.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -58,14 +59,37 @@ public class UsuarioControlador {
     public String modificarUsuario(@PathVariable String id, ModelMap modelo){
         Usuario usuario = usuarioServicio.getUsuarioById(id);
         modelo.addAttribute("usuario", usuario);
+        List<Rol> roles = Arrays.stream(Rol.values()).toList();
+        modelo.addAttribute("roles", roles);
         return "modificar_usuario";
     }
 
 
+//    @PostMapping("/modificar/{id}")
+//    public String modificar(@PathVariable String id,  @RequestParam String nombre, @RequestParam String apellido,
+//                            @RequestParam String telefono, ModelMap modelo) throws MiException{
+//        try{
+//            usuarioServicio.modificar(id,nombre, apellido, telefono);
+//            List<Usuario> usuarios = usuarioServicio.listarUsuarios().stream().filter(u -> u.getRol().toString().equals("USER")).collect(Collectors.toList());
+//            modelo.addAttribute("usuarios", usuarios);
+//            return "usuario_lista";
+//        }catch(MiException ex){
+//            Usuario usuario = usuarioServicio.getUsuarioById(id);
+//            modelo.addAttribute("usuario", usuario);
+//            modelo.put("error", ex.getMessage());
+//            return "modificar_usuario";
+//        }
+//    }
+
     @PostMapping("/modificar/{id}")
-    public String modificar(@PathVariable String id,  @RequestParam String nombre, @RequestParam String apellido,  @RequestParam String telefono, ModelMap modelo) throws MiException{
+    public String modificar(@PathVariable String id,  @RequestParam String nombre, @RequestParam String apellido,
+                            @RequestParam String telefono, Rol rol, ModelMap modelo) throws MiException{
         try{
-            usuarioServicio.modificar(id,nombre, apellido, telefono);
+            if (rol != null) {
+                usuarioServicio.modificarAdmin(id,nombre, apellido, telefono, rol);
+            } else {
+                usuarioServicio.modificar(id, nombre, apellido, telefono);
+            }
             List<Usuario> usuarios = usuarioServicio.listarUsuarios().stream().filter(u -> u.getRol().toString().equals("USER")).collect(Collectors.toList());
             modelo.addAttribute("usuarios", usuarios);
             return "usuario_lista";
