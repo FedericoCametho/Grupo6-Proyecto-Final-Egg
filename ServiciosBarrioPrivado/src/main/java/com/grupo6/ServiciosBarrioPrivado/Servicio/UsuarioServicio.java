@@ -34,6 +34,9 @@ public class UsuarioServicio implements UserDetailsService {
     @Autowired
     private TrabajoServicio trabajoServicio;
 
+    @Autowired
+    private ProveedorServicio proveedorServicio;
+
     @Transactional
     public void registrar(String nombre,String apellido, String email, String password, String password2, String telefono) throws MiException {
         validar(nombre,apellido,email,password,password2, telefono);
@@ -97,6 +100,24 @@ public class UsuarioServicio implements UserDetailsService {
         if (respuesta.isPresent()){
             Usuario usuario = respuesta.get();
 
+            usuario.setNombre(nombre);
+            usuario.setApellido(apellido);
+            usuario.setTelefono(telefono);
+
+            usuarioRepositorio.save(usuario);
+        }
+
+    }
+
+    @Transactional
+    public void cambiarARolUsuario(String id, String nombre, String apellido, String telefono) throws MiException{
+        validarParcial(nombre,apellido,telefono);
+
+        Optional<Usuario> respuesta = usuarioRepositorio.findById(id);
+
+        if (respuesta.isPresent()){
+            Usuario usuario = respuesta.get();
+            usuario.setRol(Rol.valueOf("USER"));
             usuario.setNombre(nombre);
             usuario.setApellido(apellido);
             usuario.setTelefono(telefono);

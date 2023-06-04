@@ -27,8 +27,14 @@
         <li>APELLIDO: <span th:text="${usuario.apellido}"></span> </li>
         <li>EMAIL: <span th:text="${usuario.email}"></span> </li>
         <li>TELEFONO: <span th:text="${usuario.telefono}"></span> </li>
-        <li th:if="${session.usuariosesion.rol.toString().equals('PROVEEDOR') || session.usuariosesion.rol.toString().equals('ADMIN')}">CATEGORIA DE SERVICIO: <span th:text="${usuario.categoriaServicio}"></span> </li>
-        <li th:if="${session.usuariosesion.rol.toString().equals('PROVEEDOR') || session.usuariosesion.rol.toString().equals('ADMIN')}">PRECIO POR HORA: <span th:text="${usuario.precioPorHora}"></span></li>
+        <li th:if="${usuario.rol.toString.equals('PROVEEDOR') || session.usuariosesion.rol.toString().equals('ADMIN')}">
+          CATEGORIA DE SERVICIO: <span th:text="${usuario.categoriaServicio}"></span> </li>
+        <li th:if="${usuario.rol.toString().equals('PROVEEDOR') || session.usuariosesion.rol.toString().equals('ADMIN')}">
+          PRECIO POR HORA: <span th:text="${usuario.precioPorHora}"></span></li>
+        <li th:if="${usuario.rol.toString().equals('PROVEEDOR') ||session.usuariosesion.rol.toString().equals('ADMIN')}">
+          CALIFICACION PROMEDIO: <span th:text="${usuario.calificacion}"></span></li>
+        <li th:if="${usuario.rol.toString().equals('PROVEEDOR') || session.usuariosesion.rol.toString().equals('ADMIN')}">
+          Cantidad de Comentarios: <span th:text="${cantComentarios}"></span> - Cantidad de Calificaciones recibidas: <span th:text="${cantCalificaciones}"></span> </li>
       </ul>
     </div>
 
@@ -38,11 +44,14 @@
   <section class=" text-center container">
     <div class="row mt-3">
 
-      <div class="divVolver" th:if="${session.usuariosesion.rol.toString().equals('USER')}">
+      <div class="divVolver" th:if="${usuario.rol.toString().equals('USER')}">
         <a th:href="@{/usuario/modificarPerfilUsuario/__${usuario.id}__}" class="btn btn-secondary my-2 botonVolver botones">Modificar</a>
+        <a th:href="@{/usuario/cambiarRolAProveedor/__${usuario.id}__}" class="btn btn-secondary my-2 botonVolver botones">Cambiar Rol a Proveedor</a>
       </div>
-      <div class="divVolver" th:if="${session.usuariosesion.rol.toString().equals('PROVEEDOR')}">
+      <div class="divVolver" th:if="${usuario.rol.toString().equals('PROVEEDOR')}">
         <a th:href="@{/proveedor/modificarPerfilProveedor/__${usuario.id}__}" class="btn btn-secondary my-2 botonVolver botones">Modificar</a>
+        <a th:href="@{/proveedor/cambiarRolAUsuario/__${usuario.id}__}" class="btn btn-secondary my-2 botonVolver botones">Cambiar Rol a Cliente</a>
+
       </div>
       <div class="divVolver" th:if="${session.usuariosesion.rol.toString().equals('ADMIN') && usuario.rol.toString().equals('PROVEEDOR')}">
         <a th:href="@{/proveedor/modificarPerfilProveedor/__${usuario.id}__}" class="btn btn-secondary my-2 botonVolver botones">Modificar</a>
@@ -57,7 +66,7 @@
   </section>
 </div>
 
-<div class="vista-admin-comentarios" th:if="${session.usuariosesion.rol.toString().equals('ADMIN') && usuario.rol.toString().equals('PROVEEDOR')}">
+<div class="vista-admin-comentarios" th:if="${!session.usuariosesion.rol.toString().equals('USER') && usuario.rol.toString().equals('PROVEEDOR')}">
   <div class="album py-5 bg-body-tertiary">
     <div class="container">
 
@@ -65,9 +74,9 @@
         <div th:each="res : ${resultados}"  class="col">
           <div class="card shadow-sm">
             <div class="card-body">
+              <h5 th:if="${res.calificacion == 0 }"><span >No registra calificaciones</span></h5>
               <h5 th:if="${res.calificacion != 0}" >CALIFICACION: <span th:text="${res.calificacion}"></span></h5>
-              <h5 th:if="${res.calificacion == 0}">CALIFICACION: <span >No registra calificaciones</span></h5>
-              <p th:text="${res.comentario}">  </p>
+              <p th:text="${res.comentario}"> </p>
             </div>
           </div>
         </div>

@@ -29,13 +29,16 @@
     </div>
     <h2 class="mb-2">Modificar Usuario Cliente</h2>
     <div class="form-group my-3">
-      <input type="text" class="form-control" name="nombre" th:value="${usuario.nombre}" placeholder="Nombre">
+      <label for="nombre">Nombre</label>
+      <input type="text" class="form-control" name="nombre" id="nombre" th:value="${usuario.nombre}" placeholder="Nombre">
     </div>
     <div class="form-group my-3">
-      <input type="text" class="form-control" name="apellido" th:value="${usuario.apellido}"placeholder="Apellido">
+      <label for="apellido">Apellido</label>
+      <input type="text" class="form-control" name="apellido" id="apellido" th:value="${usuario.apellido}"placeholder="Apellido">
     </div>
     <div class="form-group my-3">
-      <input type="text" class="form-control" name="telefono" th:value="${usuario.telefono}" placeholder="Telefono">
+      <label for="telefono">Telefono</label>
+      <input type="text" class="form-control" name="telefono" id="telefono" th:value="${usuario.telefono}" placeholder="Telefono">
     </div>
 
     <button type="submit" class="btn btn-primary mt-3 botones">Modificar</button>

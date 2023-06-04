@@ -1,19 +1,18 @@
 package com.grupo6.ServiciosBarrioPrivado.Controlador;
 
-import com.grupo6.ServiciosBarrioPrivado.Entidad.Trabajo;
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Usuario;
+
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.CategoriaServicio;
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.Rol;
 import com.grupo6.ServiciosBarrioPrivado.Excepciones.MiException;
 import com.grupo6.ServiciosBarrioPrivado.Servicio.ProveedorServicio;
-import com.grupo6.ServiciosBarrioPrivado.Servicio.TrabajoServicio;
+
 import com.grupo6.ServiciosBarrioPrivado.Servicio.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,8 +27,6 @@ public class UsuarioControlador {
     @Autowired
     private ProveedorServicio proveedorServicio;
 
-    @Autowired
-    private TrabajoServicio trabajoServicio;
 
 
     @GetMapping("/registrar")
@@ -142,10 +139,13 @@ public class UsuarioControlador {
             modelo.addAttribute("usuario", usuario);
 
             try{
-                List<AuxComentarioCalificacion> resultados = trabajoServicio.listarPorProveedor(id).stream().map(t -> new AuxComentarioCalificacion(t.getComentario(), t.getCalificacion())).collect(Collectors.toList());
+                List<AuxComentarioCalificacion> resultados = proveedorServicio.trabajosFinalizadosDeUnProveedor(id)
+                        .stream().map(t -> new AuxComentarioCalificacion(t.getComentario(), t.getCalificacion())).collect(Collectors.toList());
                 if (resultados.isEmpty()) {
                     resultados.add(new AuxComentarioCalificacion("Sin Comentarios", 0));
                 }
+                modelo.addAttribute("cantCalificaciones", proveedorServicio.cantidadCalificacionesDeUnProveedor(id));
+                modelo.addAttribute("cantComentarios", proveedorServicio.cantidadComentariosDeUnProveedor(id));
                 modelo.addAttribute("resultados", resultados);
             } catch(MiException ex){
                 modelo.put("error", ex.getMessage());
@@ -157,6 +157,58 @@ public class UsuarioControlador {
         }
 
         return "perfil";
+    }
+
+    @GetMapping("/cambiarRolAProveedor/{idCliente}")
+    public String confirmacionCambiarRol(@PathVariable String idCliente, ModelMap modelo){
+        Usuario usuario = usuarioServicio.getUsuarioById(idCliente);
+        modelo.addAttribute("usuario", usuario);
+        List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
+        modelo.addAttribute("categoriaServicio", categoriaServicio);
+        return "cambio_rol_a_proveedor";
+    }
+
+
+//    public String cambiarRol(@PathVariable String idCliente,  @RequestParam String nombre, @RequestParam String apellido,
+//                             @RequestParam String telefono, ModelMap modelo){
+//        try{
+//            usuarioServicio.cambiarARolUsuario(idCliente,nombre,apellido,telefono);
+//        } catch (MiException ex){
+//            modelo.put("error", ex.getMessage());
+//        }
+//
+//        Usuario usuario = usuarioServicio.getUsuarioById(idCliente);
+//        modelo.addAttribute("usuario", usuario);
+//        return "perfil";
+//    }
+    @PostMapping("/cambiarRolAProveedor/{idCliente}")
+    public String cambiarRol(@PathVariable String idCliente,  @RequestParam String nombre, @RequestParam String apellido,
+                             @RequestParam String telefono,@RequestParam CategoriaServicio categoria,
+                             @RequestParam Integer precioPorHora, ModelMap modelo){
+        try{
+            proveedorServicio.cambiarARolProveedor(idCliente,nombre,apellido,telefono,categoria,precioPorHora);
+            try{
+                List<AuxComentarioCalificacion> resultados = proveedorServicio.trabajosFinalizadosDeUnProveedor(idCliente)
+                        .stream().map(t -> new AuxComentarioCalificacion(t.getComentario(), t.getCalificacion())).collect(Collectors.toList());
+                if (resultados.isEmpty()) {
+                    resultados.add(new AuxComentarioCalificacion("Sin Comentarios", 0));
+                }
+                modelo.addAttribute("cantCalificaciones", proveedorServicio.cantidadCalificacionesDeUnProveedor(idCliente));
+                modelo.addAttribute("cantComentarios", proveedorServicio.cantidadComentariosDeUnProveedor(idCliente));
+                modelo.addAttribute("resultados", resultados);
+            } catch(MiException ex){
+                modelo.put("error", ex.getMessage());
+            } finally {
+                Usuario usuario = proveedorServicio.getProveedorById(idCliente);
+                modelo.addAttribute("usuario", usuario);
+                return "perfil";
+            }
+        } catch (MiException ex){
+            modelo.put("error", ex.getMessage());
+            Usuario usuario = proveedorServicio.getProveedorById(idCliente);
+            modelo.addAttribute("usuario", usuario);
+            return "perfil";
+        }
     }
 
 }

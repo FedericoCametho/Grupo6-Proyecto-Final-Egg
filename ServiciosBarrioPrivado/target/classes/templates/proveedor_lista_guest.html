@@ -71,9 +71,16 @@
 <!--                <li> Telefono: <span th:text="${prov.telefono}"></span></li>-->
                 <li> Precio Por Hora: <span th:text="${prov.precioPorHora}"></span> </li>
                 <li> Categoria de Servicio: <span th:text="${prov.categoriaServicio.toString()}"></span></li>
-                <li> Calificacion:
-                  <span th:if="${prov.calificacion != 0}"><span th:text="${prov.calificacion}"></span></span>
-                  <span th:if="${prov.calificacion == null}">Sin calificaciones</span>
+                <li> Calificacion Promedio:
+                  <span th:if="${prov.calificacion != 0}">
+                      <span th:text="${prov.calificacion}" style="font-weight: bolder"></span><br>
+                    Cantidad de Calificaciones: <span th:text="${provServicio.cantidadCalificacionesDeUnProveedor(prov.id)}" style="font-weight: bolder"></span>
+                    </span>
+                  <span th:if="${prov.calificacion == null}" style="font-weight: bolder">Sin calificaciones</span>
+                </li>
+                <li> Cantidad de Cometarios recibidos:
+                  <span th:if="${prov != 0}"><span th:text="${provServicio.cantidadComentariosDeUnProveedor(prov.id)}" style="font-weight: bolder" ></span></span>
+                  <span th:if="${provServicio.cantidadComentariosDeUnProveedor(prov.id) == 0}" style="font-weight: bolder">Sin Comentarios</span>
                 </li>
               </ul>
               <div class="d-flex justify-content-between align-items-center">

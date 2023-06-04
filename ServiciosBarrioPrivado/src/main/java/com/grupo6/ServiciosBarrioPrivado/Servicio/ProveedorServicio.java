@@ -27,6 +27,9 @@ public class ProveedorServicio {
     @Autowired
     private TrabajoRepositorio trabajoRepositorio;
 
+
+
+
     @Transactional
     public void registrar(String nombre, String apellido, String email, String password, String password2, String telefono,
                           CategoriaServicio categoria, Integer precioPorHora) throws MiException {
@@ -102,6 +105,29 @@ public class ProveedorServicio {
 
     }
 
+
+
+    @Transactional
+    public void cambiarARolProveedor(String id, String nombre, String apellido, String telefono,
+                                     CategoriaServicio categoria, Integer precioPorHora) throws MiException{
+        validarParcial(nombre,apellido,telefono, categoria, precioPorHora);
+
+        Optional<Usuario> respuesta = proveedorRepositorio.findById(id);
+
+        if (respuesta.isPresent()){
+            Usuario proveedor = respuesta.get();
+            proveedor.setRol(Rol.valueOf("PROVEEDOR"));
+            proveedor.setNombre(nombre);
+            proveedor.setApellido(apellido);
+            proveedor.setTelefono(telefono);
+            proveedor.setCategoriaServicio(categoria);
+            proveedor.setPrecioPorHora(precioPorHora);
+
+            proveedorRepositorio.save(proveedor);
+        }
+
+    }
+
     // METODOS DE CONSULTA
 
     public List<Usuario> listarProveedores(){
@@ -124,6 +150,20 @@ public class ProveedorServicio {
 
     public List<Trabajo> trabajosDeUnProveedor(String idProveedor) throws MiException{
         return trabajoRepositorio.buscarPorProveedor(idProveedor);
+    }
+    public List<Trabajo> trabajosFinalizadosDeUnProveedor(String idProveedor) throws MiException{
+        return trabajoRepositorio.buscarPorProveedor(idProveedor).stream().filter(t -> t.getEstado().toString().equals("FINALIZADO")).collect(Collectors.toList());
+    }
+
+    public int cantidadCalificacionesDeUnProveedor(String idProveedor) throws MiException{
+        return trabajoRepositorio.buscarPorProveedor(idProveedor)
+                .stream().filter(t -> t.getEstado().toString()
+                        .equals("FINALIZADO") && t.getCalificacion() != null).collect(Collectors.toList()).size();
+    }
+    public int cantidadComentariosDeUnProveedor(String idProveedor) throws MiException{
+        return trabajoRepositorio.buscarPorProveedor(idProveedor)
+                .stream().filter(t -> t.getEstado().toString()
+                        .equals("FINALIZADO") && !t.getComentario().equals("")).collect(Collectors.toList()).size();
     }
 
     public void validar(String nombre, String apellido, String email, String password, String password2, String telefono,

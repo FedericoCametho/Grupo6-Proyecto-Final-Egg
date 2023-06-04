@@ -5,6 +5,8 @@ import com.grupo6.ServiciosBarrioPrivado.Entidad.Usuario;
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.CategoriaServicio;
 import com.grupo6.ServiciosBarrioPrivado.Excepciones.MiException;
 import com.grupo6.ServiciosBarrioPrivado.Servicio.ProveedorServicio;
+
+import com.grupo6.ServiciosBarrioPrivado.Servicio.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Controller
@@ -22,6 +25,9 @@ public class ProveedorControlador {
 
     @Autowired
     private ProveedorServicio proveedorServicio;
+
+    @Autowired
+    private UsuarioServicio usuarioServicio;
 
 
     @GetMapping("/registrar")
@@ -146,12 +152,16 @@ public class ProveedorControlador {
         }
     }
 
+
+
+
     @GetMapping("/listar")
     public String listarTodos(ModelMap modelo){
         List<Usuario> proveedores = proveedorServicio.listarProveedores();
         modelo.addAttribute("proveedores", proveedores);
         List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
         modelo.addAttribute("categoriaServicio", categoriaServicio);
+        modelo.addAttribute("provServicio", proveedorServicio);
         return "proveedor_lista";
     }
 
@@ -164,13 +174,39 @@ public class ProveedorControlador {
         if (categoria.equals("Todos")){
             List<Usuario> proveedores = proveedorServicio.listarProveedores();
             modelo.addAttribute("proveedores", proveedores);
+            modelo.addAttribute("provServicio", proveedorServicio);
             return "proveedor_lista";
         } else {
             List<Usuario> proveedores = proveedorServicio.listarPorCategoria(CategoriaServicio.valueOf(categoria));
             modelo.addAttribute("proveedores", proveedores);
             modelo.addAttribute("categoriaSeleccionada", CategoriaServicio.valueOf(categoria));
+            modelo.addAttribute("provServicio", proveedorServicio);
             return "proveedor_lista";
         }
+    }
+
+    @GetMapping("/cambiarRolAUsuario/{idProveedor}")
+    public String confirmacionCambiarRol(@PathVariable String idProveedor, ModelMap modelo){
+        Usuario proveedor = proveedorServicio.getProveedorById(idProveedor);
+        modelo.addAttribute("proveedor", proveedor);
+        return "cambio_rol_a_usuario";
+    }
+
+    @PostMapping("/cambiarRolAUsuario/{idProveedor}")
+    public String cambiarRol(@PathVariable String idProveedor,  @RequestParam String nombre, @RequestParam String apellido,
+                         @RequestParam String telefono, ModelMap modelo){
+
+        try{
+            usuarioServicio.cambiarARolUsuario(idProveedor,nombre,apellido,telefono);
+        } catch (MiException ex){
+            modelo.put("error", ex.getMessage());
+        } finally {
+            Usuario usuario = usuarioServicio.getUsuarioById(idProveedor);
+            modelo.addAttribute("usuario", usuario);
+            return "perfil";
+        }
+
+
     }
 
 
