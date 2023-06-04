@@ -1,4 +1,4 @@
-package com.grupo6.ServiciosBarrioPrivado.Controlador;
+package com.grupo6.ServiciosBarrioPrivado.Entidad;
 
 public class AuxComentarioCalificacion {
     private String comentario;

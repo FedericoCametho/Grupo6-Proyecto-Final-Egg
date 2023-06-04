@@ -38,7 +38,8 @@
         <div th:each="res : ${resultados}"  class="col">
           <div class="card shadow-sm">
             <div class="card-body">
-              <h5>CALIFICACION: <span th:text="${res.calificacion}"></span></span></h5>
+              <h5 th:if="${res.calificacion != 0}">CALIFICACION: <span  th:text="${res.calificacion}"></span></span></h5>
+              <h5 th:if="${res.calificacion == 0}"><span  style="font-weight: normal"> Sin Calificaciones</span></span></h5>
               <p th:text="${res.comentario}">  </p>
             </div>
           </div>
@@ -50,7 +51,7 @@
 
   <section class=" text-center container">
       <div class="divVolver">
-        <a th:href="@{/inicio}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+        <a th:href="@{/proveedor/listar}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
       </div>
   </section>
 </div>

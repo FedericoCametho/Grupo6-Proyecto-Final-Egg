@@ -74,12 +74,12 @@
                 <li> Calificacion Promedio:
                   <span th:if="${prov.calificacion != 0}">
                       <span th:text="${prov.calificacion}" style="font-weight: bolder"></span><br>
-                    Cantidad de Calificaciones: <span th:text="${provServicio.cantidadCalificacionesDeUnProveedor(prov.id)}" style="font-weight: bolder"></span>
+                    Cantidad de Calificaciones: <span th:if="${prov.calificacion != null}" th:text="${provServicio.cantidadCalificacionesDeUnProveedor(prov.id)}" style="font-weight: bolder"></span>
                     </span>
                   <span th:if="${prov.calificacion == null}" style="font-weight: bolder">Sin calificaciones</span>
                 </li>
                 <li> Cantidad de Cometarios recibidos:
-                  <span th:if="${prov != 0}"><span th:text="${provServicio.cantidadComentariosDeUnProveedor(prov.id)}" style="font-weight: bolder" ></span></span>
+                  <span th:if="${provServicio.cantidadComentariosDeUnProveedor(prov.id) != 0}"><span th:text="${provServicio.cantidadComentariosDeUnProveedor(prov.id)}" style="font-weight: bolder" ></span></span>
                   <span th:if="${provServicio.cantidadComentariosDeUnProveedor(prov.id) == 0}" style="font-weight: bolder">Sin Comentarios</span>
                 </li>
               </ul>

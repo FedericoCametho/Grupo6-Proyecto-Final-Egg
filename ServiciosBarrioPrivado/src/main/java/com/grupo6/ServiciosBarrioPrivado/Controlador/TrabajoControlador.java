@@ -1,5 +1,6 @@
 package com.grupo6.ServiciosBarrioPrivado.Controlador;
 
+import com.grupo6.ServiciosBarrioPrivado.Entidad.AuxComentarioCalificacion;
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Trabajo;
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Usuario;
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.CategoriaServicio;

@@ -163,7 +163,7 @@ public class ProveedorServicio {
     public int cantidadComentariosDeUnProveedor(String idProveedor) throws MiException{
         return trabajoRepositorio.buscarPorProveedor(idProveedor)
                 .stream().filter(t -> t.getEstado().toString()
-                        .equals("FINALIZADO") && !t.getComentario().equals("")).collect(Collectors.toList()).size();
+                        .equals("FINALIZADO") && t.getComentario() != null).collect(Collectors.toList()).size();
     }
 
     public void validar(String nombre, String apellido, String email, String password, String password2, String telefono,

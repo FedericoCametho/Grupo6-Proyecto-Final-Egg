@@ -22,8 +22,8 @@ import java.util.List;
 @RequestMapping("/")
 public class PortalControlador {
 
-//    @Autowired
-//    private ProveedorServicio proveedorServicio;
+    @Autowired
+    private ProveedorServicio proveedorServicio;
 
     @GetMapping("/")        // localhost:8080/
     public String index() {
@@ -84,7 +84,6 @@ public class PortalControlador {
 
     @GetMapping("/listarProveedores")
     public String listarTodos(ModelMap modelo){
-        ProveedorServicio proveedorServicio = new ProveedorServicio();
         List<Usuario> proveedores = proveedorServicio.listarProveedores();
         modelo.addAttribute("proveedores", proveedores);
         List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
