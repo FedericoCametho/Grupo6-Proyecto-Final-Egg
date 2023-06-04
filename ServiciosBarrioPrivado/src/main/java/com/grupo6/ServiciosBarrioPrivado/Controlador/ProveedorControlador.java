@@ -203,7 +203,7 @@ public class ProveedorControlador {
         } finally {
             Usuario usuario = usuarioServicio.getUsuarioById(idProveedor);
             modelo.addAttribute("usuario", usuario);
-            return "perfil";
+            return "perfil_rol_logout";
         }
 
 

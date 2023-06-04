@@ -202,13 +202,13 @@ public class UsuarioControlador {
             } finally {
                 Usuario usuario = proveedorServicio.getProveedorById(idCliente);
                 modelo.addAttribute("usuario", usuario);
-                return "perfil";
+                return "perfil_rol_logout";
             }
         } catch (MiException ex){
             modelo.put("error", ex.getMessage());
             Usuario usuario = proveedorServicio.getProveedorById(idCliente);
             modelo.addAttribute("usuario", usuario);
-            return "perfil";
+            return "perfil_rol_logout";
         }
     }
 
