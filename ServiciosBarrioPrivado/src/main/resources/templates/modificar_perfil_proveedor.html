@@ -52,8 +52,8 @@
         <option>Seleccionar Categoria</option>
 
         <option th:each="cat : ${categoriaServicio}"
-                th:value="${cat}"
-                th:text="${cat.toString()}"
+                th:value="${cat.id}"
+                th:text="${cat.nombre}"
                 th:selected="${proveedor.categoriaServicio == cat}"
         />
       </select>

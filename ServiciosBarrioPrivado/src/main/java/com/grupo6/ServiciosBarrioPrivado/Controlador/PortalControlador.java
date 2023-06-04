@@ -1,14 +1,15 @@
 package com.grupo6.ServiciosBarrioPrivado.Controlador;
 
 
+import com.grupo6.ServiciosBarrioPrivado.Entidad.CategoriaServicio;
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Usuario;
-import com.grupo6.ServiciosBarrioPrivado.Enumeracion.CategoriaServicio;
+
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.Rol;
+import com.grupo6.ServiciosBarrioPrivado.Servicio.CategoriaServicioService;
 import com.grupo6.ServiciosBarrioPrivado.Servicio.ProveedorServicio;
 import com.grupo6.ServiciosBarrioPrivado.Servicio.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.parameters.P;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,9 @@ public class PortalControlador {
 
     @Autowired
     private UsuarioServicio usuarioServicio;
+
+    @Autowired
+    private CategoriaServicioService categoriaServicioService;
 
     @GetMapping("/")        // localhost:8080/
     public String index() {
@@ -101,7 +105,7 @@ public class PortalControlador {
     public String listarTodos(ModelMap modelo){
         List<Usuario> proveedores = proveedorServicio.listarProveedores();
         modelo.addAttribute("proveedores", proveedores);
-        List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
+        List<CategoriaServicio> categoriaServicio = categoriaServicioService.listarTodas();
         modelo.addAttribute("categoriaServicio", categoriaServicio);
         modelo.addAttribute("provServicio", proveedorServicio);
         return "proveedor_lista_guest";
@@ -109,9 +113,8 @@ public class PortalControlador {
 
     @PostMapping("/listarPorCategoria")
     public String listarPorCategoria(@RequestParam String categoria, ModelMap modelo){
-        List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
+        List<CategoriaServicio> categoriaServicio = categoriaServicioService.listarTodas();
         modelo.addAttribute("categoriaServicio", categoriaServicio);
-        ProveedorServicio proveedorServicio = new ProveedorServicio();
 
 
         if (categoria.equals("Todos")){
@@ -120,9 +123,9 @@ public class PortalControlador {
             modelo.addAttribute("provServicio", proveedorServicio);
             return "proveedor_lista_guest";
         } else {
-            List<Usuario> proveedores = proveedorServicio.listarPorCategoria(CategoriaServicio.valueOf(categoria));
+            List<Usuario> proveedores = proveedorServicio.listarPorCategoria(categoriaServicioService.getCategoriaByName(categoria).getId());
             modelo.addAttribute("proveedores", proveedores);
-            modelo.addAttribute("categoriaSeleccionada", CategoriaServicio.valueOf(categoria));
+            modelo.addAttribute("categoriaSeleccionada", categoriaServicioService.getCategoriaByName(categoria));
             modelo.addAttribute("provServicio", proveedorServicio);
             return "proveedor_lista_guest";
         }

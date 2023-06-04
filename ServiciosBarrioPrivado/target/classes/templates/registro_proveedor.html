@@ -46,11 +46,9 @@
       <label for="categoria">Categoria</label>
       <select name="categoria" id="categoria">
 
-        <option>Seleccionar Categoria</option>
-
         <option th:each="cat : ${categoriaServicio}"
-                th:value="${cat}"
-                th:text="${cat.toString()}"
+                th:value="${cat.getId().toString()}"
+                th:text="${cat.getNombre()}"
         >
       </select>
     </div>

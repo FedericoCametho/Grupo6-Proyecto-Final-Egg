@@ -19,8 +19,8 @@
 
 
             <option th:each="cat : ${categoriaServicio}"
-                    th:value="${cat.toString()}"
-                    th:text="${cat.toString()}"
+                    th:value="${cat.nombre}"
+                    th:text="${cat.nombre}"
                     th:selected="${categoriaSeleccionada == cat}"
             />
           </select>
@@ -58,8 +58,8 @@
     </div>
 
     <div class="form-group my-3 seleccion">
-      <label> Categoria Seleccionada: <span style="font-weight:bolder;"  th:text="${categoria.toString()}"></span></label>
-      <input name="categoria" hidden th:value="${categoria}">
+      <label> Categoria Seleccionada: <span style="font-weight:bolder;"  th:text="${categoria.nombre}"></span></label>
+      <input name="idCategoria" hidden th:value="${categoria.id}">
     </div>
 <!--    <div class="form-group my-3 seleccion">-->
 
@@ -76,10 +76,9 @@
 
 
     <div class="form-group my-3 seleccion">
+      <label id="idproveedor"></label>
+      <select name="idProveedor" id="idproveedor">
 
-      <select name="idProveedor">
-
-        <option>Seleccionar Proveedor</option>
 
         <option th:each="pro : ${proveedores}"
                 th:value="${pro.getId()}"

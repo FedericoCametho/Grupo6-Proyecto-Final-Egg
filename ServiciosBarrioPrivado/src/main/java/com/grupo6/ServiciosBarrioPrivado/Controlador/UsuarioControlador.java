@@ -1,16 +1,16 @@
 package com.grupo6.ServiciosBarrioPrivado.Controlador;
 
 import com.grupo6.ServiciosBarrioPrivado.Entidad.AuxComentarioCalificacion;
+import com.grupo6.ServiciosBarrioPrivado.Entidad.CategoriaServicio;
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Usuario;
 
-import com.grupo6.ServiciosBarrioPrivado.Enumeracion.CategoriaServicio;
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.Rol;
 import com.grupo6.ServiciosBarrioPrivado.Excepciones.MiException;
+import com.grupo6.ServiciosBarrioPrivado.Servicio.CategoriaServicioService;
 import com.grupo6.ServiciosBarrioPrivado.Servicio.ProveedorServicio;
 
 import com.grupo6.ServiciosBarrioPrivado.Servicio.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +28,9 @@ public class UsuarioControlador {
 
     @Autowired
     private ProveedorServicio proveedorServicio;
+
+    @Autowired
+    private CategoriaServicioService categoriaServicioService;
 
 
 
@@ -176,9 +179,12 @@ public class UsuarioControlador {
                 modelo.put("error", ex.getMessage());
             }
 
-        } else {
+        } else if (rol.toString().equals("USER")){
             usuario = usuarioServicio.getUsuarioById(id);
             modelo.addAttribute("usuario", usuario);
+        } else {
+            // si el usuario es ADMIN
+            return "perfil_admin";
         }
 
         return "perfil";
@@ -188,30 +194,19 @@ public class UsuarioControlador {
     public String confirmacionCambiarRol(@PathVariable String idCliente, ModelMap modelo){
         Usuario usuario = usuarioServicio.getUsuarioById(idCliente);
         modelo.addAttribute("usuario", usuario);
-        List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
+        List<CategoriaServicio> categoriaServicio = categoriaServicioService.listarTodas();
         modelo.addAttribute("categoriaServicio", categoriaServicio);
         return "cambio_rol_a_proveedor";
     }
 
 
-//    public String cambiarRol(@PathVariable String idCliente,  @RequestParam String nombre, @RequestParam String apellido,
-//                             @RequestParam String telefono, ModelMap modelo){
-//        try{
-//            usuarioServicio.cambiarARolUsuario(idCliente,nombre,apellido,telefono);
-//        } catch (MiException ex){
-//            modelo.put("error", ex.getMessage());
-//        }
-//
-//        Usuario usuario = usuarioServicio.getUsuarioById(idCliente);
-//        modelo.addAttribute("usuario", usuario);
-//        return "perfil";
-//    }
+
     @PostMapping("/cambiarRolAProveedor/{idCliente}")
     public String cambiarRol(@PathVariable String idCliente,  @RequestParam String nombre, @RequestParam String apellido,
-                             @RequestParam String telefono,@RequestParam CategoriaServicio categoria,
+                             @RequestParam String telefono,@RequestParam String idCategoria,
                              @RequestParam Integer precioPorHora, ModelMap modelo){
         try{
-            proveedorServicio.cambiarARolProveedor(idCliente,nombre,apellido,telefono,categoria,precioPorHora);
+            proveedorServicio.cambiarARolProveedor(idCliente,nombre,apellido,telefono,idCategoria,precioPorHora);
             try{
                 List<AuxComentarioCalificacion> resultados = proveedorServicio.trabajosFinalizadosDeUnProveedor(idCliente)
                         .stream().map(t -> new AuxComentarioCalificacion(t.getComentario(), t.getCalificacion(), t.getId())).collect(Collectors.toList());

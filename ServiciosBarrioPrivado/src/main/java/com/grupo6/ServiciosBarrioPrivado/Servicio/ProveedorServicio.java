@@ -1,8 +1,9 @@
 package com.grupo6.ServiciosBarrioPrivado.Servicio;
 
+import com.grupo6.ServiciosBarrioPrivado.Entidad.CategoriaServicio;
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Trabajo;
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Usuario;
-import com.grupo6.ServiciosBarrioPrivado.Enumeracion.CategoriaServicio;
+
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.Rol;
 import com.grupo6.ServiciosBarrioPrivado.Excepciones.MiException;
 
@@ -27,14 +28,18 @@ public class ProveedorServicio {
     @Autowired
     private TrabajoRepositorio trabajoRepositorio;
 
+    @Autowired
+    private CategoriaServicioService categoriaServicioService;
+
 
 
 
     @Transactional
     public void registrar(String nombre, String apellido, String email, String password, String password2, String telefono,
-                          CategoriaServicio categoria, Integer precioPorHora) throws MiException {
+                          String idCategoria, Integer precioPorHora) throws MiException {
 
-        this.validar(nombre,apellido, email,password,password2, telefono, categoria, precioPorHora);
+        this.validar(nombre,apellido, email,password,password2, telefono, idCategoria, precioPorHora);
+        CategoriaServicio categoria = categoriaServicioService.getCategoriaById(idCategoria);
 
         Usuario proveedor = new Usuario();
 
@@ -54,9 +59,9 @@ public class ProveedorServicio {
 
     @Transactional
     public void modificar(String id, String nombre, String apellido, String telefono,
-                          CategoriaServicio categoria, Integer precioPorHora) throws MiException{
-        this.validarParcial(nombre,apellido,telefono, categoria, precioPorHora);
-
+                          String idCategoria, Integer precioPorHora) throws MiException{
+        this.validarParcial(nombre,apellido,telefono, idCategoria, precioPorHora);
+        CategoriaServicio categoria = categoriaServicioService.getCategoriaById(idCategoria);
         Optional<Usuario> respuesta = proveedorRepositorio.findById(id);
 
         if (respuesta.isPresent()){
@@ -75,11 +80,11 @@ public class ProveedorServicio {
 
     @Transactional
     public void modificarAdmin(String id, String nombre, String apellido, String telefono,
-                          CategoriaServicio categoria, Integer precioPorHora, Rol rol) throws MiException{
-        this.validarParcial(nombre,apellido,telefono, categoria, precioPorHora);
+                          String idCategoria, Integer precioPorHora, Rol rol) throws MiException{
+        this.validarParcial(nombre,apellido,telefono, idCategoria, precioPorHora);
 
         Optional<Usuario> respuesta = proveedorRepositorio.findById(id);
-
+        CategoriaServicio categoria = categoriaServicioService.getCategoriaById(idCategoria);
         if (respuesta.isPresent()){
             Usuario proveedor = respuesta.get();
 
@@ -110,10 +115,10 @@ public class ProveedorServicio {
 
     @Transactional
     public void modificarPerfil(String id, String nombre,String apellido, String telefono,
-                                CategoriaServicio categoria, Integer precioPorHora) throws MiException{
-        this.validarParcial(nombre, apellido, telefono,categoria, precioPorHora);
+                                String idCategoria, Integer precioPorHora) throws MiException{
+        this.validarParcial(nombre, apellido, telefono,idCategoria, precioPorHora);
         Optional<Usuario> respuesta = proveedorRepositorio.findById(id);
-
+        CategoriaServicio categoria = categoriaServicioService.getCategoriaById(idCategoria);
         if (respuesta.isPresent()){
             Usuario usuario = respuesta.get();
 
@@ -132,11 +137,11 @@ public class ProveedorServicio {
 
     @Transactional
     public void cambiarARolProveedor(String id, String nombre, String apellido, String telefono,
-                                     CategoriaServicio categoria, Integer precioPorHora) throws MiException{
-        validarParcial(nombre,apellido,telefono, categoria, precioPorHora);
+                                     String idCategoria, Integer precioPorHora) throws MiException{
+        validarParcial(nombre,apellido,telefono, idCategoria, precioPorHora);
 
         Optional<Usuario> respuesta = proveedorRepositorio.findById(id);
-
+        CategoriaServicio categoria = categoriaServicioService.getCategoriaById(idCategoria);
         if (respuesta.isPresent()){
             Usuario proveedor = respuesta.get();
             proveedor.setRol(Rol.valueOf("PROVEEDOR"));
@@ -159,10 +164,9 @@ public class ProveedorServicio {
         return proveedores;
     }
 
-    public List<Usuario> listarPorCategoria(CategoriaServicio categoria){
-        List<Usuario> proveedores = new ArrayList();
-        proveedores = proveedorRepositorio.buscarPorCategoria(categoria);
-        return proveedores;
+
+    public List<Usuario> listarPorCategoria(String idCategoria){
+        return proveedorRepositorio.buscarPorCategoria(idCategoria);
     }
 
     public Usuario getProveedorById(String id){
@@ -190,7 +194,7 @@ public class ProveedorServicio {
     }
 
     public void validar(String nombre, String apellido, String email, String password, String password2, String telefono,
-                        CategoriaServicio categoria, Integer precioPorHora) throws MiException{
+                        String categoria, Integer precioPorHora) throws MiException{
 
         if(nombre.isEmpty() || nombre == null){
             throw new MiException("El nombre no puede ser nulo o estar vacio");
@@ -215,7 +219,7 @@ public class ProveedorServicio {
         if(telefono.isEmpty() || telefono == null){
             throw new MiException("El telefono no puede ser nulo o estar vacio");
         }
-        if(categoria.toString().isEmpty() || categoria == null){
+        if(categoria.isEmpty() || categoria == null){
             throw new MiException("La categoria no puede ser nulo o estar vacio");
         }
         if(precioPorHora == null){
@@ -225,7 +229,7 @@ public class ProveedorServicio {
     }
 
     public void validarParcial( String nombre, String apellido, String telefono,
-                        CategoriaServicio categoria, Integer precioPorHora) throws MiException{
+                                String categoria, Integer precioPorHora) throws MiException{
 
         if(nombre.isEmpty() || nombre == null){
             throw new MiException("El nombre no puede ser nulo o estar vacio");
@@ -238,7 +242,7 @@ public class ProveedorServicio {
         if(telefono.isEmpty() || telefono == null){
             throw new MiException("El telefono no puede ser nulo o estar vacio");
         }
-        if(categoria.toString().isEmpty() || categoria == null){
+        if(categoria.isEmpty() || categoria == null){
             throw new MiException("La categoria no puede ser nulo o estar vacio");
         }
         if(precioPorHora == null){

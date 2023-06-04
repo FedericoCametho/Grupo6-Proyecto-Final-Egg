@@ -28,13 +28,21 @@
         <li>EMAIL: <span th:text="${usuario.email}"></span> </li>
         <li>TELEFONO: <span th:text="${usuario.telefono}"></span> </li>
         <li th:if="${usuario.rol.toString.equals('PROVEEDOR') || session.usuariosesion.rol.toString().equals('ADMIN')}">
-          CATEGORIA DE SERVICIO: <span th:text="${usuario.categoriaServicio}"></span> </li>
+          CATEGORIA DE SERVICIO: <span th:if="${usuario.categoriaServicio != null}" th:text="${usuario.categoriaServicio.nombre}"></span>
+          <span th:if="${usuario.categoriaServicio == null}"> Sin categoria asignada</span>
+        </li>
         <li th:if="${usuario.rol.toString().equals('PROVEEDOR') || session.usuariosesion.rol.toString().equals('ADMIN')}">
-          PRECIO POR HORA: <span th:text="${usuario.precioPorHora}"></span></li>
+          PRECIO POR HORA: <span th:if="${usuario.precioPorHora != null}"  th:text="${usuario.precioPorHora}"></span>
+          <span th:if="${usuario.precioPorHora == null}" > Sin Precio por Hora establecido</span>
+        </li>
         <li th:if="${usuario.rol.toString().equals('PROVEEDOR') ||session.usuariosesion.rol.toString().equals('ADMIN')}">
-          CALIFICACION PROMEDIO: <span th:text="${usuario.calificacion}"></span></li>
+          CALIFICACION PROMEDIO: <span th:if="${usuario.calificacion != null}" th:text="${usuario.calificacion}"></span>
+          <span th:if="${usuario.calificacion == null}" > Sin calificaciones </span>
+        </li>
         <li th:if="${usuario.rol.toString().equals('PROVEEDOR') || session.usuariosesion.rol.toString().equals('ADMIN')}">
-          Cantidad de Comentarios: <span th:text="${cantComentarios}"></span> - Cantidad de Calificaciones recibidas: <span th:text="${cantCalificaciones}"></span> </li>
+          Cantidad de Comentarios: <span th:text="${cantComentarios}"></span> - Cantidad de Calificaciones recibidas: <span th:text="${cantCalificaciones}"></span>
+          
+        </li>
       </ul>
     </div>
 

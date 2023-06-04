@@ -1,18 +1,16 @@
 package com.grupo6.ServiciosBarrioPrivado.Controlador;
 
 import com.grupo6.ServiciosBarrioPrivado.Entidad.CategoriaServicio;
-import com.grupo6.ServiciosBarrioPrivado.Entidad.Usuario;
+
 import com.grupo6.ServiciosBarrioPrivado.Excepciones.MiException;
-import com.grupo6.ServiciosBarrioPrivado.Repositorio.CategoriaServicioRepositorio;
+
 import com.grupo6.ServiciosBarrioPrivado.Servicio.CategoriaServicioService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
-import java.nio.charset.MalformedInputException;
 import java.util.List;
 
 @Controller

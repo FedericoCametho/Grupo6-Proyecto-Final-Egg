@@ -1,10 +1,12 @@
 package com.grupo6.ServiciosBarrioPrivado.Controlador;
 
+import com.grupo6.ServiciosBarrioPrivado.Entidad.CategoriaServicio;
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Trabajo;
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Usuario;
-import com.grupo6.ServiciosBarrioPrivado.Enumeracion.CategoriaServicio;
+
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.Rol;
 import com.grupo6.ServiciosBarrioPrivado.Excepciones.MiException;
+import com.grupo6.ServiciosBarrioPrivado.Servicio.CategoriaServicioService;
 import com.grupo6.ServiciosBarrioPrivado.Servicio.ProveedorServicio;
 
 import com.grupo6.ServiciosBarrioPrivado.Servicio.UsuarioServicio;
@@ -30,10 +32,13 @@ public class ProveedorControlador {
     @Autowired
     private UsuarioServicio usuarioServicio;
 
+    @Autowired
+    private CategoriaServicioService categoriaServicioService;
+
 
     @GetMapping("/registrar")
     public String registrar(ModelMap modelo){
-        List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
+        List<CategoriaServicio> categoriaServicio = categoriaServicioService.listarTodas();
         modelo.addAttribute("categoriaServicio", categoriaServicio);
         return "registro_proveedor";
     }
@@ -45,7 +50,7 @@ public class ProveedorControlador {
                                      @RequestParam CategoriaServicio categoria, @RequestParam Integer precioPorHora,
                                      ModelMap modelo){
         try{
-            proveedorServicio.registrar(nombre, apellido, email, password, password2, telefono, categoria, precioPorHora);
+            proveedorServicio.registrar(nombre, apellido, email, password, password2, telefono, categoria.getId(), precioPorHora);
             return "index";
 
         } catch (MiException ex){
@@ -54,7 +59,7 @@ public class ProveedorControlador {
             modelo.put("apellido", apellido);
             modelo.put("email", email);
             modelo.put("telefono", telefono);
-            List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
+            List<CategoriaServicio> categoriaServicio = categoriaServicioService.listarTodas();
             modelo.addAttribute("categoriaServicio", categoriaServicio);
             modelo.put("precioPorhora", precioPorHora);
 
@@ -66,7 +71,7 @@ public class ProveedorControlador {
     public String modificarProveedor(@PathVariable String id, ModelMap modelo){
         Usuario proveedor = proveedorServicio.getProveedorById(id);
         modelo.addAttribute("proveedor", proveedor);
-        List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
+        List<CategoriaServicio> categoriaServicio = categoriaServicioService.listarTodas();
         modelo.addAttribute("categoriaServicio", categoriaServicio);
         List<Rol> roles = Arrays.stream(Rol.values()).toList();
         modelo.addAttribute("roles", roles);
@@ -76,23 +81,23 @@ public class ProveedorControlador {
 
     @PostMapping("/modificar/{id}")
     public String modificar(@PathVariable String id,  @RequestParam String nombre, @RequestParam String apellido,
-                            @RequestParam String telefono,@RequestParam CategoriaServicio categoria,
+                            @RequestParam String telefono,@RequestParam String idCategoria,
                             @RequestParam Integer precioPorHora, Rol rol, ModelMap modelo) throws MiException{
         try{
             if (rol != null){
-                proveedorServicio.modificarAdmin(id,nombre, apellido, telefono, categoria, precioPorHora, rol);
+                proveedorServicio.modificarAdmin(id,nombre, apellido, telefono, idCategoria, precioPorHora, rol);
             } else {
-                proveedorServicio.modificar(id,nombre, apellido, telefono, categoria, precioPorHora);
+                proveedorServicio.modificar(id,nombre, apellido, telefono, idCategoria, precioPorHora);
             }
             List<Usuario> proveedores = proveedorServicio.listarProveedores();
             modelo.addAttribute("proveedores", proveedores);
-            List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
+            List<CategoriaServicio> categoriaServicio = categoriaServicioService.listarTodas();
             modelo.addAttribute("categoriaServicio", categoriaServicio);
             return "proveedor_lista";
         }catch(MiException ex){
             Usuario proveedor = proveedorServicio.getProveedorById(id);
             modelo.addAttribute("proveedor", proveedor);
-            List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
+            List<CategoriaServicio> categoriaServicio = categoriaServicioService.listarTodas();
             modelo.addAttribute("categoriaServicio", categoriaServicio);
             modelo.put("error", ex.getMessage());
             return "modificar_proveedor";
@@ -126,7 +131,7 @@ public class ProveedorControlador {
     public String modificarPerfilProveedor(@PathVariable String id, ModelMap modelo){
         Usuario proveedor = proveedorServicio.getProveedorById(id);
         modelo.addAttribute("proveedor", proveedor);
-        List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
+        List<CategoriaServicio> categoriaServicio = categoriaServicioService.listarTodas();
         modelo.addAttribute("categoriaServicio", categoriaServicio);
         try{
             List<Trabajo> trabajos = proveedorServicio.trabajosDeUnProveedor(id);
@@ -142,17 +147,17 @@ public class ProveedorControlador {
 
     @PostMapping("/modificarPerfilProveedor/{id}")
     public String modificarPerfilP(@PathVariable String id, @RequestParam String nombre, @RequestParam String apellido,
-                                   @RequestParam String telefono, @RequestParam CategoriaServicio categoria,
+                                   @RequestParam String telefono, @RequestParam String idCategoria,
                                    @RequestParam Integer precioPorHora,
                                    ModelMap modelo) {
         try{
-            proveedorServicio.modificarPerfil(id,nombre, apellido, telefono, categoria, precioPorHora);
+            proveedorServicio.modificarPerfil(id,nombre, apellido, telefono, idCategoria, precioPorHora);
             modelo.addAttribute("usuario", proveedorServicio.getProveedorById(id));
             return "inicio";
         }catch(MiException ex){
             Usuario proveedor = proveedorServicio.getProveedorById(id);
             modelo.addAttribute("proveedor", proveedor);
-            List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
+            List<CategoriaServicio> categoriaServicio = categoriaServicioService.listarTodas();
             modelo.addAttribute("categoriaServicio", categoriaServicio);
             modelo.put("error", ex.getMessage());
             return "modificar_perfil_proveedor";
@@ -166,7 +171,7 @@ public class ProveedorControlador {
     public String listarTodos(ModelMap modelo){
         List<Usuario> proveedores = proveedorServicio.listarProveedores();
         modelo.addAttribute("proveedores", proveedores);
-        List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
+        List<CategoriaServicio> categoriaServicio = categoriaServicioService.listarTodas();
         modelo.addAttribute("categoriaServicio", categoriaServicio);
         modelo.addAttribute("provServicio", proveedorServicio);
         return "proveedor_lista";
@@ -174,7 +179,7 @@ public class ProveedorControlador {
 
     @PostMapping("/listarPorCategoria")
     public String listarPorCategoria(@RequestParam String categoria, ModelMap modelo){
-        List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
+        List<CategoriaServicio> categoriaServicio = categoriaServicioService.listarTodas();
         modelo.addAttribute("categoriaServicio", categoriaServicio);
 
 
@@ -184,9 +189,9 @@ public class ProveedorControlador {
             modelo.addAttribute("provServicio", proveedorServicio);
             return "proveedor_lista";
         } else {
-            List<Usuario> proveedores = proveedorServicio.listarPorCategoria(CategoriaServicio.valueOf(categoria));
+            List<Usuario> proveedores = proveedorServicio.listarPorCategoria(categoriaServicioService.getCategoriaByName(categoria).getId());
             modelo.addAttribute("proveedores", proveedores);
-            modelo.addAttribute("categoriaSeleccionada", CategoriaServicio.valueOf(categoria));
+            modelo.addAttribute("categoriaSeleccionada", categoriaServicioService.getCategoriaByName(categoria));
             modelo.addAttribute("provServicio", proveedorServicio);
             return "proveedor_lista";
         }

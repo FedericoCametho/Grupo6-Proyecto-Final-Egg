@@ -99,21 +99,21 @@
           </div><!-- /.col-lg-4 -->
 
 
-        <div class="opciones-usuario" th:if="${usuario.rol.toString().equals('USER')}" >
-          <div class="col-lg-4" >
+          <div class="col-lg-4" th:if="${usuario.rol.toString().equals('USER')}">
             <img class="rounded-image" src="https://drive.google.com/uc?id=1i0RZhyOdMk0bzUmcqxev0AOnXlhSuH8a" alt="trabajos" style="background-color: lightgray">
             <h2 class="fw-normal">Mis Trabajos Solicitados</h2>
             <p><a class="btn btn-secondary botones" th:href="@{/trabajo/listarPorUsuario/__${usuario.id}__}">Ver Detalles &raquo;</a></p>
           </div><!-- /.col-lg-4 -->
-          <div class="col-lg-4" >
+          <div class="col-lg-4" th:if="${usuario.rol.toString().equals('USER')}">
             <img class="rounded-image" src="https://drive.google.com/uc?id=1i0RZhyOdMk0bzUmcqxev0AOnXlhSuH8a" alt="trabajos" style="background-color: lightgray">
             <h2 class="fw-normal">Mis Trabajos Finalizados</h2>
             <p><a class="btn btn-secondary botones" th:href="@{/trabajo/listarPorUsuarioFinalizado/__${usuario.id}__}">Ver Detalles &raquo;</a></p>
           </div><!-- /.col-lg-4 -->
-        </div>
 
 
-          <div class="opciones-proveedor" th:if="${usuario.rol.toString().equals('PROVEEDOR')}" >
+
+
+          <div class="opciones-proveedor row" th:if="${usuario.rol.toString().equals('PROVEEDOR')}" >
             <div class="col-lg-4"  >
               <img class="rounded-image" src="https://drive.google.com/uc?id=1i0RZhyOdMk0bzUmcqxev0AOnXlhSuH8a" alt="trabajos" style="background-color: lightgray">
               <h2 class="fw-normal">Mis Trabajos Pendientes</h2>

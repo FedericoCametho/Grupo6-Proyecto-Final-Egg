@@ -19,8 +19,8 @@
         <option>Todos</option>
 
         <option th:each="cat : ${categoriaServicio}"
-                th:value="${cat.toString()}"
-                th:text="${cat.toString()}"
+                th:value="${cat.nombre}"
+                th:text="${cat.nombre}"
                 th:selected="${categoriaSeleccionada == cat}"
         />
       </select>
@@ -52,8 +52,8 @@
       <td th:text="${prov.apellido}"></td>
       <td th:text="${prov.email}"></td>
       <td th:text="${prov.telefono}"></td>
-      <td th:text="${prov.precioPorHora}"></td>
-      <td th:text="${prov.categoriaServicio.toString()}"></td>
+      <td th:if="${prov.precioPorHora != null}" th:text="${prov.precioPorHora}"></td> <td th:if="${prov.precioPorHora == null}"> Sin Asignar</td>
+      <td th:if="${prov.categoriaServicio != null}" th:text="${prov.categoriaServicio.nombre}"></td> <td th:if="${prov.categoriaServicio == null}" >Sin Asignar</td>
       <td>
         <span th:if="${prov.calificacion != 0}"><span th:text="${prov.calificacion}"></span></span>
         <span th:if="${prov.calificacion == null}">Sin calificaciones</span>
@@ -92,10 +92,13 @@
                   <li> Email: <span th:text="${prov.email}"></span></li>
                   <li> Telefono: <span th:text="${prov.telefono}"></span></li>
                   <li> Precio Por Hora: <span th:text="${prov.precioPorHora}"></span> </li>
-                  <li> Categoria de Servicio: <span th:text="${prov.categoriaServicio.toString()}"></span></li>
+                  <li> Categoria de Servicio:
+                    <span th:if="${prov.categoriaServicio != null}" th:text="${prov.categoriaServicio.nombre}"></span>
+                    <span th:if="${prov.categoriaServicio == null}"> Sin categoria asignada</span>
+                  </li>
                   <li> Calificacion Promedio:
-                    <span th:if="${prov.calificacion != 0}">
-                      <span th:text="${prov.calificacion}" style="font-weight: bolder"></span><br>
+                    <span th:if="${prov.calificacion != null}" th:text="${prov.calificacion}"></span>
+                    <span th:if="${prov.calificacion == null}" > Sin calificaciones </span><br>
                     Cantidad de Calificaciones: <span th:if="${prov.calificacion != null}" th:text="${provServicio.cantidadCalificacionesDeUnProveedor(prov.id)}" style="font-weight: bolder"></span>
                     </span>
                     <span th:if="${prov.calificacion == null}" style="font-weight: bolder">Sin calificaciones</span>

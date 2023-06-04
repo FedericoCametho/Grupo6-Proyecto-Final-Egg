@@ -2,12 +2,12 @@ package com.grupo6.ServiciosBarrioPrivado.Entidad;
 
 
 
-import com.grupo6.ServiciosBarrioPrivado.Enumeracion.CategoriaServicio;
+
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.EstadoTrabajo;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+
 import java.util.Date;
 
 @Entity
@@ -28,6 +28,7 @@ public class Trabajo {
     @ManyToOne
     private Usuario proveedor;
 
+    @ManyToOne
     private CategoriaServicio categoria ;
 
     private String detalles;

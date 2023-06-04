@@ -2,9 +2,10 @@ package com.grupo6.ServiciosBarrioPrivado.Servicio;
 
 
 
+import com.grupo6.ServiciosBarrioPrivado.Entidad.CategoriaServicio;
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Trabajo;
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Usuario;
-import com.grupo6.ServiciosBarrioPrivado.Enumeracion.CategoriaServicio;
+
 
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.EstadoTrabajo;
 import com.grupo6.ServiciosBarrioPrivado.Excepciones.MiException;
@@ -37,8 +38,11 @@ public class TrabajoServicio {
     @Autowired
     private ProveedorServicio proveedorServicio;
 
+    @Autowired
+    private CategoriaServicioService categoriaServicioService;
+
     @Transactional
-    public void registrar(String fechaString, String idCliente, String idProveedor, CategoriaServicio categoria,
+    public void registrar(String fechaString, String idCliente, String idProveedor, String idCategoria,
                           String detalles) throws MiException, ParseException {
         SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
         Date fecha;
@@ -49,10 +53,11 @@ public class TrabajoServicio {
             throw ex;
         }
 
-        validar(fecha, idCliente, idProveedor, categoria);
+        validar(fecha, idCliente, idProveedor, idCategoria);
 
         Usuario cliente = usuarioRepositorio.findById(idCliente).get();
         Usuario proveedor = proveedorServicio.getProveedorById(idProveedor);
+        CategoriaServicio categoria = categoriaServicioService.getCategoriaById(idCategoria);
 
         Trabajo trabajo = new Trabajo();
 
@@ -75,7 +80,7 @@ public class TrabajoServicio {
 
 
     @Transactional
-    public void modificar(String id, String fechaString, String idCliente, String idProveedor, CategoriaServicio categoria,
+    public void modificar(String id, String fechaString, String idCliente, String idProveedor, String idCategoria,
                           String detalles) throws MiException, ParseException{
         SimpleDateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -86,11 +91,12 @@ public class TrabajoServicio {
         }catch(ParseException ex){
             throw ex;
         }
-        validar(fecha, idCliente, idProveedor, categoria);
+        validar(fecha, idCliente, idProveedor, idCategoria);
 
         Optional<Trabajo> respuestaTrabajo = trabajoRepositorio.findById(id);
         Optional<Usuario> respuestaProveedor = usuarioRepositorio.findById(idProveedor);
         Optional<Usuario> respuestaCliente = usuarioRepositorio.findById(idCliente);
+        CategoriaServicio categoria = categoriaServicioService.getCategoriaById(idCategoria);
 
         Usuario proveedor = new Usuario();
         Usuario cliente = new Usuario();
@@ -227,7 +233,7 @@ public class TrabajoServicio {
         return trabajoRepositorio.getOne(id);
     }
 
-    public void validar(Date fecha,String idCliente,String idProveedor,CategoriaServicio categoria) throws MiException {
+    public void validar(Date fecha,String idCliente,String idProveedor,String categoria) throws MiException {
 
         LocalDate fechaLocalDate = fecha.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
@@ -235,7 +241,7 @@ public class TrabajoServicio {
             throw new MiException("La fecha no puede ser nula ni puede ser anterior a la fecha de hoy");
         }
 
-        if (categoria.toString().isEmpty() || categoria == null) {
+        if (categoria.isEmpty() || categoria == null) {
             throw new MiException("La categoria no puede ser nulo o estar vacio");
         }
 
@@ -250,9 +256,14 @@ public class TrabajoServicio {
 
     private void agregarCalificacionAlProveedor(Integer calificacion, String idProveedor){
         Usuario proveedor = proveedorServicio.getProveedorById(idProveedor);
-        List<Double> calificaciones = trabajoRepositorio.buscarPorProveedor(idProveedor).stream().map(t -> Double.valueOf(""+t.getCalificacion())).collect(Collectors.toList());
-        calificaciones.add(Double.valueOf(""+calificacion));
+        List<Double> calificaciones = trabajoRepositorio.buscarPorProveedor(idProveedor).stream().map(t -> Double.valueOf(t.getCalificacion())).collect(Collectors.toList());
+        calificaciones.add(Double.valueOf(calificacion));
 
-        proveedor.setCalificacion(calificaciones.stream().reduce(0.0, Double::sum) / calificaciones.size());
+        if (calificaciones.size() > 1){
+            proveedor.setCalificacion(calificaciones.stream().reduce(0.0, Double::sum) / calificaciones.size());
+        } else{
+            proveedor.setCalificacion(Double.valueOf(calificacion));
+        }
+
     }
 }

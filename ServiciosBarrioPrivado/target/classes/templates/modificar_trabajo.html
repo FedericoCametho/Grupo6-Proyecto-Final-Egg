@@ -71,7 +71,6 @@
       <label for="categoria">Categoria</label>
       <select name="categoria" id="categoria">
 
-        <option>Seleccionar Categoria</option>
 
         <option th:each="cat : ${categoriaServicio}"
                 th:value="${cat}"
@@ -84,7 +83,6 @@
       <label for="cliente">Cliente</label>
       <select name="idCliente" id="cliente">
 
-        <option>Seleccionar Cliente</option>
 
         <option th:each="cli : ${clientes}"
                 th:value="${cli.getId()}"
@@ -97,8 +95,6 @@
     <div class="form-group my-3 seleccion">
       <label for="proveedor">Proveedor</label>
       <select name="idProveedor" id="proveedor">
-
-        <option>Seleccionar Proveedor</option>
 
         <option th:each="pro : ${proveedores}"
                 th:value="${pro.getId()}"

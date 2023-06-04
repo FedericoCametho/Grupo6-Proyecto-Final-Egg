@@ -22,7 +22,7 @@
             <ul>
                 <li>FECHA: <span th:text="${trabajo.fecha}"></span></li>
                 <li>PROVEEDOR: <span th:text="${trabajo.proveedor.getNombreCompleto()}"></span> </li>
-                <li>CATEGORIA DE SERVICIO: <span th:text="${trabajo.categoria}"></span> </li>
+                <li>CATEGORIA DE SERVICIO: <span th:text="${trabajo.categoria.nombre}"></span> </li>
                 <li>OBSERVACIONES: <span th:text="${trabajo.detalles}"></span>  </li>
             </ul>
             <label for="calif"> Por Favor indique el puntaje que le otorga al proveedor del trabajo: </label>

@@ -27,7 +27,7 @@
         <li>TELEFONO: <span th:text="${usuario.telefono}"></span> </li>
         <div  th:if="${usuario.rol.toString.equals('PROVEEDOR')}">
           <li>
-            CATEGORIA DE SERVICIO: <span th:text="${usuario.categoriaServicio}"></span> </li>
+            CATEGORIA DE SERVICIO: <span th:text="${usuario.categoriaServicio.nombre}"></span> </li>
           <li>
             PRECIO POR HORA: <span th:text="${usuario.precioPorHora}"></span></li>
           <li >
