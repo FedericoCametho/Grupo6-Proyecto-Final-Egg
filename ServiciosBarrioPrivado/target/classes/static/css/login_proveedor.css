@@ -1,7 +1,8 @@
-.formulario{
+.formulario {
     width: 40%;
-    margin: auto;
-    background-color: whitesmoke;
+    margin: 0 auto;
+    background-color: lightgray;
+    align-items: center;
 }
 
 
@@ -11,7 +12,7 @@ input{
 }
 
 .campo{
-    width: 60%;
+    width: 80%;
     margin: auto;
 
 }

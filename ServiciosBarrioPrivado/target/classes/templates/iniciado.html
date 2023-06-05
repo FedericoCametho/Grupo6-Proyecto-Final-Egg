@@ -7,7 +7,21 @@
 
 <div class="main-container">
   <main>
-    <div id="myCarousel" class="carousel slide carousel-custom" data-bs-ride="carousel">
+      
+      
+       <div class="col-lg-12  ml-2">
+  <div class="banner-section ">
+    <img th:src="@{/imagenes/banner.jpg}" class="banner" src="../static/imagenes/banner.jpg" alt="banner">
+    <div class="banner-content text-center">
+      <h1 class="hero-title">Que puedas hacerlo, no significa que tengas que hacerlo.</h1>
+      <p class="subtitle"> Desde Service + te ponemos en contacto directo con profesionales que te ayudarán con tu hogar, local, oficina...</p>
+      <p><a class="btn btn-lg btn-primary botones" th:href="@{/registrar}" > Registrate! </a></p>
+
+    </div>
+  </div>
+</div>
+      
+   <!-- <div id="myCarousel" class="carousel slide carousel-custom" data-bs-ride="carousel">
       <div class="carousel-indicators">
         <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
         <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -22,7 +36,7 @@
               <h1 class="textcar">Estas a un click de hacer tu vida mas simple</h1>
               <p></p>
               <!--                            <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p>-->
-            </div>
+       <!--     </div>
           </div>
         </div>
         <div class="carousel-item" style="background-color: rgba(145,23,23,0.73);"  >
@@ -76,36 +90,36 @@
         <div class="row">
           <div class="col-lg-4"  th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}">
           <!--                    <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(&#45;&#45;bs-secondary-color)"/></svg>-->
-          <img class="rounded-image" src="https://drive.google.com/uc?id=1hJ65ZDYFEt5G5U1fbKnkEaVR9T46Jwrg" alt="usuario">
+      <img th:src="@{/imagenes/loguser.png}" class="rounded-image" src="../static/imagenes/loguser.png" alt="cliente">
           <h2 class="fw-normal">Listado de usuarios</h2>
           <p></p>
           <p><a class="btn btn-secondary botones" th:href="@{/usuario/listar}">Ver Detalles &raquo;</a></p>
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4" th:if="${usuario.rol.toString().equals('USER') || session.usuariosesion.rol.toString().equals('ADMIN')}">
-          <img class="rounded-image" src="https://drive.google.com/uc?id=1cmb9ITlL4Pf2AUEVMKFvTAsogeBpRKpq" alt="proveedor">
+      <img th:src="@{/imagenes/logprov.png}" class="rounded-image" src="../static/imagenes/logprov.png" alt="proveedor">
           <h2 class="fw-normal">Listado de Proveedores</h2>
           <p></p>
           <p><a class="btn btn-secondary botones" th:href="@{/proveedor/listar}">Ver Detalles &raquo;</a></p>
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-4" th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}" >
-          <img class="rounded-image" src="https://drive.google.com/uc?id=1i0RZhyOdMk0bzUmcqxev0AOnXlhSuH8a" alt="trabajos" style="background-color: lightgray">
+      <img th:src="@{/imagenes/menu.png}" class="rounded-image" src="../static/imagenes/menu.png" alt="proveedor">
           <h2 class="fw-normal">Listado de Trabajos</h2>
           <p><a class="btn btn-secondary botones" th:href="@{/trabajo/listar}">Ver Detalles &raquo;</a></p>
         </div><!-- /.col-lg-4 -->
           <div class="col-lg-4" th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}" >
-            <img class="rounded-image" src="https://drive.google.com/uc?id=1i0RZhyOdMk0bzUmcqxev0AOnXlhSuH8a" alt="trabajos" style="background-color: lightgray">
+      <img th:src="@{/imagenes/tools.png}" class="rounded-image" src="../static/imagenes/tools.png" alt="proveedor">
             <h2 class="fw-normal">Crear nuevas Categorias de Servicios</h2>
             <p><a class="btn btn-secondary botones" th:href="@{/admin/listarCategorias}">Comenzar &raquo;</a></p>
           </div><!-- /.col-lg-4 -->
 
 
           <div class="col-lg-4" th:if="${usuario.rol.toString().equals('USER')}">
-            <img class="rounded-image" src="https://drive.google.com/uc?id=1i0RZhyOdMk0bzUmcqxev0AOnXlhSuH8a" alt="trabajos" style="background-color: lightgray">
+      <img th:src="@{/imagenes/menu.png}" class="rounded-image" src="../static/imagenes/menu.png" alt="proveedor">
             <h2 class="fw-normal">Mis Trabajos Solicitados</h2>
             <p><a class="btn btn-secondary botones" th:href="@{/trabajo/listarPorUsuario/__${usuario.id}__}">Ver Detalles &raquo;</a></p>
           </div><!-- /.col-lg-4 -->
           <div class="col-lg-4" th:if="${usuario.rol.toString().equals('USER')}">
-            <img class="rounded-image" src="https://drive.google.com/uc?id=1i0RZhyOdMk0bzUmcqxev0AOnXlhSuH8a" alt="trabajos" style="background-color: lightgray">
+      <img th:src="@{/imagenes/menu.png}" class="rounded-image" src="../static/imagenes/menu.png" alt="proveedor">
             <h2 class="fw-normal">Mis Trabajos Finalizados</h2>
             <p><a class="btn btn-secondary botones" th:href="@{/trabajo/listarPorUsuarioFinalizado/__${usuario.id}__}">Ver Detalles &raquo;</a></p>
           </div><!-- /.col-lg-4 -->
@@ -115,12 +129,12 @@
 
           <div class="opciones-proveedor row" th:if="${usuario.rol.toString().equals('PROVEEDOR')}" >
             <div class="col-lg-4"  >
-              <img class="rounded-image" src="https://drive.google.com/uc?id=1i0RZhyOdMk0bzUmcqxev0AOnXlhSuH8a" alt="trabajos" style="background-color: lightgray">
+      <img th:src="@{/imagenes/menu.png}" class="rounded-image" src="../static/imagenes/menu.png" alt="proveedor">
               <h2 class="fw-normal">Mis Trabajos Pendientes</h2>
               <p><a class="btn btn-secondary botones" th:href="@{/trabajo/listarPorProveedorPendiente/__${usuario.id}__}">Ver Detalles &raquo;</a></p>
             </div><!-- /.col-lg-4 -->
             <div class="col-lg-4" >
-              <img class="rounded-image" src="https://drive.google.com/uc?id=1i0RZhyOdMk0bzUmcqxev0AOnXlhSuH8a" alt="trabajos" style="background-color: lightgray">
+      <img th:src="@{/imagenes/menu.png}" class="rounded-image" src="../static/imagenes/menu.png" alt="proveedor">
               <h2 class="fw-normal">Mis Trabajos Finalizados</h2>
               <p><a class="btn btn-secondary botones" th:href="@{/trabajo/listarPorProveedorFinalizado/__${usuario.id}__}">Ver Detalles &raquo;</a></p>
             </div><!-- /.col-lg-4 -->

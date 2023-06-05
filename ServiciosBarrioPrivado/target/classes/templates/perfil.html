@@ -26,7 +26,7 @@
         <h4 class="card-title" th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}">Datos Personales del Usuario:</h4>
         <h4 class="card-title" th:if="${!session.usuariosesion.rol.toString().equals('ADMIN')}">Mis Datos Personales:</h4>
 
-      <ul>
+      <ul style="list-style-type: none;">
         <li>NOMBRE: <span th:text="${usuario.nombre}"></span></li>
         <li>APELLIDO: <span th:text="${usuario.apellido}"></span> </li>
         <li>EMAIL: <span th:text="${usuario.email}"></span> </li>
