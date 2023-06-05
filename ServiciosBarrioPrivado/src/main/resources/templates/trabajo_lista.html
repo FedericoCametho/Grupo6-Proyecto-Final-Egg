@@ -13,6 +13,23 @@
 
 <div class="container m-5" >
 
+  <form class="formulario" th:if="${finalizado == null}" th:action="@{/trabajo/listarPorEstado/__${session.usuariosesion.id}__-__${session.usuariosesion.rol}__}"  method="POST">
+    <div class="form-group my-3">
+      <label for="estado-filtrar" style="display: inline; font-weight: bold">Seleccione un Estado para filtrar los trabajos: </label>
+      <select name="estado" id="estado-filtrar">
+
+        <option>Todos</option>
+
+        <option th:each="est : ${estados}"
+                th:value="${est.toString()}"
+                th:text="${est.toString()}"
+        />
+      </select>
+      <button type="submit" class="botones">Filtrar</button>
+    </div>
+
+  </form>
+
   <table class="table">
     <thead>
       <tr>

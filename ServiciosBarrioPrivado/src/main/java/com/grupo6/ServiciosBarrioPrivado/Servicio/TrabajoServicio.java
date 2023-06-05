@@ -229,6 +229,27 @@ public class TrabajoServicio {
         return trabajoRepositorio.buscarPorCategoria(categoria);
     }
 
+    public List<Trabajo> listarPorEstadoAdmin(EstadoTrabajo estado) throws MiException{
+        if (estado == null ){
+            throw new MiException("El estado no puede ser nulo o estar vacio");
+        }
+        return trabajoRepositorio.buscarPorEstado(estado);
+    }
+
+    public List<Trabajo> listarPorEstadoUsuario(String idUsuario, EstadoTrabajo estado) throws MiException{
+        if (estado == null ){
+            throw new MiException("El estado no puede ser nulo o estar vacio");
+        }
+        return trabajoRepositorio.buscarPorEstadoCliente(idUsuario, estado);
+    }
+
+    public List<Trabajo> listarPorEstadoProveedor(String idProveedor,EstadoTrabajo estado) throws MiException{
+        if (estado == null ){
+            throw new MiException("El estado no puede ser nulo o estar vacio");
+        }
+        return trabajoRepositorio.buscarPorEstadoProveedor(idProveedor,estado);
+    }
+
     public Trabajo getTrabajoById(String id) {
         return trabajoRepositorio.getOne(id);
     }

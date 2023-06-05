@@ -6,6 +6,7 @@ import com.grupo6.ServiciosBarrioPrivado.Entidad.Trabajo;
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Usuario;
 
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.EstadoTrabajo;
+import com.grupo6.ServiciosBarrioPrivado.Enumeracion.Rol;
 import com.grupo6.ServiciosBarrioPrivado.Excepciones.MiException;
 import com.grupo6.ServiciosBarrioPrivado.Servicio.CategoriaServicioService;
 import com.grupo6.ServiciosBarrioPrivado.Servicio.ProveedorServicio;
@@ -207,6 +208,7 @@ public class TrabajoControlador {
             modelo.addAttribute("trabajos", trabajos);
             List<Usuario> proveedores = proveedorServicio.listarProveedores();
             modelo.addAttribute("proveedores", proveedores);
+            modelo.addAttribute("finalizado", true);
             return "trabajo_lista";
         } catch(MiException ex){
             modelo.put("error", ex.getMessage());
@@ -218,6 +220,7 @@ public class TrabajoControlador {
     public String calificarTrabajo(@PathVariable String id, ModelMap modelo){
         Trabajo trabajo = trabajoServicio.getTrabajoById(id);
         modelo.addAttribute("trabajo", trabajo);
+        modelo.addAttribute("finalizado", true);
         return "trabajo_calificacion";
     }
 
@@ -247,7 +250,8 @@ public class TrabajoControlador {
         modelo.addAttribute("categoriaServicio", categoriaServicio);
         List<Usuario> proveedores = proveedorServicio.listarProveedores();
         modelo.addAttribute("proveedores", proveedores);
-
+        List<EstadoTrabajo> estados = Arrays.asList(EstadoTrabajo.values());
+        modelo.addAttribute("estados", estados);
         return "trabajo_lista";
     }
 
@@ -257,7 +261,7 @@ public class TrabajoControlador {
     public String filtrarPorCategoria(@RequestParam String categoria, ModelMap modelo) throws MiException{
         List<CategoriaServicio> categoriaServicio = categoriaServicioService.listarTodas();;
         modelo.addAttribute("categoriaServicio", categoriaServicio);
-
+        modelo.addAttribute("finalizado", true);
 
         if (categoria.equals("Todos")){
             List<Trabajo> trabajos = trabajoServicio.listarTrabajo();
@@ -273,8 +277,53 @@ public class TrabajoControlador {
             List<Usuario> proveedores = proveedorServicio.listarProveedores();
             modelo.addAttribute("proveedores", proveedores);
 
+
             return "trabajo_lista";
         }
+    }
+
+    @PostMapping("/listarPorEstado/{idUsuario}-{rol}")
+    public String filtrarPorEstado(@PathVariable String idUsuario, @PathVariable Rol rol, @RequestParam String estado, ModelMap modelo) throws MiException{
+        List<CategoriaServicio> categoriaServicio = categoriaServicioService.listarTodas();;
+        modelo.addAttribute("categoriaServicio", categoriaServicio);
+        List<EstadoTrabajo> estados = Arrays.asList(EstadoTrabajo.values());
+        modelo.addAttribute("estados", estados);
+
+        List<Usuario> proveedores = proveedorServicio.listarProveedores();
+        modelo.addAttribute("proveedores", proveedores);
+
+        if(rol.toString().equals("ADMIN")){
+            if (estado.equals("Todos")){
+                List<Trabajo> trabajos = trabajoServicio.listarTrabajo();
+                modelo.addAttribute("trabajos", trabajos);
+
+            } else {
+                List<Trabajo> trabajos = trabajoServicio.listarPorEstadoAdmin(EstadoTrabajo.valueOf(estado));
+                modelo.addAttribute("trabajos", trabajos);
+                modelo.addAttribute("estadoSeleccionado", estado);
+
+            }
+        } else if(rol.toString().equals("USER")){
+            if (estado.equals("Todos")){
+                List<Trabajo> trabajos = trabajoServicio.listarPorUsuario(idUsuario);
+                modelo.addAttribute("trabajos", trabajos);
+
+            } else{
+                List<Trabajo> trabajos = trabajoServicio.listarPorEstadoUsuario(idUsuario, EstadoTrabajo.valueOf(estado));
+                modelo.addAttribute("trabajos", trabajos);
+            }
+        } else {
+            if (estado.equals("Todos")){
+                List<Trabajo> trabajos = trabajoServicio.listarPorProveedor(idUsuario);
+                modelo.addAttribute("trabajos", trabajos);
+
+            } else {
+                List<Trabajo> trabajos = trabajoServicio.listarPorEstadoProveedor(idUsuario, EstadoTrabajo.valueOf(estado));
+                modelo.addAttribute("trabajos", trabajos);
+            }
+        }
+
+        return "trabajo_lista";
     }
 
     @GetMapping("/listarPorUsuario/{idCliente}")
@@ -282,11 +331,14 @@ public class TrabajoControlador {
 
         List<CategoriaServicio> categoriaServicio = categoriaServicioService.listarTodas();;
         modelo.addAttribute("categoriaServicio", categoriaServicio);
+        List<EstadoTrabajo> estados = Arrays.asList(EstadoTrabajo.values());
+        modelo.addAttribute("estados", estados);
 
         List<Trabajo> trabajos = trabajoServicio.listarPorUsuario(idCliente);
         modelo.addAttribute("trabajos", trabajos);
         List<Usuario> proveedores = proveedorServicio.listarProveedores();
         modelo.addAttribute("proveedores", proveedores);
+
         return "trabajo_lista";
 
     }
@@ -301,6 +353,7 @@ public class TrabajoControlador {
         modelo.addAttribute("trabajos", trabajos);
         List<Usuario> proveedores = proveedorServicio.listarProveedores();
         modelo.addAttribute("proveedores", proveedores);
+        modelo.addAttribute("finalizado", true);
         return "trabajo_lista";
 
     }
@@ -310,6 +363,8 @@ public class TrabajoControlador {
 
         List<CategoriaServicio> categoriaServicio = categoriaServicioService.listarTodas();;
         modelo.addAttribute("categoriaServicio", categoriaServicio);
+        List<EstadoTrabajo> estados = Arrays.asList(EstadoTrabajo.values());
+        modelo.addAttribute("estados", estados);
 
         List<Trabajo> trabajos = trabajoServicio.listarPorUsuario(idCliente);
         modelo.addAttribute("trabajos", trabajos);
@@ -330,6 +385,7 @@ public class TrabajoControlador {
         modelo.addAttribute("trabajos", trabajos);
         List<Usuario> proveedores = proveedorServicio.listarProveedores();
         modelo.addAttribute("proveedores", proveedores);
+        modelo.addAttribute("finalizado", true);
         return "trabajo_lista";
 
     }
@@ -344,6 +400,7 @@ public class TrabajoControlador {
         modelo.addAttribute("trabajos", trabajos);
         List<Usuario> proveedores = proveedorServicio.listarProveedores();
         modelo.addAttribute("proveedores", proveedores);
+        modelo.addAttribute("finalizado", true);
         return "trabajo_lista";
 
     }
@@ -360,6 +417,7 @@ public class TrabajoControlador {
         modelo.addAttribute("trabajos", trabajos);
         List<Usuario> proveedores = proveedorServicio.listarProveedores();
         modelo.addAttribute("proveedores", proveedores);
+
         return "trabajo_lista";
     }
 
