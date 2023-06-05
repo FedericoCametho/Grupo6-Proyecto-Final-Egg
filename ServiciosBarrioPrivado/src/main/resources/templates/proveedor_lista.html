@@ -84,7 +84,10 @@
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
           <div th:each="prov : ${proveedores}"  class="col">
             <div class="card shadow-sm">
-              <img class="image-cards" src="https://drive.google.com/uc?id=1cmb9ITlL4Pf2AUEVMKFvTAsogeBpRKpq" alt="proveedor">
+              <div class="foto" style="border-radius:100%">
+                <img th:if="${prov.imagen != null}" class="image-cards" th:src="@{/pictures/__${prov.imagen}__}">
+                <img th:if="${prov.imagen == null}"  class="image-cards" src="https://drive.google.com/uc?id=1cmb9ITlL4Pf2AUEVMKFvTAsogeBpRKpq">
+              </div>
               <div class="card-body">
                 <ul>
                   <li> Nombre:<span th:text="${prov.nombre}"></span> </li>

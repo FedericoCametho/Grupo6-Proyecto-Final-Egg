@@ -16,8 +16,13 @@
     border-radius: 100%;
 }
 .image-cards{
-    width: 40px;
-    height: 40px
+    width: 70px;
+    height: 70px;
+    margin-left: 42%;
+    margin-top: 5%;
+    border-radius: 100%;
+    object-fit: scale-down;
+    background-color: #d8e3e9;
 }
 .botones{
     background-color: #8282d4;

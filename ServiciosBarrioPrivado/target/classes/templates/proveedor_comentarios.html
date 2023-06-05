@@ -19,7 +19,8 @@
     </div>
 
     <div class="form-group my-3 campo">
-      <img class="image-cards" src="https://drive.google.com/uc?id=1cmb9ITlL4Pf2AUEVMKFvTAsogeBpRKpq" alt="proveedor">
+      <img th:if="${proveedor.imagen != null}" class="image-cards" th:src="@{/pictures/__${proveedor.imagen}__}">
+      <img th:if="${proveedor.imagen == null}"  class="image-cards" src="https://drive.google.com/uc?id=1cmb9ITlL4Pf2AUEVMKFvTAsogeBpRKpq">
       <ul>
         <li>NOMBRE: <span th:text="${proveedor.nombre}"></span></li>
         <li>APELLIDO: <span th:text="${proveedor.apellido}"></span> </li>

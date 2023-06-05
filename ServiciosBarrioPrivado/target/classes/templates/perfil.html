@@ -14,11 +14,15 @@
 
 
 
-    <div class="form-group my-3">
-      <h2 class="card-title">Bienvenido <span th:text="${session.usuariosesion.getNombreCompleto()}"></span></h2>
-    </div>
+  <div class="form-group my-3">
+    <h2 class="card-title">Bienvenido <span th:text="${session.usuariosesion.getNombreCompleto()}"></span></h2>
+  </div>
+  <div class="foto" style="border-radius:100%">
+    <img th:if="${usuario.imagen != null}" class="image-cards" th:src="@{/pictures/__${usuario.imagen}__}">
+    <img th:if="${usuario.imagen == null}"  class="image-cards" src="https://drive.google.com/uc?id=1cmb9ITlL4Pf2AUEVMKFvTAsogeBpRKpq">
+  </div>
 
-    <div class="form-group my-3 campo">
+  <div class="form-group my-3 campo">
         <h4 class="card-title" th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}">Datos Personales del Usuario:</h4>
         <h4 class="card-title" th:if="${!session.usuariosesion.rol.toString().equals('ADMIN')}">Mis Datos Personales:</h4>
 

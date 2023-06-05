@@ -12,6 +12,7 @@ import com.grupo6.ServiciosBarrioPrivado.Repositorio.UsuarioRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class ProveedorServicio {
 
     @Transactional
     public void registrar(String nombre, String apellido, String email, String password, String password2, String telefono,
-                          String idCategoria, Integer precioPorHora) throws MiException {
+                          String idCategoria, Integer precioPorHora, MultipartFile imagen) throws MiException {
 
         this.validar(nombre,apellido, email,password,password2, telefono, idCategoria, precioPorHora);
         CategoriaServicio categoria = categoriaServicioService.getCategoriaById(idCategoria);
@@ -51,6 +52,7 @@ public class ProveedorServicio {
         proveedor.setRol(Rol.PROVEEDOR);
         proveedor.setCategoriaServicio(categoria);
         proveedor.setPrecioPorHora(precioPorHora);
+        proveedor.setImagen(imagen.getOriginalFilename());
 
 
         proveedorRepositorio.save(proveedor);
@@ -59,7 +61,7 @@ public class ProveedorServicio {
 
     @Transactional
     public void modificar(String id, String nombre, String apellido, String telefono,
-                          String idCategoria, Integer precioPorHora) throws MiException{
+                          String idCategoria, Integer precioPorHora, MultipartFile imagen) throws MiException{
         this.validarParcial(nombre,apellido,telefono, idCategoria, precioPorHora);
         CategoriaServicio categoria = categoriaServicioService.getCategoriaById(idCategoria);
         Optional<Usuario> respuesta = proveedorRepositorio.findById(id);
@@ -72,12 +74,24 @@ public class ProveedorServicio {
             proveedor.setTelefono(telefono);
             proveedor.setCategoriaServicio(categoria);
             proveedor.setPrecioPorHora(precioPorHora);
+            proveedor.setImagen(imagen.getOriginalFilename());
+
 
             proveedorRepositorio.save(proveedor);
         }
 
     }
 
+    @Transactional
+    public void modificarImagen(String id, String imagen) {
+        Optional<Usuario> respuesta = proveedorRepositorio.findById(id);
+
+        if (respuesta.isPresent()) {
+            Usuario proveedor = respuesta.get();
+            proveedor.setImagen(imagen);
+            proveedorRepositorio.save(proveedor);
+        }
+    }
     @Transactional
     public void modificarAdmin(String id, String nombre, String apellido, String telefono,
                           String idCategoria, Integer precioPorHora, Rol rol) throws MiException{

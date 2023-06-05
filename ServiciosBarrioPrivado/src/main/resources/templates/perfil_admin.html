@@ -18,6 +18,10 @@
       <h2 class="card-title">Bienvenido <span th:text="${session.usuariosesion.getNombreCompleto()}"></span></h2>
     </div>
 
+    <div class="foto" style="border-radius:100%" th:if="${session.usuariosesion.imagen != null}">
+        <img  class="image-cards" th:src="@{/pictures/__${session.usuariosesion.imagen}__}">
+    </div>
+
     <div class="form-group my-3 campo">
         <h4 class="card-title">Datos Personales del Usuario:</h4>
 

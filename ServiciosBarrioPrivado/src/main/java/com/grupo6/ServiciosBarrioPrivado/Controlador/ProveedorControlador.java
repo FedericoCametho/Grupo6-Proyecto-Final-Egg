@@ -10,13 +10,19 @@ import com.grupo6.ServiciosBarrioPrivado.Servicio.CategoriaServicioService;
 import com.grupo6.ServiciosBarrioPrivado.Servicio.ProveedorServicio;
 
 import com.grupo6.ServiciosBarrioPrivado.Servicio.UsuarioServicio;
+import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,9 +54,23 @@ public class ProveedorControlador {
     public String registro_proveedor(@RequestParam String nombre, @RequestParam String apellido, @RequestParam String email, @RequestParam String password,
                                      @RequestParam String password2, @RequestParam String telefono,
                                      @RequestParam CategoriaServicio categoria, @RequestParam Integer precioPorHora,
-                                     ModelMap modelo){
+                                     @RequestParam("file") MultipartFile imagen, ModelMap modelo){
         try{
-            proveedorServicio.registrar(nombre, apellido, email, password, password2, telefono, categoria.getId(), precioPorHora);
+            if(!imagen.isEmpty()) {
+                Path directorioImagenes = Paths.get("src//main//resources//static/pictures");
+                String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
+
+
+                try {
+                    byte[] bytesImg = imagen.getBytes();
+                    Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + imagen.getOriginalFilename());
+                    Files.write(rutaCompleta, bytesImg);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            proveedorServicio.registrar(nombre, apellido, email, password, password2, telefono, categoria.getId(), precioPorHora, imagen);
             return "index";
 
         } catch (MiException ex){
@@ -82,12 +102,25 @@ public class ProveedorControlador {
     @PostMapping("/modificar/{id}")
     public String modificar(@PathVariable String id,  @RequestParam String nombre, @RequestParam String apellido,
                             @RequestParam String telefono,@RequestParam String idCategoria,
-                            @RequestParam Integer precioPorHora, Rol rol, ModelMap modelo) throws MiException{
+                            @RequestParam Integer precioPorHora, Rol rol, @RequestParam("file") MultipartFile imagen, ModelMap modelo) throws MiException{
         try{
             if (rol != null){
                 proveedorServicio.modificarAdmin(id,nombre, apellido, telefono, idCategoria, precioPorHora, rol);
             } else {
-                proveedorServicio.modificar(id,nombre, apellido, telefono, idCategoria, precioPorHora);
+                Path directorioImagenes = Paths.get("src//main//resources//static/pictures");
+                String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
+
+//                proveedorServicio.modificarImagen(id, imagen.getOriginalFilename());
+
+                try {
+                    byte[] bytesImg = imagen.getBytes();
+                    Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + imagen.getOriginalFilename());
+                    Files.write(rutaCompleta, bytesImg);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                proveedorServicio.modificar(id,nombre, apellido, telefono, idCategoria, precioPorHora, imagen);
             }
             List<Usuario> proveedores = proveedorServicio.listarProveedores();
             modelo.addAttribute("proveedores", proveedores);
@@ -148,12 +181,34 @@ public class ProveedorControlador {
     @PostMapping("/modificarPerfilProveedor/{id}")
     public String modificarPerfilP(@PathVariable String id, @RequestParam String nombre, @RequestParam String apellido,
                                    @RequestParam String telefono, @RequestParam String idCategoria,
-                                   @RequestParam Integer precioPorHora,
+                                   @RequestParam Integer precioPorHora, @RequestParam("file") MultipartFile imagen,
                                    ModelMap modelo) {
         try{
             proveedorServicio.modificarPerfil(id,nombre, apellido, telefono, idCategoria, precioPorHora);
+            if(!imagen.isEmpty()) {
+                Path directorioImagenes = Paths.get("src//main//resources//static/pictures");
+                String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
+
+                proveedorServicio.modificarImagen(id, imagen.getOriginalFilename());
+
+                try {
+                    byte[] bytesImg = imagen.getBytes();
+                    Path rutaCompleta = Paths.get(rutaAbsoluta + "//" + imagen.getOriginalFilename());
+                    Files.write(rutaCompleta, bytesImg);
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    modelo.put("error", e.getMessage());
+                    Usuario proveedor = proveedorServicio.getProveedorById(id);
+                    modelo.addAttribute("proveedor", proveedor);
+                    List<CategoriaServicio> categoriaServicio = categoriaServicioService.listarTodas();
+                    modelo.addAttribute("categoriaServicio", categoriaServicio);
+                    return "modificar_perfil_proveedor";
+                }
+            }
             modelo.addAttribute("usuario", proveedorServicio.getProveedorById(id));
             return "inicio";
+
         }catch(MiException ex){
             Usuario proveedor = proveedorServicio.getProveedorById(id);
             modelo.addAttribute("proveedor", proveedor);
