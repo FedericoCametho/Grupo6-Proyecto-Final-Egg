@@ -1,15 +1,17 @@
 .container{
-    padding-top: 5%;
+
+ 
 
 }
 
 .grupobotones{
 
-    background-color: whitesmoke;
+    color: white;
 }
 
 .botones{
     background-color: #8282d4;
+     font-size: 20px;
 }
 
 
@@ -28,27 +30,33 @@ img{
     height: 70px;
     padding-bottom: 0px;
     border-radius: 100px;
-    background-color: #8282d4;
+
 }
 .rounded-image{
     width: 150px;
-    height: 150px
+    height:150px;
 }
 .tarjeta1{
-    background-color: whitesmoke;
-    margin-left: 25%;
+    margin-top: 10%;
+   margin-left: 25%;
     width: 250px;
     cursor: default;
     transition: all 400ms ease;
-
+    text-align: center;
+  background-color: rgba(235, 215, 205, 0.8);
+color: black;
+  
 
 }
 .tarjeta2{
-    background-color: blue;
-    margin-left: 5%;
+     margin-top: 10%;
+    margin-left: 10%;
     width: 250px;
     cursor: default;
     transition: all 400ms ease;
+    text-align: center;
+  background-color: rgba(235, 215, 205, 0.8);
+  color:black;
 }
 
 .tarjeta1:hover{

@@ -13,51 +13,68 @@
 
 <div class="container m-5" >
 
+  <form class="formulario" th:if="${finalizado == null}" th:action="@{/trabajo/listarPorEstado/__${session.usuariosesion.id}__-__${session.usuariosesion.rol}__}"  method="POST">
+    <div class="form-group my-3">
+      <label for="estado-filtrar" style="display: inline; font-weight: bold">Seleccione un Estado para filtrar los trabajos: </label>
+      <select name="estado" id="estado-filtrar">
+
+        <option>Todos</option>
+
+        <option th:each="est : ${estados}"
+                th:value="${est.toString()}"
+                th:text="${est.toString()}"
+        />
+      </select>
+      <button type="submit" class="botones">Filtrar</button>
+    </div>
+
+  </form>
+
   <table class="table">
     <thead>
-    <tr>
-      <th scope="col">Fecha</th>
-      <th scope="col">Cliente</th>
-      <th scope="col">Proveedor</th>
-      <th scope="col">Tipo de Servicio</th>
-      <th scope="col">Detalles</th>
-      <th scope="col">Estado</th>
-      <th scope="col">Comentarios</th>
-      <th scope="col">Calificacion</th>
-      <th th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}">Acciones</th>
-      <th th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}"></th>
-      <th th:if="${session.usuariosesion.rol.toString().equals('PROVEEDOR')}">Acciones</th>
-      <th th:if="${session.usuariosesion.rol.toString().equals('USER')}">Acciones</th>
+      <tr>
+        <th scope="col">Fecha</th>
+        <th scope="col">Cliente</th>
+        <th scope="col">Proveedor</th>
+        <th scope="col">Tipo de Servicio</th>
+        <th scope="col">Detalles</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Comentarios</th>
+        <th scope="col">Calificacion</th>
+        <th scope="col">Acciones</th>
+        <th th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}"></th>
 
-    </tr>
+
+      </tr>
     </thead>
-    <tbody th:each="tra : ${trabajos}">
-    <tr>
-      <th scope="row" th:text="${tra.fecha}"></th>
-      <td th:text="${tra.cliente.getNombreCompleto()}"></td>
-      <td th:text="${tra.proveedor.getNombreCompleto()}"></td>
-      <td th:text="${tra.categoria}"></td>
-      <td th:text="${tra.detalles}"></td>
-      <td th:text="${tra.estado}"></td>
-      <td th:text="${tra.comentario}"></td>
-      <td>
-        <span th:if="${tra.calificacion == 0}"> Sin calificacion </span>
-        <span th:if="${tra.calificacion != 0}" th:text="${tra.calificacion}"></span>
-      </td>
-      <td th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}">
-        <a th:href= "@{/trabajo/modificar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Modificar </a>
-      </td>
-      <td th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}">
-        <a th:href= "@{/trabajo/borrar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Borrar </a>
-      </td>
-      <td th:if="${session.usuariosesion.rol.toString().equals('PROVEEDOR') && tra.estado.toString().equals('PENDIENTE')}">
-        <a th:href= "@{/trabajo/confirmar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Cambiar Estado </a>
-      </td>
-      <td th:if="${session.usuariosesion.rol.toString().equals('USER') && tra.estado.toString().equals('FINALIZADO') && tra.calificacion == 0}">
-        <a th:href= "@{/trabajo/calificar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Calificar </a>
-      </td>
 
-    </tr>
+    <tbody>
+      <tr th:each="tra : ${trabajos}">
+        <th scope="row" th:text="${tra.fecha}"></th>
+        <td th:text="${tra.cliente.getNombreCompleto()}"></td>
+        <td th:text="${tra.proveedor.getNombreCompleto()}"></td>
+        <td th:text="${tra.categoria.nombre}"></td>
+        <td th:text="${tra.detalles}"></td>
+        <td th:text="${tra.estado}"></td>
+        <td th:text="${tra.comentario}"></td>
+        <td>
+          <span th:if="${tra.calificacion == 0}"> Sin calificacion </span>
+          <span th:if="${tra.calificacion != 0}" th:text="${tra.calificacion}"></span>
+        </td>
+        <td th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}">
+          <a th:href= "@{/trabajo/modificar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Modificar </a>
+        </td>
+        <td th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}">
+          <a th:href= "@{/trabajo/borrar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Borrar </a>
+        </td>
+        <td th:if="${session.usuariosesion.rol.toString().equals('PROVEEDOR') && tra.estado.toString().equals('PENDIENTE')}">
+          <a th:href= "@{/trabajo/confirmar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Cambiar Estado </a>
+        </td>
+        <td th:if="${session.usuariosesion.rol.toString().equals('USER') && tra.estado.toString().equals('FINALIZADO') && tra.calificacion == 0}">
+          <a th:href= "@{/trabajo/calificar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Calificar </a>
+        </td>
+
+      </tr>
 
     </tbody>
   </table>
@@ -66,7 +83,12 @@
     <div class="row mt-3">
       <div class="divVolver">
         <div class="divVolver" th:if="${session.usuariosesion != null}">
-          <a th:href="@{/inicio}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+          <div class="divVolver">
+            <a th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}" th:href="@{/inicio}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+          </div>
+          <div class="divVolver">
+            <a th:if="${!session.usuariosesion.rol.toString().equals('ADMIN')}" th:href="@{/iniciado/__${session.usuariosesion.id}__-__${session.usuariosesion.rol}__}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+          </div>
         </div>
         <div class="divVolver" th:if="${session.usuariosesion == null}">
           <a th:href="@{/}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>

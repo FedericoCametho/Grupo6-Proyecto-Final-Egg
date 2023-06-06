@@ -54,7 +54,7 @@
                 <li>FECHA: <span th:text="${trabajo.fecha}"></span></li>
                 <li>CLIENTE: <span th:text="${trabajo.cliente.getNombreCompleto()}"></span> </li>
                 <li>PROVEEDOR: <span th:text="${trabajo.proveedor.getNombreCompleto()}"></span> </li>
-                <li>CATEGORIA DE SERVICIO: <span th:text="${trabajo.categoria}"></span> </li>
+                <li>CATEGORIA DE SERVICIO: <span th:text="${trabajo.categoria.nombre}"></span> </li>
                 <li>ESTADO ACTUAL: <span th:text="${trabajo.estado}"></span></li>
             </ul>
         </div>

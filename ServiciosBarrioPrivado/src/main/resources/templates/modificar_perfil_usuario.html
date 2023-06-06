@@ -30,16 +30,20 @@
     </div>
     <h2 class="mb-2">Modificar Mi Perfil</h2>
     <div class="form-group my-3">
-      <input type="text" class="form-control" name="nombre" th:value="${usuario.nombre}">
+      <label for="nombre">Nombre</label>
+      <input type="text" class="form-control" name="nombre" id="nombre" th:value="${usuario.nombre}">
     </div>
     <div class="form-group my-3">
-      <input type="text" class="form-control" name="apellido" th:value="${usuario.apellido}">
+      <label for="apellido">Apellido</label>
+      <input type="text" class="form-control" name="apellido" id="apellido" th:value="${usuario.apellido}">
     </div>
     <div class="form-group my-3">
-      <input type="text" class="form-control" name="telefono" th:value="${usuario.telefono}">
+      <label for="telefono">Telefono</label>
+      <input type="text" class="form-control" name="telefono" id="telefono" th:value="${usuario.telefono}">
     </div>
     <div class="form-group my-3">
-      <label class="form-control"  th:text="${usuario.email}"></label>
+      <label for="precioPorHora">Precio por hora</label>
+      <label class="form-control" id="precioPorHora"  th:text="${usuario.email}"></label>
     </div>
     
     <div class="form-group my-3">
@@ -59,7 +63,10 @@
   <section class=" text-center container">
     <div class="row mt-3">
       <div class="divVolver">
-        <a th:href="@{/inicio}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+        <a th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}" th:href="@{/inicio}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+      </div>
+      <div class="divVolver">
+        <a th:if="${!session.usuariosesion.rol.toString().equals('ADMIN')}" th:href="@{/iniciado/__${session.usuariosesion.id}__-__${session.usuariosesion.rol}__}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
       </div>
     </div>
   </section>

@@ -1,15 +1,24 @@
 .container{
     padding-top: 5%;
+ 
 
 }
+.formulario {
+    width: 40%;
+    margin: 0 auto; /* Agrega este estilo para centrar horizontalmente */
+    background-color: lightgray;
+    align-items: center;
+}
+
 
 .grupobotones{
 
-    background-color: whitesmoke;
+    color: white;
 }
 
 .botones{
     background-color: #8282d4;
+     font-size: 20px;
 }
 
 
@@ -28,29 +37,30 @@ img{
     height: 70px;
     padding-bottom: 0px;
     border-radius: 100px;
-    background-color: #8282d4;
+
 }
 .rounded-image{
     width: 150px;
-    height: 150px
+    height:150px;
 }
 .tarjeta1{
-    background-color: whitesmoke;
-    margin-left: 25%;
+   margin-left: 25%;
     width: 250px;
     cursor: default;
     transition: all 400ms ease;
     text-align: center;
+  background-color: rgba(235, 215, 205, 0.8);
 
+  
 
 }
 .tarjeta2{
-    background-color: blue;
     margin-left: 5%;
     width: 250px;
     cursor: default;
     transition: all 400ms ease;
     text-align: center;
+  background-color: rgba(235, 215, 205, 0.8);
 }
 
 .tarjeta1:hover{

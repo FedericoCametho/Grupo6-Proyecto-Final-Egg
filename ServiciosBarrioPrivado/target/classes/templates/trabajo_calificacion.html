@@ -22,7 +22,7 @@
             <ul>
                 <li>FECHA: <span th:text="${trabajo.fecha}"></span></li>
                 <li>PROVEEDOR: <span th:text="${trabajo.proveedor.getNombreCompleto()}"></span> </li>
-                <li>CATEGORIA DE SERVICIO: <span th:text="${trabajo.categoria}"></span> </li>
+                <li>CATEGORIA DE SERVICIO: <span th:text="${trabajo.categoria.nombre}"></span> </li>
                 <li>OBSERVACIONES: <span th:text="${trabajo.detalles}"></span>  </li>
             </ul>
             <label for="calif"> Por Favor indique el puntaje que le otorga al proveedor del trabajo: </label>
@@ -58,7 +58,10 @@
     <section class=" text-center container">
         <div class="row mt-3">
             <div class="divVolver">
-                <a th:href="@{/inicio}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+                <a th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}" th:href="@{/inicio}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+            </div>
+            <div class="divVolver">
+                <a th:if="${!session.usuariosesion.rol.toString().equals('ADMIN')}" th:href="@{/iniciado/__${session.usuariosesion.id}__-__${session.usuariosesion.rol}__}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
             </div>
         </div>
     </section>

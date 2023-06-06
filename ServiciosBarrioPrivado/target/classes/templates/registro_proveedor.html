@@ -11,7 +11,7 @@
 
 <div class="container-fluid contenedor">
 
-  <form class="shadow p-3 mb-5 bg-body-tertiary rounded formulario" th:action="@{/proveedor/registro}"  method="POST">
+  <form class="shadow p-3 mb-5 bg-body-tertiary rounded formulario" th:action="@{/proveedor/registro}"  method="POST" enctype="multipart/form-data">
 
     <div th:if="${error != null}" class="card text-white bg-danger mb-3 mensajeError" >
       <div class="card-body">
@@ -43,14 +43,12 @@
       <input type="text" class="form-control" name="telefono" id="telefono" placeholder="Telefono">
     </div>
     <div class="form-group my-3 seleccion">
-
-      <select name="categoria">
-
-        <option>Seleccionar Categoria</option>
+      <label for="categoria">Categoria</label>
+      <select name="categoria" id="categoria">
 
         <option th:each="cat : ${categoriaServicio}"
-                th:value="${cat}"
-                th:text="${cat.toString()}"
+                th:value="${cat.getId().toString()}"
+                th:text="${cat.getNombre()}"
         >
       </select>
     </div>
@@ -58,6 +56,12 @@
       <label for="precioPorHora">Precio por Hora</label>
       <input type="number" class="form-control" name="precioPorHora" id="precioPorHora" placeholder="Precio Por Hora">
     </div>
+
+    <div class="form-group my-3">
+      <label class="col-md-2" for="imagen">Seleccionar imagen de perfil:</label>
+      <input type="file" name="file" class="form-control form-control-sm col-md-6" id="imagen" >
+    </div>
+
     <div class="form-group my-3 campo">
       <label for="password">Constraseña</label>
       <input type="password" class="form-control" name="password" id="password" placeholder="Contraseña">

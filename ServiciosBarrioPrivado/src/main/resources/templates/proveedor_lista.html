@@ -14,13 +14,14 @@
 <div class="container m-5" >
   <form class="formulario" th:action="@{/proveedor/listarPorCategoria}"  method="POST">
     <div class="form-group my-3">
+      <label for="categoria-filtrar" style="display: inline; font-weight: bold">Seleccione una categoria para filtrar los proveedores: </label>
       <select name="categoria" id="categoria-filtrar">
 
         <option>Todos</option>
 
         <option th:each="cat : ${categoriaServicio}"
-                th:value="${cat.toString()}"
-                th:text="${cat.toString()}"
+                th:value="${cat.nombre}"
+                th:text="${cat.nombre}"
                 th:selected="${categoriaSeleccionada == cat}"
         />
       </select>
@@ -52,8 +53,8 @@
       <td th:text="${prov.apellido}"></td>
       <td th:text="${prov.email}"></td>
       <td th:text="${prov.telefono}"></td>
-      <td th:text="${prov.precioPorHora}"></td>
-      <td th:text="${prov.categoriaServicio.toString()}"></td>
+      <td th:if="${prov.precioPorHora != null}" th:text="${prov.precioPorHora}"></td> <td th:if="${prov.precioPorHora == null}"> Sin Asignar</td>
+      <td th:if="${prov.categoriaServicio != null}" th:text="${prov.categoriaServicio.nombre}"></td> <td th:if="${prov.categoriaServicio == null}" >Sin Asignar</td>
       <td>
         <span th:if="${prov.calificacion != 0}"><span th:text="${prov.calificacion}"></span></span>
         <span th:if="${prov.calificacion == null}">Sin calificaciones</span>
@@ -77,14 +78,17 @@
   </table>
 </div>
 
-  <div class="vista-user" th:if="${session.usuariosesion.rol.toString().equals('USER')}">
+  <div class="vista-user" th:if="${!session.usuariosesion.rol.toString().equals('ADMIN')}">
     <div class="album py-5 bg-body-tertiary">
       <div class="container">
 
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
           <div th:each="prov : ${proveedores}"  class="col">
             <div class="card shadow-sm">
-              <img class="image-cards" src="https://drive.google.com/uc?id=1cmb9ITlL4Pf2AUEVMKFvTAsogeBpRKpq" alt="proveedor">
+              <div class="foto" style="border-radius:100%">
+                <img th:if="${prov.imagen != null}" class="image-cards" th:src="@{/pictures/__${prov.imagen}__}">
+                <img th:if="${prov.imagen == null}"  class="image-cards" src="https://drive.google.com/uc?id=1cmb9ITlL4Pf2AUEVMKFvTAsogeBpRKpq">
+              </div>
               <div class="card-body">
                 <ul>
                   <li> Nombre:<span th:text="${prov.nombre}"></span> </li>
@@ -92,10 +96,20 @@
                   <li> Email: <span th:text="${prov.email}"></span></li>
                   <li> Telefono: <span th:text="${prov.telefono}"></span></li>
                   <li> Precio Por Hora: <span th:text="${prov.precioPorHora}"></span> </li>
-                  <li> Categoria de Servicio: <span th:text="${prov.categoriaServicio.toString()}"></span></li>
-                  <li> Calificacion:
-                    <span th:if="${prov.calificacion != 0}"><span th:text="${prov.calificacion}"></span></span>
-                    <span th:if="${prov.calificacion == null}">Sin calificaciones</span>
+                  <li> Categoria de Servicio:
+                    <span th:if="${prov.categoriaServicio != null}" th:text="${prov.categoriaServicio.nombre}"></span>
+                    <span th:if="${prov.categoriaServicio == null}"> Sin categoria asignada</span>
+                  </li>
+                  <li> Calificacion Promedio:
+                    <span th:if="${prov.calificacion != null}" th:text="${prov.calificacion}"></span>
+                    <span th:if="${prov.calificacion == null}" > Sin calificaciones </span><br>
+                    Cantidad de Calificaciones: <span th:if="${prov.calificacion != null}" th:text="${provServicio.cantidadCalificacionesDeUnProveedor(prov.id)}" style="font-weight: bolder"></span>
+                    </span>
+                    <span th:if="${prov.calificacion == null}" style="font-weight: bolder">Sin calificaciones</span>
+                  </li>
+                  <li> Cantidad de Cometarios recibidos:
+                    <span th:if="${provServicio.cantidadComentariosDeUnProveedor(prov.id) != 0}"><span th:text="${provServicio.cantidadComentariosDeUnProveedor(prov.id)}" style="font-weight: bolder" ></span></span>
+                    <span th:if="${provServicio.cantidadComentariosDeUnProveedor(prov.id) == 0}" style="font-weight: bolder">Sin Comentarios</span>
                   </li>
                 </ul>
                 <div class="d-flex justify-content-between align-items-center">
@@ -117,7 +131,12 @@
   <section class=" text-center container">
     <div class="row mt-3">
       <div class="divVolver" th:if="${session.usuariosesion != null}">
-        <a th:href="@{/inicio}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+        <div class="divVolver">
+          <a th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}" th:href="@{/inicio}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+        </div>
+        <div class="divVolver">
+          <a th:if="${!session.usuariosesion.rol.toString().equals('ADMIN')}" th:href="@{/iniciado/__${session.usuariosesion.id}__-__${session.usuariosesion.rol}__}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+        </div>
       </div>
       <div class="divVolver" th:if="${session.usuariosesion == null}">
         <a th:href="@{/}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>

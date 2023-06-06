@@ -1,14 +1,15 @@
-package com.grupo6.ServiciosBarrioPrivado.Controlador;
+package com.grupo6.ServiciosBarrioPrivado.Entidad;
 
 public class AuxComentarioCalificacion {
-    private String id;
     private String comentario;
     private Integer calificacion;
 
-    public AuxComentarioCalificacion(String id, String comentario, Integer calificacion){
-        this.id = id;
+    private String idTrabajo;
+
+    public AuxComentarioCalificacion(String comentario, Integer calificacion, String idTrabajo){
         this.comentario = comentario;
         this.calificacion = calificacion;
+        this.idTrabajo = idTrabajo;
     }
 
     public String getComentario() {
@@ -26,8 +27,12 @@ public class AuxComentarioCalificacion {
     public void setCalificacion(Integer calificacion) {
         this.calificacion = calificacion;
     }
-    
-    public String getId() {
-        return id;
+
+    public String getIdTrabajo() {
+        return idTrabajo;
+    }
+
+    public void setIdTrabajo(String idTrabajo) {
+        this.idTrabajo = idTrabajo;
     }
 }

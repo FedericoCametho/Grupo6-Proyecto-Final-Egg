@@ -56,8 +56,8 @@
       <input type="date" class="form-control" name="fecha" id="fecha">
     </div>
     <div class="form-group my-3 seleccion">
-      <label> Categoria: <span style="font-weight:bolder;"  th:text="${categoriaServicio.toString()}"></span></label>
-      <input name="categoria" hidden th:value="${categoriaServicio}">
+      <label> Categoria: <span style="font-weight:bolder;"  th:text="${categoriaServicio.nombre}"></span></label>
+      <input name="idCategoria" hidden th:value="${categoriaServicio.id}">
     </div>
 
 
@@ -79,7 +79,10 @@
   <section class=" text-center container">
     <div class="row mt-2">
       <div class="divVolver">
-        <a th:href="@{/}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+        <a th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}" th:href="@{/inicio}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
+      </div>
+      <div class="divVolver">
+        <a th:if="${!session.usuariosesion.rol.toString().equals('ADMIN')}" th:href="@{/iniciado/__${session.usuariosesion.id}__-__${session.usuariosesion.rol}__}" class="btn btn-secondary my-2 botonVolver botones">Volver</a>
       </div>
     </div>
   </section>

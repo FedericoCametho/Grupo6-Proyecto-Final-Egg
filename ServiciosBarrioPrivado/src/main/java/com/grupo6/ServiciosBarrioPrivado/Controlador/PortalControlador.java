@@ -1,17 +1,18 @@
 package com.grupo6.ServiciosBarrioPrivado.Controlador;
 
 
+import com.grupo6.ServiciosBarrioPrivado.Entidad.CategoriaServicio;
 import com.grupo6.ServiciosBarrioPrivado.Entidad.Usuario;
-import com.grupo6.ServiciosBarrioPrivado.Enumeracion.CategoriaServicio;
+
+import com.grupo6.ServiciosBarrioPrivado.Enumeracion.Rol;
+import com.grupo6.ServiciosBarrioPrivado.Servicio.CategoriaServicioService;
 import com.grupo6.ServiciosBarrioPrivado.Servicio.ProveedorServicio;
+import com.grupo6.ServiciosBarrioPrivado.Servicio.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.Arrays;
@@ -23,6 +24,12 @@ public class PortalControlador {
 
     @Autowired
     private ProveedorServicio proveedorServicio;
+
+    @Autowired
+    private UsuarioServicio usuarioServicio;
+
+    @Autowired
+    private CategoriaServicioService categoriaServicioService;
 
     @GetMapping("/")        // localhost:8080/
     public String index() {
@@ -81,29 +88,45 @@ public class PortalControlador {
         return "inicio";
     }
 
+    @GetMapping("/iniciado/{id}-{rol}")
+    public String menuInicio(@PathVariable String id, @PathVariable Rol rol, ModelMap modelo){
+        Usuario usuario = new Usuario();
+        if (rol.toString().equals("PROVEEDOR")){
+            usuario = proveedorServicio.getProveedorById(id);
+        } else if (rol.toString().equals("USER")) {
+            usuario = usuarioServicio.getUsuarioById(id);
+        }
+
+        modelo.addAttribute("usuario", usuario);
+        return "iniciado";
+    }
+
     @GetMapping("/listarProveedores")
     public String listarTodos(ModelMap modelo){
         List<Usuario> proveedores = proveedorServicio.listarProveedores();
         modelo.addAttribute("proveedores", proveedores);
-        List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
+        List<CategoriaServicio> categoriaServicio = categoriaServicioService.listarTodas();
         modelo.addAttribute("categoriaServicio", categoriaServicio);
+        modelo.addAttribute("provServicio", proveedorServicio);
         return "proveedor_lista_guest";
     }
 
     @PostMapping("/listarPorCategoria")
     public String listarPorCategoria(@RequestParam String categoria, ModelMap modelo){
-        List<CategoriaServicio> categoriaServicio = Arrays.stream(CategoriaServicio.values()).toList();
+        List<CategoriaServicio> categoriaServicio = categoriaServicioService.listarTodas();
         modelo.addAttribute("categoriaServicio", categoriaServicio);
 
 
         if (categoria.equals("Todos")){
             List<Usuario> proveedores = proveedorServicio.listarProveedores();
             modelo.addAttribute("proveedores", proveedores);
+            modelo.addAttribute("provServicio", proveedorServicio);
             return "proveedor_lista_guest";
         } else {
-            List<Usuario> proveedores = proveedorServicio.listarPorCategoria(CategoriaServicio.valueOf(categoria));
+            List<Usuario> proveedores = proveedorServicio.listarPorCategoria(categoriaServicioService.getCategoriaByName(categoria).getId());
             modelo.addAttribute("proveedores", proveedores);
-            modelo.addAttribute("categoriaSeleccionada", CategoriaServicio.valueOf(categoria));
+            modelo.addAttribute("categoriaSeleccionada", categoriaServicioService.getCategoriaByName(categoria));
+            modelo.addAttribute("provServicio", proveedorServicio);
             return "proveedor_lista_guest";
         }
     }

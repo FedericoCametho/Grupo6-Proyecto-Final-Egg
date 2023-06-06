@@ -1,6 +1,6 @@
 package com.grupo6.ServiciosBarrioPrivado.Entidad;
 
-import com.grupo6.ServiciosBarrioPrivado.Enumeracion.CategoriaServicio;
+
 import com.grupo6.ServiciosBarrioPrivado.Enumeracion.Rol;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -27,10 +27,13 @@ public class Usuario {
 
     private Integer precioPorHora;
 
-    @Enumerated(EnumType.STRING)
+
+    @ManyToOne
     private CategoriaServicio categoriaServicio;
 
     private Double calificacion;
+
+    private String imagen;
 
 
     public Usuario() {
@@ -118,5 +121,13 @@ public class Usuario {
 
     public void setCalificacion(Double calificacion) {
         this.calificacion = calificacion;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 }
