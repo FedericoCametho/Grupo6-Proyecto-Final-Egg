@@ -1,11 +1,14 @@
 .formulario {
     width: 40%;
+<<<<<<< HEAD
     margin: 0 auto; 
+
     background-color: lightgray;
     align-items: center;
 }
 
 
+<<<<<<< HEAD
 
 
 
@@ -19,6 +22,7 @@
 -o-transform: translate(120px, 0px);
 -ms-transform: translate(120px, 0px);
 transform: translate(120px, 0px);
+
 }
 
 input{
@@ -27,9 +31,11 @@ input{
 }
 
 .campo{
+<<<<<<< HEAD
    
     margin: auto;
   font-weight:  bold;
+
 
 }
 
@@ -40,13 +46,17 @@ input{
 
 .botones{
     background-color: #8282d4;
+<<<<<<< HEAD
      justify-content: center;
+
 
 }
 
 .boton{
     background-color: #8282d4;
+<<<<<<< HEAD
  justify-content: center;
+
 }
 
 
@@ -86,4 +96,11 @@ h2{
 }
 header{
     max-height: 80px;
+
+}
+
+
+.login-u{
+    background-color: lightgray;
+>>>>>>> develop_3
 }

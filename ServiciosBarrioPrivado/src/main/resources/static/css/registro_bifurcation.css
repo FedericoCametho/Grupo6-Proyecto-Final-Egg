@@ -1,8 +1,10 @@
+<<<<<<< HEAD
 .container{
 
  
 
 }
+
 
 .grupobotones{
 
@@ -11,7 +13,9 @@
 
 .botones{
     background-color: #8282d4;
+<<<<<<< HEAD
      font-size: 20px;
+
 }
 
 
@@ -38,11 +42,14 @@ img{
 }
 .tarjeta1{
     margin-top: 10%;
+<<<<<<< HEAD
    margin-left: 25%;
+
     width: 250px;
     cursor: default;
     transition: all 400ms ease;
     text-align: center;
+<<<<<<< HEAD
   background-color: rgba(235, 215, 205, 0.8);
 color: black;
   
@@ -50,13 +57,16 @@ color: black;
 }
 .tarjeta2{
      margin-top: 10%;
+=
     margin-left: 10%;
     width: 250px;
     cursor: default;
     transition: all 400ms ease;
     text-align: center;
+<<<<<<< HEAD
   background-color: rgba(235, 215, 205, 0.8);
   color:black;
+
 }
 
 .tarjeta1:hover{
