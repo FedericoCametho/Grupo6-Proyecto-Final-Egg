@@ -42,6 +42,7 @@
       <label for="telefono">Telefono</label>
       <input type="text" class="form-control" name="telefono" id="telefono" placeholder="Telefono">
     </div>
+
     <div class="form-group my-3 seleccion">
       <label for="categoria">Categoria</label>
       <select name="categoria" id="categoria">
@@ -49,9 +50,24 @@
         <option th:each="cat : ${categoriaServicio}"
                 th:value="${cat.getId().toString()}"
                 th:text="${cat.getNombre()}"
-        >
+        />
       </select>
     </div>
+
+    <!--<div class="form-group my-3">
+
+      <select name="categoria">
+
+        <option>Seleccionar Categoria</option>
+
+        <option th:each="cat : ${categoriaServicio}"
+                th:value="${cat}"
+                th:text="${cat.toString()}"
+                th:selected="${proveedor.categoriaServicio == cat}"
+        />
+      </select>
+    </div> -->
+
     <div class="form-group my-3 campo">
       <label for="precioPorHora">Precio por Hora</label>
       <input type="number" class="form-control" name="precioPorHora" id="precioPorHora" placeholder="Precio Por Hora">

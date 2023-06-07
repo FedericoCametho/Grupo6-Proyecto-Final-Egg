@@ -24,8 +24,8 @@
 
 
             <div class="text-end" th:if="${session.usuariosesion != null}" >
-                <button type="button" class="btn btn-outline-light me-2 botones"><a th:href="@{/usuario/perfil/__${session.usuariosesion.id}__/__${session.usuariosesion.rol}__}" style=" border-color: white;width:150px; font-size: 19px;" class="nav-link px-2 text-black">Perfil</a></button>
-                <button type="button" class="btn btn-warning botones"><a th:href="@{/logout}" style=" border-color: white;width:150px; font-size: 19px;" class="nav-link px-2 text-black" >Cerrar Sesión</a></button>
+                <button type="button" class="btn btn-outline-light me-2 botones"><a th:href="@{/usuario/perfil/__${session.usuariosesion.id}__/__${session.usuariosesion.rol}__}" style=" border-color: white;width:135px margin:auto; font-size: 19px;" class="nav-link px-2 text-black">Perfil</a></button>
+                <button type="button" class="btn btn-warning botones"><a th:href="@{/logout}" style=" border-color: white;width:135px margin:auto; font-size: 19px;" class="nav-link px-2 text-black" >Cerrar Sesión</a></button>
             </div>
             <div class="text-end" th:if="${session.usuariosesion == null}">
                 <button type="button" class="btn btn-outline-light me-2 botones"><a th:href="@{/login-usuario-proveedor}" style=" border-color: white;width:150px; font-size: 19px;" class="nav-link px-2 text-black"  >Iniciar Sesión</a></button>
