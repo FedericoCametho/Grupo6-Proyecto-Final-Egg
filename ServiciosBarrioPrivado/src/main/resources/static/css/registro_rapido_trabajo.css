@@ -1,0 +1,35 @@
+/* <link th:href="@{/css/registro_rapido_trabajo.css}" rel="stylesheet" /> */
+.formulario {
+    width: 40%;
+    margin: 0 auto;
+    background-color: lightgray;
+    align-items: center;
+}
+
+.mensajeError{
+    text-align: center;
+    width: 200px;
+    display: inline-block;
+}
+.mensajeExito{
+    text-align: center;
+    width: 200px;
+    display: inline-block;
+}
+.botones{
+    background-color: #8282d4;
+    justify-content: center;
+
+}
+
+.boton{
+    background-color: #8282d4;
+    justify-content: center;
+}
+
+.contenedor{
+    text-align: center;
+}
+header{
+    max-height: 80px;
+}

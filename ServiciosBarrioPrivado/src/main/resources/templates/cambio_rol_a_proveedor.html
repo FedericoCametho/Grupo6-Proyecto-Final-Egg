@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <title>Cambio de Rol</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-  <link th:href="@{/css/registro_proveedor.css}" rel="stylesheet" />
+    <link th:href="@{/css/cambio_rol_a_proveedor.css}" rel="stylesheet" />
 </head>
 <body>
 <header th:replace="/fragments/header :: header"> </header>
 
 <div class="container">
-    <h2> Confirme y complete los datos necesarios</h2>
+
 
     <form th:action="@{/usuario/cambiarRolAProveedor/__${usuario.id}__}" class="formulario" method="post" style="background-color: lightgray; color:black">
 
@@ -26,7 +26,7 @@
                 <h5 class="card-title">Exito!</h5>
                 <p class="card-text" th:text="${exito}"></p>
             </div>
-        </div>
+        </div><h2> Confirme y complete los datos necesarios</h2>
         <div class="form-group my-3">
             <label for="nombre">Nombre</label>
             <input type="text" class="form-control" name="nombre" id="nombre" th:value="${usuario.nombre}">
