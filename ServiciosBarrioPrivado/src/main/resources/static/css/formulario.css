@@ -93,3 +93,11 @@ img{
     border-radius: 100px;
     background-color: #8282d4;
 }
+
+.bold-text {
+  font-weight: bold;
+}
+
+.normal-text {
+  font-weight: normal;
+}

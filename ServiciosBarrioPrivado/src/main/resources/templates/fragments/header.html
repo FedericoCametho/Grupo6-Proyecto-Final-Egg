@@ -10,7 +10,7 @@
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li th:if="${session.usuariosesion == null}"><a th:href="@{/}" class="nav-link px-2 text-secondary logo"><img th:src="@{/imagenes/Logo.png}" class="img-header" src="../static/imagenes/Logo.png" alt="logo"><b class="letra"> SERVICE+</b></a></li>
                 <li th:if="${session.usuariosesion != null && session.usuariosesion.rol.toString().equals('ADMIN')}"><a th:href="@{/inicio}" class="nav-link px-2 text-secondary logo"><img th:src="@{/imagenes/Logo.png}" class="img-header" src="../static/imagenes/Logo.png" alt="logo"><b class="letra"> SERVICE+</b></a></li>
-                <li th:if="${session.usuariosesion != null && !session.usuariosesion.rol.toString().equals('ADMIN')}"><a th:href="@{/iniciado/__${session.usuariosesion.id}__-__${session.usuariosesion.rol}__}" class="nav-link px-2 text-secondary logo"><img th:src="@{/imagenes/Logo.png}" class="img-header" src="../static/imagenes/Logo.png" alt="logo"><b class="letra"><b class="letra">  SERVICE+</b></a></li>
+                <li th:if="${session.usuariosesion != null && !session.usuariosesion.rol.toString().equals('ADMIN')}"><a th:href="@{/iniciado/__${session.usuariosesion.id}__-__${session.usuariosesion.rol}__}" class="nav-link px-2 text-secondary logo"><img th:src="@{/imagenes/Logo.png}" class="img-header" src="../static/imagenes/Logo.png" alt="logo"><b class="letra"> SERVICE+</b></a></li>
 
                 <!--        <li><a href="#" class="nav-link px-2 text-white">Features</a></li>-->
                 <!--        <li><a href="#" class="nav-link px-2 text-white">Pricing</a></li>-->

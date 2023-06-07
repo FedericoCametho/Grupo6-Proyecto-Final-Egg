@@ -87,3 +87,9 @@ h2{
 header{
     max-height: 80px;
 }
+
+
+.negrita-izquierda {
+    font-weight: bold;
+    text-align: left;
+}

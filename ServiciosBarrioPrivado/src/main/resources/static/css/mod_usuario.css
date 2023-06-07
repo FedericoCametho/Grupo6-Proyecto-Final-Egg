@@ -18,40 +18,78 @@ img{
     margin: auto;
     display: flex;
     flex-direction: column;
-    background-color: whitesmoke;
+    background-color: lightgrey;
     padding: 20px 50px 20px 50px;
     border-radius: 10px;
+    text-align: center;
+      font-weight:  bold;
+
+}
+input{
+    text-align: center;
+
+}
+
+.campo{
+    width: 80%;
+    margin: auto;
+
+}
+
+.seleccion{
+    text-align: center;
+}
+
+.botones{
+    background-color: #8282d4;
+
+}
+
+.boton{
+    background-color: #8282d4;
+    margin-left: 40%;
+}
+
+
+
+h3{
     text-align: center;
 }
 
 .mensajeError{
     text-align: center;
-    width: 150px;
-    margin: auto;
+    width: 200px;
+    display: inline-block;
 
 
 }
 .mensajeExito{
     text-align: center;
-    width: 150px;
-    margin: auto;
+    width: 200px;
+    display: inline-block;
+
 }
 
-.botones{
+img{
+    width: 70px;
+    height: 70px;
+    padding-bottom: 0px;
+    border-radius: 100px;
     background-color: #8282d4;
-    width: 100px;
-    margin: auto;
 }
 
-input{
+.letra{
+    font-size: x-large;
+    color: whitesmoke;
+}
+
+.contenedor{
     text-align: center;
-}
-
-.campo{
-    width: 50%;
-    align-items: center;
-    margin: auto;
 }
 header{
     max-height: 120px;
+}
+.text{
+        text-align: left;
+
 }

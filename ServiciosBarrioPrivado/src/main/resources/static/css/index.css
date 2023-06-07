@@ -1,3 +1,7 @@
+main{
+background-image: linear-gradient(165deg, #ffffff 0, #fbffff 25%, #ecebea 50%, #ded7d2 75%, #d3c7be 100%);
+}
+
 .letra{
     
 }
@@ -33,9 +37,6 @@
 }
 header{
     max-height: 120px;
-}
-.row {
-    padding-bottom: 10%;
 }
 
 .main-container {
@@ -81,7 +82,9 @@ body {
   justify-content: center;
   align-items: center;
   height: 60vh; /* Ajusta el valor según tus necesidades */
-  background-color: rgba(235, 215, 215, 0.8);
+  background-color:rgba(183, 209, 195, 0.8)
+
+ ;
 }
 
 .card-image{
