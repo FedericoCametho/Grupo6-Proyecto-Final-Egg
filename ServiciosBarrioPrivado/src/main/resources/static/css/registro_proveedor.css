@@ -1,6 +1,6 @@
 .formulario {
     width: 40%;
-    margin: 0 auto;
+    margin: 0 auto; 
     background-color: lightgray;
     align-items: center;
 }
@@ -8,15 +8,15 @@
 
 
 .img-reg {
-
-    width: 72%;
-    padding-bottom: 100px;
-    position: relative;
-    -moz-transform: translate(120px, 0px);
-    -webkit-transform: translate(120px, 0px);
-    -o-transform: translate(120px, 0px);
-    -ms-transform: translate(120px, 0px);
-    transform: translate(120px, 0px);
+   
+   width: 72%;
+   padding-bottom: 100px;
+   position: relative;
+  -moz-transform: translate(120px, 0px);
+-webkit-transform: translate(120px, 0px);
+-o-transform: translate(120px, 0px);
+-ms-transform: translate(120px, 0px);
+transform: translate(120px, 0px);
 }
 
 input{
@@ -25,7 +25,7 @@ input{
 }
 
 .campo{
-
+   
     margin: auto;
 
 
@@ -38,13 +38,13 @@ input{
 
 .botones{
     background-color: #8282d4;
-    justify-content: center;
+     justify-content: center;
 
 }
 
 .boton{
     background-color: #8282d4;
-    justify-content: center;
+ justify-content: center;
 }
 
 
@@ -75,7 +75,7 @@ h2{
 
 
 .letra{
-    color:black;
+  color:black;
 }
 
 .contenedor{
@@ -85,8 +85,18 @@ header{
     max-height: 80px;
 }
 
-label{
+.negrita-izquierda {
+    font-weight: bold;
     text-align: left;
-    display: block;
-    margin-left: 3%;
 }
+
+.titulo-negrita {
+    font-weight: bold;
+  }
+
+  .campo-amplio {
+    width: 300px; /* Ajusta el valor según tus necesidades */
+    border-radius: 5px; /* Ajusta el valor para redondear los bordes */
+    text-align: center;
+    height: 30px;
+  }

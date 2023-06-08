@@ -1,0 +1,51 @@
+.botones{
+    background-color: #8282d4;
+    color: white;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+header{
+    max-height: 120px;
+}
+
+.row {
+    padding-bottom: 10%;
+}
+
+h1{
+    color: black;
+    text-align: center;
+    padding-top: 180px;
+}
+
+.mod{
+    border-radius: 8px;
+    background: #72C652;
+    border: 1px solid #72C652;
+    padding:5px 10px 5px 10px;
+    color: whitesmoke;
+    text-decoration: none;
+}
+
+.delete{
+    border-radius: 8px;
+    background: #F64D4D;
+    border: 1px solid #F64D4D;
+    color: whitesmoke;
+    text-decoration: none;
+    padding:5px 10px 5px 10px;
+}
+
+.catBox{
+    background: whitesmoke;
+    margin-top:15px;
+    margin:40px;
+    padding:30px;
+    border-radius:16px;
+}

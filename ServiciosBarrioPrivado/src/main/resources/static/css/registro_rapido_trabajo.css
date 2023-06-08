@@ -1,0 +1,122 @@
+.formulario{
+    width: 500px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    background-color: lightgray;
+    padding: 20px 50px 20px 50px;
+    border-radius: 10px;
+}
+
+
+
+
+.img-reg {
+   
+   width: 72%;
+   padding-bottom: 100px;
+   position: relative;
+  -moz-transform: translate(120px, 0px);
+-webkit-transform: translate(120px, 0px);
+-o-transform: translate(120px, 0px);
+-ms-transform: translate(120px, 0px);
+transform: translate(120px, 0px);
+}
+
+input{
+    text-align: center;
+
+}
+
+.campo{
+   
+    margin: auto;
+  font-weight:  bold;
+
+}
+
+.seleccion{
+    text-align: center;
+
+}
+
+.botones{
+    background-color: #8282d4;
+     justify-content: center;
+
+}
+
+.boton{
+    background-color: #8282d4;
+ justify-content: center;
+}
+
+
+
+h2{
+    text-align: center;
+}
+
+.mensajeError{
+    text-align: center;
+    width: 200px;
+    display: inline-block;
+
+}
+.mensajeExito{
+    text-align: center;
+    width: 200px;
+    display: inline-block;
+
+}
+
+.image-column {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+.letra{
+    font-size: x-large;
+    color: whitesmoke;
+}
+
+.contenedor{
+    text-align: center;
+}
+header{
+    max-height: 80px;
+}
+
+
+
+.neg {
+    font-weight: bold;
+    text-align: left;
+}
+
+.titulo-negrita {
+    font-weight: bold;
+  }
+
+  .campo-amplio {
+    width: 300px; /* Ajusta el valor según tus necesidades */
+    border-radius: 5px; /* Ajusta el valor para redondear los bordes */
+    text-align: center;
+    height: 30px;
+    margin-left: 50px;
+  }
+  .date{
+      width: 300px;
+  
+  }
+  .center{
+      display: flex;
+        justify-content: center;
+  }
+  
+  .campo{
+      width:  400px;
+  }

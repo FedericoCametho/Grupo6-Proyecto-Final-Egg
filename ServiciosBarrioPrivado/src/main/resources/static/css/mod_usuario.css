@@ -1,57 +1,110 @@
-.letra{
-    font-size: x-large;
-    color: whitesmoke;
-}
-
-img{
-    width: 70px;
-    height: 70px;
-    padding-bottom: 0px;
-    border-radius: 100px;
-    background-color: #8282d4;
-}
-
-
-
 .formulario{
     width: 500px;
     margin: auto;
     display: flex;
     flex-direction: column;
-    background-color: whitesmoke;
+    background-color: lightgray;
     padding: 20px 50px 20px 50px;
     border-radius: 10px;
+}
+
+
+
+
+.img-reg {
+   
+   width: 72%;
+   padding-bottom: 100px;
+   position: relative;
+  -moz-transform: translate(120px, 0px);
+-webkit-transform: translate(120px, 0px);
+-o-transform: translate(120px, 0px);
+-ms-transform: translate(120px, 0px);
+transform: translate(120px, 0px);
+}
+
+input{
+    text-align: center;
+
+}
+
+.campo{
+   
+    margin: auto;
+  font-weight:  bold;
+
+}
+
+.seleccion{
+    text-align: center;
+
+}
+
+.botones{
+    background-color: #8282d4;
+     justify-content: center;
+
+}
+
+.boton{
+    background-color: #8282d4;
+ justify-content: center;
+}
+
+
+
+h2{
     text-align: center;
 }
 
 .mensajeError{
     text-align: center;
-    width: 150px;
-    margin: auto;
-
+    width: 200px;
+    display: inline-block;
 
 }
 .mensajeExito{
     text-align: center;
-    width: 150px;
-    margin: auto;
+    width: 200px;
+    display: inline-block;
+
 }
 
-.botones{
-    background-color: #8282d4;
-    width: 100px;
-    margin: auto;
+.image-column {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-input{
+
+
+.letra{
+    font-size: x-large;
+    color: whitesmoke;
+}
+
+.contenedor{
     text-align: center;
 }
-
-.campo{
-    width: 50%;
-    align-items: center;
-    margin: auto;
-}
 header{
-    max-height: 120px;
+    max-height: 80px;
 }
+
+
+
+.neg {
+    font-weight: bold;
+    text-align: left;
+}
+
+.titulo-negrita {
+    font-weight: bold;
+  }
+
+  .campo-amplio {
+    width: 300px; /* Ajusta el valor según tus necesidades */
+    border-radius: 5px; /* Ajusta el valor para redondear los bordes */
+    text-align: center;
+    height: 30px;
+    margin-left: 50px;
+  }

@@ -1,6 +1,6 @@
 .container{
     padding-top: 5%;
-
+ 
 
 }
 .formulario {
@@ -18,7 +18,7 @@
 
 .botones{
     background-color: #8282d4;
-    font-size: 20px;
+     font-size: 20px;
 }
 
 
@@ -44,14 +44,14 @@ img{
     height:150px;
 }
 .tarjeta1{
-    margin-left: 25%;
+   margin-left: 25%;
     width: 250px;
     cursor: default;
     transition: all 400ms ease;
     text-align: center;
-    background-color: rgba(235, 215, 205, 0.8);
+  background-color: rgba(235, 215, 205, 0.8);
 
-
+  
 
 }
 .tarjeta2{
@@ -60,7 +60,7 @@ img{
     cursor: default;
     transition: all 400ms ease;
     text-align: center;
-    background-color: rgba(235, 215, 205, 0.8);
+  background-color: rgba(235, 215, 205, 0.8);
 }
 
 .tarjeta1:hover{
