@@ -1,6 +1,6 @@
 /*  <link th:href="@{/css/trabajo_calificacion.css}" rel="stylesheet" /> */
 .formulario{
-     width: 40%;
+     width: 48%;
      margin: 0 auto;
      display: flex;
      flex-direction: column;
