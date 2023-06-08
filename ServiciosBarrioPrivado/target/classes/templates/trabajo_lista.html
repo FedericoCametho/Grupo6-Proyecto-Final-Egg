@@ -32,49 +32,49 @@
 
   <table class="table">
     <thead>
-      <tr>
-        <th scope="col">Fecha</th>
-        <th scope="col">Cliente</th>
-        <th scope="col">Proveedor</th>
-        <th scope="col">Tipo de Servicio</th>
-        <th scope="col">Detalles</th>
-        <th scope="col">Estado</th>
-        <th scope="col">Comentarios</th>
-        <th scope="col">Calificacion</th>
-        <th scope="col">Acciones</th>
-        <th th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}"></th>
+    <tr>
+      <th scope="col">Fecha</th>
+      <th scope="col">Cliente</th>
+      <th scope="col">Proveedor</th>
+      <th scope="col">Tipo de Servicio</th>
+      <th scope="col">Detalles</th>
+      <th scope="col">Estado</th>
+      <th scope="col">Comentarios</th>
+      <th scope="col">Calificacion</th>
+      <th scope="col">Acciones</th>
+      <th th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}"></th>
 
 
-      </tr>
+    </tr>
     </thead>
 
     <tbody>
-      <tr th:each="tra : ${trabajos}">
-        <th scope="row" th:text="${tra.fecha}"></th>
-        <td th:text="${tra.cliente.getNombreCompleto()}"></td>
-        <td th:text="${tra.proveedor.getNombreCompleto()}"></td>
-        <td th:text="${tra.categoria.nombre}"></td>
-        <td th:text="${tra.detalles}"></td>
-        <td th:text="${tra.estado}"></td>
-        <td th:text="${tra.comentario}"></td>
-        <td>
-          <span th:if="${tra.calificacion == 0}"> Sin calificacion </span>
-          <span th:if="${tra.calificacion != 0}" th:text="${tra.calificacion}"></span>
-        </td>
-        <td th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}">
-          <a th:href= "@{/trabajo/modificar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Modificar </a>
-        </td>
-        <td th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}">
-          <a th:href= "@{/trabajo/borrar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Borrar </a>
-        </td>
-        <td th:if="${session.usuariosesion.rol.toString().equals('PROVEEDOR') && tra.estado.toString().equals('PENDIENTE')}">
-          <a th:href= "@{/trabajo/confirmar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Cambiar Estado </a>
-        </td>
-        <td th:if="${session.usuariosesion.rol.toString().equals('USER') && tra.estado.toString().equals('FINALIZADO') && tra.calificacion == 0}">
-          <a th:href= "@{/trabajo/calificar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Calificar </a>
-        </td>
+    <tr th:each="tra : ${trabajos}">
+      <th scope="row" th:text="${tra.fecha}"></th>
+      <td th:text="${tra.cliente.getNombreCompleto()}"></td>
+      <td th:text="${tra.proveedor.getNombreCompleto()}"></td>
+      <td th:text="${tra.categoria.nombre}"></td>
+      <td th:text="${tra.detalles}"></td>
+      <td th:text="${tra.estado}"></td>
+      <td th:text="${tra.comentario}"></td>
+      <td>
+        <span th:if="${tra.calificacion == 0}"> Sin calificacion </span>
+        <span th:if="${tra.calificacion != 0}" th:text="${tra.calificacion}"></span>
+      </td>
+      <td th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}">
+        <a th:href= "@{/trabajo/modificar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Modificar </a>
+      </td>
+      <td th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}">
+        <a th:href= "@{/trabajo/borrar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Borrar </a>
+      </td>
+      <td th:if="${session.usuariosesion.rol.toString().equals('PROVEEDOR') && tra.estado.toString().equals('PENDIENTE')}">
+        <a th:href= "@{/trabajo/confirmar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Cambiar Estado </a>
+      </td>
+      <td th:if="${session.usuariosesion.rol.toString().equals('USER') && tra.estado.toString().equals('FINALIZADO') && tra.calificacion == 0}">
+        <a th:href= "@{/trabajo/calificar/__${tra.id}__}"><i class="fas fa-feather-alt">  </i> Calificar </a>
+      </td>
 
-      </tr>
+    </tr>
 
     </tbody>
   </table>

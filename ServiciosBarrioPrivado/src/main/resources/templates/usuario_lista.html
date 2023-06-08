@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head th:replace="/fragments/head :: head"> </head>
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Usuarios</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  <link th:href="@{/css/listados.css}" rel="stylesheet" />
+</head>
 <body>
 <header th:replace="/fragments/header :: header"> </header>
 
 
-<div class="container m-5" >
-
-  <table class="table ">
+<div class="container m-7" >
+  <div class="catBox">
+    <table class="table ">
     <thead>
     <tr>
-      <th scope="col">Nombre</th>
-      <th scope="col">Apellido</th>
-      <th scope="col">Email</th>
-      <th scope="col">Telefono</th>
+      <th scope="col">NOMBRE</th>
+      <th scope="col">APELLIDO</th>
+      <th scope="col">EMAIL</th>
+      <th scope="col">TELEFONO</th>
       <th th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}"></th>
       <th th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}"></th>
 
@@ -26,16 +31,17 @@
       <td th:text="${usu.email}"></td>
       <td th:text="${usu.telefono}"></td>
       <td th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}">
-        <a th:href= "@{/usuario/modificar/__${usu.id}__}"><i class="fas fa-feather-alt">  </i> Modificar </a>
+        <a class="mod" th:href= "@{/usuario/modificar/__${usu.id}__}"><i class="fas fa-feather-alt">  </i> Modificar </a>
       </td>
       <td th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}">
-        <a th:href= "@{/usuario/borrar/__${usu.id}__}"><i class="fas fa-feather-alt">  </i> Borrar </a>
+        <a class="delete"  th:href= "@{/usuario/borrar/__${usu.id}__}"><i class="fas fa-feather-alt">  </i> Borrar </a>
       </td>
 
     </tr>
 
     </tbody>
   </table>
+  </div>
 
   <section class=" text-center container">
     <div class="row mt-3">
