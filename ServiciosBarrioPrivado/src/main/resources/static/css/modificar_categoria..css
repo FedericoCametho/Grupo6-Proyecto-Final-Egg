@@ -1,0 +1,46 @@
+/* <link th:href="@{/css/modificar_categoria..css}" rel="stylesheet" /> */
+
+.formulario{
+     width: 40%;
+     margin: 0 auto;
+     display: flex;
+     flex-direction: column;
+     background-color: lightgray;
+     padding: 10px 50px 10px 50px;
+     border-radius: 10px;
+     text-align: center;
+ }
+
+ .mensajeError{
+     text-align: center;
+     width: 150px;
+     margin: auto;
+
+
+ }
+ .mensajeExito{
+     text-align: center;
+     width: 150px;
+     margin: auto;
+ }
+.botones{
+    background-color: #8282d4;
+    justify-content: center;
+
+    margin: auto;
+}
+
+.boton{
+    background-color: #8282d4;
+    justify-content: center;
+}
+
+
+input{
+    text-align: center;
+}
+
+
+ header{
+     max-height: 80px;
+ }

@@ -108,3 +108,15 @@ header{
     height: 30px;
     margin-left: 50px;
   }
+  .date{
+      width: 300px;
+  
+  }
+  .center{
+      display: flex;
+        justify-content: center;
+  }
+  
+  .campo{
+      width:  400px;
+  }

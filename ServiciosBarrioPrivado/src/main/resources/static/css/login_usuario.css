@@ -93,3 +93,12 @@ header{
     font-weight: bold;
     text-align: left;
 }
+.normal-text{
+    font-weight: normal;
+}
+
+.botonBorrarComentario{
+        background-color: #8282d4;
+     justify-content: center;
+
+}
