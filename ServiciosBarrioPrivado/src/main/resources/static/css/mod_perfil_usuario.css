@@ -1,5 +1,4 @@
-/* <link th:href="@{/css/mod_perfil_usuario.css}" rel="stylesheet" /> */
- .formulario{
+.formulario{
      width: 40%;
      margin: 0 auto;
      display: flex;

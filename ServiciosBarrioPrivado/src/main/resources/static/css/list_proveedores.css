@@ -127,3 +127,31 @@ a:hover {
 ul{
    list-style: none;
 }
+
+.mod{
+    border-radius: 8px;
+    background: #72C652;
+    border: 1px solid #72C652;
+    padding:5px 10px 5px 10px;
+    color: whitesmoke;
+    text-decoration: none;
+}
+
+.delete{
+    border-radius: 8px;
+    background: #F64D4D;
+    border: 1px solid #F64D4D;
+    color: whitesmoke;
+    text-decoration: none;
+    padding:5px 10px 5px 10px;
+}
+
+.verPerfil{
+    border-radius: 8px;
+    background: #75D4DE;
+    border: 1px solid #75D4DE;
+    color: whitesmoke;
+    text-decoration: none;
+    padding:5px 10px 5px 10px;
+}
+
