@@ -122,9 +122,9 @@
           <p><a class="btn btn-secondary botones" th:href="@{/admin/listarCategorias}">Comenzar &raquo;</a></p>
         </div><!-- /.col-lg-4 -->
 
-        <div class="col-lg-3 mt-5" th:if="${session.usuariosesion.rol.toString().equals('USER')}" >
+        <div class="col-lg-3" th:if="${session.usuariosesion.rol.toString().equals('USER')}" >
           <img th:src="@{/imagenes/menu.png}" class="rounded-image" src="../static/imagenes/menu.png" alt="proveedor">
-          <h2 class="fw-black">Mis Trabajos Solicitados</h2>
+          <h2 class="fw-normal">Mis Trabajos Solicitados</h2>
           <p><a class="btn btn-secondary botones" th:href="@{/trabajo/listarPorUsuario/__${session.usuariosesion.id}__}">Ver Detalles &raquo;</a></p>
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-3" th:if="${session.usuariosesion.rol.toString().equals('USER')}" >
@@ -137,6 +137,11 @@
           <img th:src="@{/imagenes/menu.png}" class="rounded-image" src="../static/imagenes/menu.png" alt="proveedor">
           <h2 class="fw-normal">Mis Trabajos Pendientes</h2>
           <p><a class="btn btn-secondary botones" th:href="@{/trabajo/listarPorProveedorPendiente/__${session.usuariosesion.id}__}">Ver Detalles &raquo;</a></p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4" th:if="${session.usuariosesion.rol.toString().equals('PROVEEDOR')}">
+          <img th:src="@{/imagenes/menu.png}" class="rounded-image" src="../static/imagenes/menu.png" alt="proveedor">
+          <h2 class="fw-normal">Mis Trabajos Aceptados</h2>
+          <p><a class="btn btn-secondary botones" th:href="@{/trabajo/listarPorProveedorAceptado/__${usuario.id}__}">Ver Detalles &raquo;</a></p>
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-3" th:if="${session.usuariosesion.rol.toString().equals('PROVEEDOR')}" >
           <img th:src="@{/imagenes/menu.png}" class="rounded-image" src="../static/imagenes/menu.png" alt="proveedor">
@@ -165,7 +170,8 @@
         <hr class="featurette-divider">
 
         <div class="row featurette">
-          <div class="col-md-7 order-md-2">
+          <div class="col-md-7 order-md-2
+">
             <h2 class="featurette-heading fw-normal lh-1"> Utiliza nuestra plataforma </h2>
             <br>
             <p class="lead"> Nuestro objetivo es conectar de manera eficiente a los residentes de barrios cerrados con una amplia variedad de proveedores de servicios, desde plomeros y electricistas hasta jardineros y personal de limpieza. Ya no tienes que perder tiempo buscando referencias o preguntando en tu comunidad, en Service + encontrarás todo lo que necesitas en un solo lugar.</p>

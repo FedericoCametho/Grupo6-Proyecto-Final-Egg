@@ -76,7 +76,7 @@ public class TrabajoControlador {
             trabajoServicio.registrar(fecha, idCliente, idProveedor, idCategoria, detalles);
             Usuario usuario = usuarioServicio.getUsuarioById(idCliente);
             modelo.addAttribute("usuario", usuario);
-            return "inicio";
+            return "iniciado";
 
         } catch (MiException ex){
             modelo.put("error", ex.getMessage());
@@ -382,6 +382,21 @@ public class TrabajoControlador {
         modelo.addAttribute("categoriaServicio", categoriaServicio);
 
         List<Trabajo> trabajos = trabajoServicio.listarPorProveedor(idProveedor).stream().filter( t -> t.getEstado().toString().equals("PENDIENTE")).collect(Collectors.toList());
+        modelo.addAttribute("trabajos", trabajos);
+        List<Usuario> proveedores = proveedorServicio.listarProveedores();
+        modelo.addAttribute("proveedores", proveedores);
+        modelo.addAttribute("finalizado", true);
+        return "trabajo_lista";
+
+    }
+
+    @GetMapping("/listarPorProveedorAceptado/{idProveedor}")
+    public String listarPorProveedorAceptado(@PathVariable String idProveedor, ModelMap modelo) throws MiException{
+
+        List<CategoriaServicio> categoriaServicio = categoriaServicioService.listarTodas();;
+        modelo.addAttribute("categoriaServicio", categoriaServicio);
+
+        List<Trabajo> trabajos = trabajoServicio.listarPorProveedor(idProveedor).stream().filter( t -> t.getEstado().toString().equals("ACEPTADO")).collect(Collectors.toList());
         modelo.addAttribute("trabajos", trabajos);
         List<Usuario> proveedores = proveedorServicio.listarProveedores();
         modelo.addAttribute("proveedores", proveedores);

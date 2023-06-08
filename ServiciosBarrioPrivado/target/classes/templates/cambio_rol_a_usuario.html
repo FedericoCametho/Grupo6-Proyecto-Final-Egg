@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Cambio de Rol</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <link th:href="@{/css/formulario.css}" rel="stylesheet" />
+    <link th:href="@{/css/registro_rapido_trabajo.css}" rel="stylesheet" />    </head>
 </head>
 <body>
 <header th:replace="/fragments/header :: header"> </header>
@@ -26,24 +26,24 @@
                 <p class="card-text" th:text="${exito}"></p>
             </div>
         </div>
-        <div class="form-group my-3">
+        <div class="form-group my-3 neg">
             <label for="nombre">Nombre</label>
             <input type="text" class="form-control" name="nombre" id="nombre" th:value="${proveedor.nombre}">
         </div>
-        <div class="form-group my-3">
+        <div class="form-group my-3 neg">
             <label for="apellido">Apellido</label>
             <input type="text" class="form-control" name="apellido" id="apellido" th:value="${proveedor.apellido}">
         </div>
-        <div class="form-group my-3">
+        <div class="form-group my-3 neg">
             <label for="telefono">Telefono</label>
             <input type="text" class="form-control" name="telefono" id="telefono" th:value="${proveedor.telefono}">
         </div>
-        <div class="form-group my-3">
+        <div class="form-group my-3 neg">
             <label for="categoria">Categoria Actual: </label>
             <p class="form-control"  th:text="${proveedor.categoriaServicio.nombre}" id="categoria"></p>
 
         </div>
-        <div class="form-group my-3">
+        <div class="form-group my-3 neg">
             <label for="precioPorHora">Precio por Hora</label>
             <p class="form-control"  th:text="${proveedor.precioPorHora}" id="precioPorHora"></p>
         </div>

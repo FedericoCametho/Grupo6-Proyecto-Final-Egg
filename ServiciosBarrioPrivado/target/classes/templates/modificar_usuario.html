@@ -11,7 +11,7 @@
 <header th:replace="/fragments/header :: header"> </header>
 
 
-<div class="container-fluid contenedor">
+<div class="container-fluid m-5  contenedor">
 
   <form class="formulario" th:action="@{/usuario/modificar/__${usuario.id}__}"  method="POST">
 
@@ -28,22 +28,23 @@
       </div>
     </div>
     <h2 class="mb-2">Modificar Usuario Cliente</h2>
-    <div class="form-group my-3">
+    <div class="form-group my-3 neg">
       <label for="nombre">Nombre</label>
       <input type="text" class="form-control" name="nombre" id="nombre" th:value="${usuario.nombre}" placeholder="Nombre">
     </div>
-    <div class="form-group my-3">
+    <div class="form-group my-3 neg">
       <label for="apellido">Apellido</label>
       <input type="text" class="form-control" name="apellido" id="apellido" th:value="${usuario.apellido}"placeholder="Apellido">
     </div>
-    <div class="form-group my-3">
+    <div class="form-group my-3 neg">
       <label for="telefono">Telefono</label>
       <input type="text" class="form-control" name="telefono" id="telefono" th:value="${usuario.telefono}" placeholder="Telefono">
     </div>
 
-    <div class="form-group my-3" th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}">
+    <div class="form-group my-3 neg" th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}">
       <label for="rol">Rol</label>
-      <select name="rol" id="rol">
+      <br>
+      <select class="campo-amplio" name="rol" id="rol">
         <option th:each="rol : ${roles}"
                 th:value="${rol}"
                 th:text="${rol.toString()}"
@@ -52,7 +53,7 @@
       </select>
     </div>
 
-    <button type="submit" class="btn btn-primary mt-3 botones">Modificar</button>
+    <button type="submit" class="btn btn-primary my-2  botones ">Modificar</button>
   </form>
 
 

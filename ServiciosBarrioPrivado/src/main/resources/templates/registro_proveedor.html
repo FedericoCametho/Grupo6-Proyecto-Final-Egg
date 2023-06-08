@@ -26,25 +26,25 @@
       </div>
     </div>
     <h2 class="mb-2">Registrar Usuario Proveedor</h2>
-    <div class="form-group my-3 campo">
+    <div class="form-group my-3 negrita-izquierda">
       <label for="nombre">Nombre</label>
       <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre">
     </div>
-    <div class="form-group my-3 campo">
+    <div class="form-group my-3 negrita-izquierda">
       <label for="apellido">Apellido</label>
       <input type="text" class="form-control" name="apellido" id="apellido" placeholder="Apellido">
     </div>
-    <div class="form-group my-3 campo">
+    <div class="form-group my-3 negrita-izquierda">
       <label for="email">Email</label>
       <input type="text" class="form-control" name="email" id="email" placeholder="Email">
     </div>
-    <div class="form-group my-3 campo">
+    <div class="form-group my-3 negrita-izquierda">
       <label for="telefono">Telefono</label>
       <input type="text" class="form-control" name="telefono" id="telefono" placeholder="Telefono">
     </div>
     <div class="form-group my-3 seleccion">
-      <label for="categoria">Categoria</label>
-      <select name="categoria" id="categoria">
+      <label for="categoria" class="titulo-negrita">Categoria</label>
+      <select name="categoria" id="categoria" class="campo-amplio">
 
         <option th:each="cat : ${categoriaServicio}"
                 th:value="${cat.getId().toString()}"
@@ -52,21 +52,21 @@
         >
       </select>
     </div>
-    <div class="form-group my-3 campo">
+    <div class="form-group my-3 campo negrita-izquierda">
       <label for="precioPorHora">Precio por Hora</label>
       <input type="number" class="form-control" name="precioPorHora" id="precioPorHora" placeholder="Precio Por Hora">
     </div>
 
-    <div class="form-group my-3">
+    <div class="form-group my-3 negrita-izquierda">
       <label class=" carga-img" for="imagen">Imagen de perfil</label>
-      <input type="file" name="file" class="form-control form-control-sm col-md-6" id="imagen" >
+      <input type="file" name="file" class="form-control " id="imagen" >
     </div>
 
-    <div class="form-group my-3 campo">
+    <div class="form-group my-3 negrita-izquierda">
       <label for="password">Constraseña</label>
       <input type="password" class="form-control" name="password" id="password" placeholder="Contraseña">
     </div>
-    <div class="form-group my-3 campo">
+    <div class="form-group my-3 negrita-izquierda">
       <label for="password2">Confirme Contraseña</label>
       <input type="password" class="form-control" name="password2" id="password2" placeholder="Repita la contraseña">
     </div>

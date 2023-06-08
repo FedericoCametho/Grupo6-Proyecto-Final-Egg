@@ -102,3 +102,13 @@ header{
      justify-content: center;
 
 }
+
+.profilepic{
+    width:150px;
+    height:150px;
+    border-radius: 100%;
+    text-align:center;
+    margin:auto;
+    margin-top: 10px;
+    object-fit: scale-down;
+}

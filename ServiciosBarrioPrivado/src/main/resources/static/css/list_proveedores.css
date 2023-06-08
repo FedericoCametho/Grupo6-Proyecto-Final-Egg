@@ -102,6 +102,7 @@ h1{
     text-align:center;
     margin:auto;
     margin-top: 10px;
+    object-fit: scale-down;
 }
 
 a{  color: whitesmoke;

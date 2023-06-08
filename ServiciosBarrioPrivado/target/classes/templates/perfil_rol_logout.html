@@ -13,30 +13,30 @@
 
 
 
-    <div class="form-group my-3">
-      <h2 class="card-title">Bienvenido <span th:text="${session.usuariosesion.getNombreCompleto()}"></span></h2>
-    </div>
+  <div class="form-group my-3">
+    <h2 class="card-title">Bienvenido <span th:text="${session.usuariosesion.getNombreCompleto()}"></span></h2>
+  </div>
 
-    <div class="form-group my-3 campo">
-        <h4 class="card-title">Mis Nuevos Datos Personales:</h4>
+  <div class="form-group my-3 campo">
+    <h4 class="card-title">Mis Nuevos Datos Personales:</h4>
 
-      <ul>
-        <li>NOMBRE: <span th:text="${usuario.nombre}"></span></li>
-        <li>APELLIDO: <span th:text="${usuario.apellido}"></span> </li>
-        <li>EMAIL: <span th:text="${usuario.email}"></span> </li>
-        <li>TELEFONO: <span th:text="${usuario.telefono}"></span> </li>
-        <div  th:if="${usuario.rol.toString.equals('PROVEEDOR')}">
-          <li>
-            CATEGORIA DE SERVICIO: <span th:text="${usuario.categoriaServicio.nombre}"></span> </li>
-          <li>
-            PRECIO POR HORA: <span th:text="${usuario.precioPorHora}"></span></li>
-          <li >
-            CALIFICACION PROMEDIO: <span th:text="${usuario.calificacion}"></span></li>
-          <li >
-            Cantidad de Comentarios: <span th:text="${cantComentarios}"></span> - Cantidad de Calificaciones recibidas: <span th:text="${cantCalificaciones}"></span> </li>
-        </div>
-      </ul>
-    </div>
+    <ul style="list-style-type: none;">
+      <li class="bold-text">NOMBRE: <span class="normal-text" th:text="${usuario.nombre}"></span></li>
+      <li class="bold-text">APELLIDO: <span class="normal-text" th:text="${usuario.apellido}"></span></li>
+      <li class="bold-text">EMAIL: <span class="normal-text" th:text="${usuario.email}"></span> </li>
+      <li class="bold-text">TELEFONO: <span class="normal-text" th:text="${usuario.telefono}"></span> </li>
+      <div  th:if="${usuario.rol.toString.equals('PROVEEDOR')}">
+        <li class="bold-text">
+          CATEGORIA DE SERVICIO: <span class="normal-text" th:text="${usuario.categoriaServicio.nombre}"></span> </li>
+        <li class="bold-text">
+          PRECIO POR HORA: <span class="normal-text" th:text="${usuario.precioPorHora}"></span></li>
+        <li class="bold-text">
+          CALIFICACION PROMEDIO: <span class="normal-text" th:text="${usuario.calificacion}"></span></li>
+        <li class="bold-text">
+          Cantidad de Comentarios: <span class="normal-text" th:text="${cantComentarios}"></span> - Cantidad de Calificaciones recibidas: <span th:text="${cantCalificaciones}"></span> </li>
+      </div>
+    </ul>
+  </div>
 
   <div class="vista-admin-comentarios" th:if="${!session.usuariosesion.rol.toString().equals('USER') && usuario.rol.toString().equals('PROVEEDOR')}">
     <div class="album py-5 bg-body-tertiary">

@@ -3,5 +3,7 @@ package com.grupo6.ServiciosBarrioPrivado.Enumeracion;
 public enum EstadoTrabajo {
     FINALIZADO,
     PENDIENTE,
+
+    ACEPTADO,
     CANCELADO
 }

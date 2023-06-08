@@ -98,7 +98,6 @@ Marketing messaging and featurettes
           <div class="col-lg-4" th:if="${usuario.rol.toString().equals('USER') || session.usuariosesion.rol.toString().equals('ADMIN')}">
             <img th:src="@{/imagenes/logprov.png}" class="rounded-image" src="../static/imagenes/logprov.png" alt="proveedor">
             <h2 class="fw-normal">Listado de Proveedores</h2>
-            <p></p>
             <p><a class="btn btn-secondary botones" th:href="@{/proveedor/listar}">Ver Detalles &raquo;</a></p>
           </div><!-- /.col-lg-4 -->
           <div class="col-lg-4" th:if="${session.usuariosesion.rol.toString().equals('ADMIN')}" >
@@ -135,9 +134,16 @@ Marketing messaging and featurettes
             </div><!-- /.col-lg-4 -->
             <div class="col-lg-4" >
               <img th:src="@{/imagenes/menu.png}" class="rounded-image" src="../static/imagenes/menu.png" alt="proveedor">
+              <h2 class="fw-normal">Mis Trabajos Aceptados</h2>
+              <p><a class="btn btn-secondary botones" th:href="@{/trabajo/listarPorProveedorAceptado/__${usuario.id}__}">Ver Detalles &raquo;</a></p>
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-4" >
+              <img th:src="@{/imagenes/menu.png}" class="rounded-image" src="../static/imagenes/menu.png" alt="proveedor">
               <h2 class="fw-normal">Mis Trabajos Finalizados</h2>
               <p><a class="btn btn-secondary botones" th:href="@{/trabajo/listarPorProveedorFinalizado/__${usuario.id}__}">Ver Detalles &raquo;</a></p>
             </div><!-- /.col-lg-4 -->
+          </div>
+
           </div>
         </div><!-- /.row -->
 
